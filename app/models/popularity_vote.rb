@@ -1,0 +1,2 @@
+class PopularityVote < ApplicationRecord
+end
