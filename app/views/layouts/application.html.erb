@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kpop</title>
+    <title>Ollida</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,6 +9,7 @@
   </head>
 
   <body>
+  
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>
     <% if user_signed_in? -%>
@@ -22,6 +23,7 @@
         <li><%= link_to 'Sign in', new_user_session_path %></li>
       </ul>
     <% end %>
+
     <%= yield %>
   </body>
 </html>
