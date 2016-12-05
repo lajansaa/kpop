@@ -30,7 +30,7 @@ body {
 	text-align: center;
 
 }
-#sign_in_form, #edit_form {
+#sign_in_form{
 	margin: 0 auto;
 	#title_sign_up {
 	  margin: 30px auto;
@@ -78,4 +78,26 @@ body {
 	.radio  {
 	padding-left: 5px;
   }
+}
+#login_form {
+	margin: 0 auto;
+	padding: 0px;
+	#title_login_form {
+	  margin: 20px auto;
+	  text-align:center;
+	  clear:both;
+	  width: 694px;
+	  height: 77px;
+	  padding-top: 10px;
+	  padding-left: 30px;
+	  font-family: HanziPenSC-W5;
+	  font-size: 45px;
+	  color: rgba(74, 74, 74, 0.97);
+	}
+	.form-group {
+		padding: 5px;
+	}
+	.render {
+		text-align: center;
+	}
 }
