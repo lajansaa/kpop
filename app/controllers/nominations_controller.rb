@@ -82,7 +82,8 @@ class NominationsController < ApplicationController
   end
 
   def youtube_views_fetcher
-    api_key = "AIzaSyDV_t5nfmm_7LVJKrrpn1dBEku8ykfNkCc"
+    api_key = ENV['GOOGLE_API_KEY']
+
     log = Logger.new(STDOUT)
   
     sql = "SELECT
@@ -310,8 +311,87 @@ class NominationsController < ApplicationController
     end
   end
 
+  def nominations_fetcher
+    sql = "WITH M AS (SELECT
+                          M.award,
+                          M.max_date AS vote_start,
+                          PV.vote_end,
+                          PV.artiste,
+                          PV.song
+                      FROM popularity_votes PV,
+                           (SELECT
+                                award,
+                                MAX(PV.vote_start) AS max_date
+                            FROM popularity_votes PV
+                            GROUP BY 1) M
+                      WHERE PV.award = M.award
+                        AND PV.vote_start = M.max_date
+                     ),
+                J AS (SELECT
+                          M.award,
+                          M.vote_start,
+                          -- A.judging_criteria->digital_sales AS ds_per,
+                          -- A.judging_criteria->youtube_views AS yv_per,
+                          -- A.judging_criteria->popularity_votes AS pv_per
+                          0.5 AS ds_per,
+                          0.15 AS yv_per,
+                          0.1 AS pv_per
+                      FROM M,
+                           awards A
+                      WHERE M.award = A.name
+                      ),
+                T AS (SELECT
+                          J.award,
+                          J.vote_start,
+                          SUM(DS.download_count) AS dc_total,
+                          SUM(DS.streaming_count) AS sc_total,
+                          SUM(YV.views) AS yv_total
+                      FROM J
+                      JOIN digital_sales DS ON J.award = DS.award
+                                           AND J.vote_start = DS.vote_start
+                      JOIN youtube_views YV ON J.award = YV.award
+                                           AND J.vote_start = YV.vote_start
+                      GROUP BY 1,2
+                     )
+           SELECT DISTINCT
+               M.award,
+               M.vote_start,
+               M.vote_end,
+               M.artiste,
+               M.song,
+               DS.download_count,
+               DS.streaming_count,
+               DS.total_count AS digital_sales,
+               YV.views AS youtube_views,
+               PV.votes AS popularity_votes,
+               (((DS.download_count / T.dc_total) + (DS.streaming_count / T.sc_total)) * J.ds_per +
+               (YV.views / T.yv_total) * J.yv_per +
+               (PV.votes / 100.0) * J.pv_per) * 100.0 AS aggregate_score
+          FROM M
+          JOIN J ON M.award = J.award
+                AND M.vote_start = J.vote_start
+          JOIN T ON M.award = T.award
+                AND M.vote_start = T.vote_start
+          JOIN digital_sales DS ON M.award = DS.award
+                               AND M.vote_start = DS.vote_start
+                               AND M.artiste = DS.artiste
+                               AND M.song = DS.song
+          JOIN youtube_views YV ON M.award = YV.award
+                               AND M.vote_start = YV.vote_start
+                               AND M.artiste = YV.artiste
+                               AND M.song = YV.song
+          JOIN popularity_votes PV ON M.award = PV.award
+                                  AND M.vote_start = PV.vote_start
+                                  AND M.artiste = PV.artiste
+                                  AND M.song = PV.song
+          "                                                                  
+    sql_result = pg_connection.connection.execute(sql)
+binding.pry
+               
+  end
+
   def index
-    update_digital_sales
+    nominations_fetcher
     @nomination_artiste = DigitalSale.all
   end
 
