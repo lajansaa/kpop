@@ -1,0 +1,2 @@
+class DigitalSale < ApplicationRecord
+end

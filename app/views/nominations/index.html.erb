@@ -1,0 +1,7 @@
+<%=link_to 'Update Mapping', nominations_path %>
+<p><% @nomination_artiste.each do |n| %></p>
+	<%= n.artiste %>
+	<%= n.download_count %>
+	<%= n.streaming_count %>
+	<%= n.total_count %>
+<% end %>

@@ -20,4 +20,11 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+# Ignore config
 /config/database.yml
+
+# Ignore credentials
+.env
+
+# Ignore all csv output files from fetcher
+/lib/imports/*.csv
