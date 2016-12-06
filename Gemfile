@@ -32,6 +32,9 @@ gem 'postgres-copy'
 gem 'nokogiri'
 gem 'typhoeus'
 
+# For debugging
+gem 'pry'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
