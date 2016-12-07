@@ -28,3 +28,6 @@
 
 # Ignore all csv output files from fetcher
 /lib/imports/*.csv
+
+#Ignore database.yml
+/config/database.yml
