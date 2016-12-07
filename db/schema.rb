@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206020449) do
+ActiveRecord::Schema.define(version: 20161207154050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,24 @@ ActiveRecord::Schema.define(version: 20161206020449) do
     t.string "gaon_song"
   end
 
+  create_table "nominations", force: :cascade do |t|
+    t.string   "award"
+    t.date     "vote_start"
+    t.date     "vote_end"
+    t.string   "artiste"
+    t.string   "song"
+    t.bigint   "download_count"
+    t.bigint   "streaming_count"
+    t.bigint   "youtube_views"
+    t.float    "popularity_votes"
+    t.float    "normalized_ds"
+    t.float    "normalized_yv"
+    t.float    "normalized_pv"
+    t.float    "aggregate_score"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "popularity_votes", force: :cascade do |t|
     t.date     "vote_start"
     t.date     "vote_end"
@@ -72,6 +90,9 @@ ActiveRecord::Schema.define(version: 20161206020449) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "name"
