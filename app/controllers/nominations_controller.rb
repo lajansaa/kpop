@@ -312,81 +312,99 @@ class NominationsController < ApplicationController
   end
 
   def nominations_fetcher
-    sql = "WITH M AS (SELECT
-                          M.award,
-                          M.max_date AS vote_start,
-                          PV.vote_end,
-                          PV.artiste,
-                          PV.song
-                      FROM popularity_votes PV,
-                           (SELECT
-                                award,
-                                MAX(PV.vote_start) AS max_date
-                            FROM popularity_votes PV
-                            GROUP BY 1) M
-                      WHERE PV.award = M.award
-                        AND PV.vote_start = M.max_date
-                     ),
-                J AS (SELECT
-                          M.award,
-                          M.vote_start,
-                          -- A.judging_criteria->digital_sales AS ds_per,
-                          -- A.judging_criteria->youtube_views AS yv_per,
-                          -- A.judging_criteria->popularity_votes AS pv_per
-                          0.5 AS ds_per,
-                          0.15 AS yv_per,
-                          0.1 AS pv_per
-                      FROM M,
-                           awards A
-                      WHERE M.award = A.name
+    Nomination.delete_all
+    sql = "WITH J AS (SELECT
+                          A.name,
+                          (A.judging_criteria -> 'digital_sales')::NUMERIC AS ds_per,
+                          (A.judging_criteria -> 'youtube_views')::NUMERIC AS yv_per,
+                          (A.judging_criteria -> 'popularity_votes')::NUMERIC AS pv_per
+                      FROM awards A
                       ),
-                T AS (SELECT
-                          J.award,
-                          J.vote_start,
+                U AS (SELECT
+                          DS.award,
+                          DS.vote_start,
                           SUM(DS.download_count) AS dc_total,
                           SUM(DS.streaming_count) AS sc_total,
-                          SUM(YV.views) AS yv_total
+                          0 AS yv_total,
+                          0 AS pv_total
                       FROM J
-                      JOIN digital_sales DS ON J.award = DS.award
-                                           AND J.vote_start = DS.vote_start
-                      JOIN youtube_views YV ON J.award = YV.award
-                                           AND J.vote_start = YV.vote_start
+                      JOIN digital_sales DS ON J.name = DS.award
                       GROUP BY 1,2
-                     )
+                      UNION ALL
+
+                      SELECT
+                          YV.award,
+                          YV.vote_start,
+                          0 AS dc_total,
+                          0 AS sc_total,
+                          SUM(YV.views) AS yv_total,
+                          0 AS pv_total
+                      FROM J
+                      JOIN youtube_views YV ON J.name = YV.award
+                      GROUP BY 1,2
+                      UNION ALL
+
+                      SELECT
+                          PV.award,
+                          PV.vote_start,
+                          0 AS dc_total,
+                          0 AS sc_total,
+                          0 AS yv_total,
+                          SUM(PV.votes) AS pv_total
+                      FROM J
+                      JOIN popularity_votes PV ON J.name = PV.award
+                      GROUP BY 1,2
+                     ),
+                T AS (SELECT
+                          award,
+                          vote_start,
+                          SUM(dc_total) AS dc_total,
+                          SUM(sc_total) AS sc_total,
+                          SUM(yv_total) AS yv_total,
+                          SUM(pv_total) AS pv_total
+                      FROM U
+                      GROUP BY 1,2
+                      )
            SELECT DISTINCT
-               M.award,
-               M.vote_start,
-               M.vote_end,
-               M.artiste,
-               M.song,
+               PV.award,
+               PV.vote_start,
+               PV.vote_end,
+               PV.artiste,
+               PV.song,
                DS.download_count,
                DS.streaming_count,
-               DS.total_count AS digital_sales,
                YV.views AS youtube_views,
                PV.votes AS popularity_votes,
-               (((DS.download_count / T.dc_total) + (DS.streaming_count / T.sc_total)) * J.ds_per +
+               ROUND((((DS.download_count / T.dc_total) + (DS.streaming_count / T.sc_total)) * J.ds_per * 100.0)::NUMERIC, 2) AS normalized_ds,
+               ROUND(((YV.views / T.yv_total) * J.yv_per * 100.0)::NUMERIC, 2) AS normalized_yv,
+               ROUND(((PV.votes / T.pv_total) * J.pv_per * 100.0)::NUMERIC, 2) AS normalized_pv,
+               ROUND(((((DS.download_count / T.dc_total) + (DS.streaming_count / T.sc_total)) * J.ds_per +
                (YV.views / T.yv_total) * J.yv_per +
-               (PV.votes / 100.0) * J.pv_per) * 100.0 AS aggregate_score
-          FROM M
-          JOIN J ON M.award = J.award
-                AND M.vote_start = J.vote_start
-          JOIN T ON M.award = T.award
-                AND M.vote_start = T.vote_start
-          JOIN digital_sales DS ON M.award = DS.award
-                               AND M.vote_start = DS.vote_start
-                               AND M.artiste = DS.artiste
-                               AND M.song = DS.song
-          JOIN youtube_views YV ON M.award = YV.award
-                               AND M.vote_start = YV.vote_start
-                               AND M.artiste = YV.artiste
-                               AND M.song = YV.song
-          JOIN popularity_votes PV ON M.award = PV.award
-                                  AND M.vote_start = PV.vote_start
-                                  AND M.artiste = PV.artiste
-                                  AND M.song = PV.song
-          "                                                                  
+               (PV.votes / T.pv_total) * J.pv_per) * 100.0)::NUMERIC, 2) AS aggregate_score
+          FROM popularity_votes PV
+          JOIN J ON PV.award = J.name
+          JOIN T ON PV.award = T.award
+          JOIN digital_sales DS ON PV.award = DS.award
+                               AND PV.vote_start = DS.vote_start
+                               AND PV.artiste = DS.artiste
+                               AND PV.song = DS.song
+          JOIN youtube_views YV ON PV.award = YV.award
+                               AND PV.vote_start = YV.vote_start
+                               AND PV.artiste = YV.artiste
+                               AND PV.song = YV.song
+          " 
+    
     sql_result = pg_connection.connection.execute(sql)
-binding.pry
+    headers = sql_result.fields()
+    headers.push('created_at', 'updated_at')
+    CSV.open('./lib/imports/nominations.csv', 'wb') do |csv|
+      csv << headers
+      sql_result.each do |record|
+        csv << [ record[headers[0]], record[headers[1]], record[headers[2]], record[headers[3]], record[headers[4]], record[headers[5]], record[headers[6]], record[headers[7]], record[headers[8]], record[headers[9]], record[headers[10]], record[headers[11]], record[headers[12]], Time.now, Time.now ]
+      end
+    end
+
+    Nomination.copy_from './lib/imports/nominations.csv'
                
   end
 
