@@ -1,0 +1,14 @@
+<div class="container" id="awards">
+  <div class="row">
+  <% @awards.each do |award| %>
+    <div class="col-xs-6 col-md-4">
+      <div class="box">
+	      <%=image_tag(award.profile_img, size: "120x120")%>
+		  <h4>
+		    <%= award.name %>
+		  </h4>
+		  </div>
+		  </div>
+		<% end %>
+    </div>
+	</div>

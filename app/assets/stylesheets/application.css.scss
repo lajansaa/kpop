@@ -30,6 +30,32 @@ body {
 	text-align: center;
 
 }
+#awards {
+  margin: 0 auto;
+  width: 100%;
+  .container {
+  text-align: center;
+  display: inline-block;
+  
+  .box {
+	margin: 10px;
+	width: 237px;
+	height: 135px;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+	border-radius: 7px;
+	text-align: center;
+	  img {
+	  	width: 100%;
+	  	height: auto;
+	  }
+	}
+	h4 {
+	  	font-size: 22px;
+	  	margin: 0;
+	  	padding: 25px 10px;
+	}
+	}
+}
 #sign_in_form{
 	margin: 0 auto;
 	#title_sign_up {
@@ -54,6 +80,12 @@ body {
 .btn_devise {
 	.btn-primary {
 	background-color: #e34a6f;
+	border: none;
+	}
+}
+.btn_facebook {
+	.btn-primary {
+	background-color: #3b5998;
 	border: none;
 	}
 }

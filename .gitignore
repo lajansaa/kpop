@@ -22,12 +22,10 @@
 
 # Ignore config
 /config/database.yml
+/config/secrets.yml
 
 # Ignore credentials
 .env
 
 # Ignore all csv output files from fetcher
 /lib/imports/*.csv
-
-#Ignore database.yml
-/config/database.yml

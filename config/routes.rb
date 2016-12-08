@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  
+  resources :awards
+  get 'awards/index'
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   get 'welcome/hello'
   root to: "welcome#hello"
