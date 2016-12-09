@@ -14,10 +14,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+
 body {
-	margin: 0 auto;
-	display: block;
+	background: #E9E9E9;
+	font-family: LucidaGrande;
 }
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 100;
+}
+
+
 .clearfix:after {
    content: ".";
    visibility: hidden;

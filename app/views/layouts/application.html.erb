@@ -10,20 +10,25 @@
 
   <body>
   <div class = "clearfix:after">
-	<p class="notice"><%= notice %></p>
-	<p class="alert"><%= alert %></p>
     <% if user_signed_in? -%>
-      <ul class="nav navbar-nav pull-right">
-        <!-- <li><%#= link_to 'Update', edit_user_registration_path %></li> -->
-        <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
-      </ul>
+      <div class="nav navbar-nav pull-right">
+        <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+      </div>
     <% else %>
-      <ul class="nav navbar-nav pull-right">
-        <!-- <li><%#= link_to 'Sign up', new_user_registration_path %></li> -->
-        <li><%= link_to 'Sign in', new_user_session_path %></li>
-      </ul>
+      <div class="nav navbar-nav pull-right">
+        <%= link_to 'Sign in', new_user_session_path %>
+      </div>
     <% end %>
     </div>
+
+  <div class="container"> <!--notice for Sign-in/out -->
+      <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: "alert alert-info" %>
+      <% end %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+  </div>
+  
     <%= yield %>
   </body>
 </html>
