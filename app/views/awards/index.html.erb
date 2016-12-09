@@ -1,5 +1,4 @@
-<div class="container" id="awards">
-  <div class="row">
+<div id="home_page" >
   <div>
   	<p>Choose Your Award: <span><%= link_to 'Sort by Name', awards_path(:order => "name"), class: "btn btn-primary" %></span> </p>
   	<div id = search_field>
@@ -8,17 +7,15 @@
   		<%= submit_tag "Search" %>
 		<% end %>
 	</div>
-
   </div>
+
+<div  id="awards" class="transitions-enabled">
   <% @awards.each do |award| %>
-    <div class="col-xs-6 col-md-4">
-      <div class="box">
-	      <%=image_tag(award.profile_img, size: "120x120")%>
-		  <h4>
-		    <%= award.name %>
-		  </h4>
-		  </div>
-		  </div>
-		<% end %>
-    </div>
+    <div class="box panel panel-default">
+	      <%=image_tag(award.profile_img, size: "250x250")%>
+		<div class = "panel-body">
+			<h4><%= award.name %></h4>
+		</div>
 	</div>
+  <% end %>
+</div>
