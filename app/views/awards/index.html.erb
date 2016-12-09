@@ -1,12 +1,14 @@
 <div id="home_page" >
-  <div>
-  	<p>Choose Your Award: <span><%= link_to 'Sort by Name', awards_path(:order => "name"), class: "btn btn-primary" %></span> </p>
-  	<div id = search_field>
-  		<%= form_for awards_path, :method => :get do %>
-  		<%= text_field_tag "keyword" %>
-  		<%= submit_tag "Search" %>
-		<% end %>
-	</div>
+<div class="container">
+  <div id="sort_field">
+    <p>Choose Your Award: <span><%= link_to 'Sort by Name', awards_path(:order => "name"), class: "btn btn-default btn-xs" %></span> </p>
+  </div>
+  <div id="search_field">
+      <%= form_for awards_path, :method => :get do %>
+      <%= text_field_tag "keyword" %>
+      <%= submit_tag "Search" %>
+    <% end %>
+  </div>
   </div>
 
 <div  id="awards" class="transitions-enabled">
