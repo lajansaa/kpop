@@ -405,6 +405,7 @@ class NominationsController < ApplicationController
     end
 
     Nomination.copy_from './lib/imports/nominations.csv'
+    render json: Nomination.all
                
   end
 
