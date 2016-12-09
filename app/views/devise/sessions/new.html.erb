@@ -3,7 +3,7 @@
       <div class="logo"><img alt="ollida" height="64" src="http://imgh.us/logo@3x.png" width="192"></div>
     </div>
   </div>
-  <div class="container" id="login_form">
+  <div class="container" id="sign_in_form">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div id="title_login_form">
       Welcome back!
@@ -17,13 +17,23 @@
         <div class="form-group">
           <%= f.label :password %><br>
           <%= f.password_field :password, class: "form-control", autocomplete: "off" %>
-        </div><%if devise_mapping.rememberable? -%>
+        </div>
+        <%if devise_mapping.rememberable? -%>
         <div class="form-group">
-          <%= f.check_box :remember_me %><%= f.label :remember_me %>
-        </div><%end -%>
+          <div class="check_box"><%= f.check_box :remember_me %><span><%= f.label :remember_me %></span></div>
+        </div>
+        <%end -%>
         <div class="form-group btn_devise">
-          <%= f.submit "Log in", class: "btn btn-primary form-control" %>
-        </div><%end %>
+          <%= f.submit "Sign in", class: "btn btn-primary form-control" %>
+        </div>
+        <%end %>
+        <div class="form-group btn_facebook">
+            <div>
+            <% resource_class.omniauth_providers.each do |provider|%>
+              <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: "btn btn-primary form-control" %>
+              <% end -%>
+            </div>
+          </div>
         <div class="render">
           <%= render "devise/shared/links" %>
         </div>
