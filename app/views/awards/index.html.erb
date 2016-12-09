@@ -1,5 +1,15 @@
 <div class="container" id="awards">
   <div class="row">
+  <div>
+  	<p>Choose Your Award: <span><%= link_to 'Sort by Name', awards_path(:order => "name"), class: "btn btn-primary" %></span> </p>
+  	<div id = search_field>
+  		<%= form_for awards_path, :method => :get do %>
+  		<%= text_field_tag "keyword" %>
+  		<%= submit_tag "Search" %>
+		<% end %>
+	</div>
+
+  </div>
   <% @awards.each do |award| %>
     <div class="col-xs-6 col-md-4">
       <div class="box">
