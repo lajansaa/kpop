@@ -7,8 +7,8 @@ default: &default
 development:
   <<: *default
   database: ollida_development
-  username: <%= LOCAL_USERNAME %>
-  password: <%= LOCAL_PASSWORD %>
+  username: <%= ENV['LOCAL_USERNAME'] %>
+  password: <%= ENV['LOCAL_PASSWORD'] %>
 
 test:
   <<: *default
