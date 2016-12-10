@@ -59,4 +59,3 @@ gem 'devise', '~> 4.2'
 gem 'paperclip', '~> 4.2'
 gem 'omniauth-facebook'
 gem "koala", "~> 2.2"
-gem 'masonry-rails', '~> 0.2.4'
