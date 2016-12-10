@@ -24,4 +24,6 @@
 .env
 
 # Ignore all csv output files from fetcher
-/lib/imports/*.csv
+/lib/imports/digital_sales.csv
+/lib/imports/mappings.csv
+
