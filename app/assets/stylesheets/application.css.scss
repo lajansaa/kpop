@@ -18,7 +18,7 @@
 
 
 body {
-	background: #E9E9E9;
+	background: #d8d8d8;
 	font-family: LucidaGrande;
 }
 
@@ -26,14 +26,14 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 100;
 }
 
-
 .clearfix:after {
    content: ".";
    visibility: hidden;
    display: block;
-   height: 0;
+   height: 0px;
    clear: both;
 }
+
 .logo {
 	padding: 10px;
 	text-align: center;
@@ -119,4 +119,12 @@ h1, h2, h3, h4, h5, h6 {
 	.render {
 		text-align: center;
 	}
+}
+
+#footer {
+  height: 50px;
+  z-index: 0;
+  p {
+  margin-top: 15px;
+  }
 }
