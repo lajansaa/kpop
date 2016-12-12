@@ -1,7 +1,9 @@
-<div id="home_page" >
-<div class="container">
+<div id="home_page" class="container">
+<div class="main-content">
+<div  id="awards">
+<div class="sort_search">
   <div id="sort_field">
-    <p>Choose Your Award: <span><%= link_to 'Sort by Name', awards_path(:order => "name"), class: "btn btn-default btn-xs" %></span> </p>
+    <p>Choose Your Award: <span>Sort by Name <%= link_to 'A - Z', awards_path(:order => "name"), class: "btn btn-default btn-xs" %></span> </p>
   </div>
   <div id="search_field">
       <%= form_for awards_path, :method => :get do %>
@@ -9,15 +11,16 @@
       <%= submit_tag "Search" %>
     <% end %>
   </div>
-  </div>
+</div>
 
-<div  id="awards" class="transitions-enabled">
+<div class="row">
   <% @awards.each do |award| %>
-    <div class="box panel panel-default">
-	      <%=image_tag(award.profile_img, size: "250x250")%>
-		<div class = "panel-body">
-			<h4><%= award.name %></h4>
-		</div>
-	</div>
+    <div class="col-sm-6 col-md-4">
+    <div class="box">
+        <%=image_tag(award.profile_img, size: "200x200")%>
+      <h4><%= award.name %></h4>
+      </div>
+  </div>
   <% end %>
+</div>
 </div>

@@ -1,3 +1,63 @@
 // Place all the styles related to the awards controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#home_page {
+  width: 100%;
+  margin: 10px auto;
+  background-color: #fff;
+  .main-content {
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
+  .sort_search {
+  margin: 30px;
+  position:relative;
+  height: 80px;
+  #sort_field {
+    font-size: 20px;
+    padding:10px;
+    width: 45%;
+    float: left;
+    span {
+    font-size: 12px;
+    .btn-xs {
+    width: 100px;
+    text-align: left;
+    font-size: 10px;
+    }
+    }
+  }
+  #search_field {
+  	padding:10px;
+    width: 40%;
+    float: right;
+    text-align: right;
+  }
+ }
+  #awards {
+  max-width: 100%;
+  margin: 0 auto;
+  position:relative;
+  display: block;
+  .row {
+  margin: 10px auto 30px;
+  text-align: center;
+  .box{
+    padding:5px;
+    margin: 0 auto 20px;
+    width: 200px;
+  img {
+      max-width: 100%;
+      height: 150px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 1.5);
+      margin:5px;
+      }
+  h4 {
+  text-align: left;
+    }
+  }
+  }
+}
+}
+}
