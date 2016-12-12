@@ -9,17 +9,24 @@
   </head>
 
   <body>
-  <div class = "clearfix:after">
-    <% if user_signed_in? -%>
-      <div class="nav navbar-nav pull-right">
-        <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
-      </div>
-    <% else %>
-      <div class="nav navbar-nav pull-right">
-        <%= link_to 'Sign in', new_user_session_path %>
-      </div>
-    <% end %>
+  <div class="navbar">
+    <ul class="navbar_items_container_left">
+      <li class="navbar_items"><%= link_to 'Awards', awards_path, class: "awards_link" %></li>
+      <li class="navbar_items"><a href="#" class="artistes_link">Artistes</a></li>
+    </ul>
+    <div class="navbar_items_logo">
+      <img alt="ollida" src="http://imgh.us/logo@3x.png" class="logo">
     </div>
+    <ul class="navbar_items_container_right">
+      <li class="navbar_items"><a href="#" class="cart_link">Cart</a></li>
+      <% if user_signed_in? %>
+        <li class="navbar_items"><%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: "session_link" %></li>
+      <% else %>
+        <li class="navbar_items"><%= link_to 'Sign in', new_user_session_path, class: "session_link" %></li>
+      <% end %>  
+    </ul>
+    
+  </div>
 
   <div class="container"> <!--notice for Sign-in/out -->
       <% flash.each do |name, msg| %>
