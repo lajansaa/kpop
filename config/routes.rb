@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   
   root to: "awards#index"
   
-  get 'api/v1/get_nominations' => 'nominations#get_nominations'
+  get 'api/v1/update_mappings' => 'nominations#update_mappings'
   get 'api/v1/update_nominations' => 'nominations#update_nominations'
+  get 'api/v1/get_nominations' => 'nominations#get_nominations'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :awards

@@ -25,5 +25,7 @@
 
 # Ignore all csv output files from fetcher
 /lib/imports/digital_sales.csv
-/lib/imports/mappings.csv
+/lib/imports/popularity_votes.csv
+/lib/imports/youtube_views.csv
+/lib/imports/nominations.csv
 
