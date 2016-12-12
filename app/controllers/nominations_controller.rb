@@ -230,6 +230,7 @@ class NominationsController < ApplicationController
     # on each update
     Mapping.delete_all
     Mapping.copy_from './lib/imports/mappings.csv'
+    render text: 'Update Complete', content_type: 'text/plain'
   end
 
   def update_popularity_votes
@@ -329,7 +330,7 @@ class NominationsController < ApplicationController
       )
     }
     
-    render text: 'Update Complete', content_type: 'text/plain'       
+    render text: 'Update Complete', content_type: 'text/plain'
   end
 
   def get_nominations
