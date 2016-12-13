@@ -15,3 +15,25 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  var dataBars = document.querySelectorAll('[data-percent]');
+
+  // dataBars.onchange(setBars(dataBars));
+
+  setBars(dataBars);
+
+}, false);
+
+function setBars(dataBars) {
+  for (var i = 0; i < dataBars.length; i++) {
+    var bar = dataBars[i];
+    var percent = bar.dataset.percent;
+    bar.innerHTML = percent;
+    if (bar.classList.contains('horiz-bar')) {
+      bar.style.width = percent;
+    }
+  }
+}

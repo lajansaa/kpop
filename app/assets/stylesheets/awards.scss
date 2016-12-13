@@ -69,3 +69,64 @@
 }
 }
 }
+
+.main-box {
+  width: 80%;
+  margin: 0 auto;
+  box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
+  background-color: #fff;
+  padding: 40px;
+}
+
+.award-profile {
+  text-align: center;
+}
+
+.flex-bar {
+  margin: 1em;
+  background: #ccc;
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  border-radius: 50px;
+  overflow: hidden;
+  height: 1.5em;
+  color: #ddd;
+  width: 70%;
+  &--item {
+    height: 0%;
+    display: block;
+    align-self: stretch;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all .2s ease-in-out;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, .15);
+  }
+}
+
+.ranking_container {
+  padding: 50px;
+  margin-top: 100px
+}
+
+.ranking_item {
+  margin-bottom: 20px;
+}
+
+.ranking {
+  text-align: center;
+}
+
+.ranking-no {
+  vertical-align: middle;
+}
+
+.artiste_name {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+
