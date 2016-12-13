@@ -6,6 +6,12 @@
   width: 100%;
   margin: 10px auto 0px;
   background-color: #d8d8d8;
+  @media(max-width: 767px) {
+  img {
+  height: 162px;
+  width: 100%
+    }
+  }
   .main-content {
   width: 80%;
   margin: 0 auto;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
   <head>
     <title>Ollida</title>
@@ -8,7 +8,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class=<%= css_class_for_controller_action(controller) %>>
   <div class="navbar">
     <ul class="navbar_items_container_left">
       <li class="navbar_items"><%= link_to 'Awards', awards_path, class: "awards_link" %></li>
@@ -25,16 +25,12 @@
         <li class="navbar_items"><%= link_to 'Sign in', new_user_session_path, class: "session_link" %></li>
       <% end %>  
     </ul>
-    
   </div>
-
-  <div class="container"> <!--notice for Sign-in/out -->
+ <!--notice for Sign-in/out -->
       <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, class: "alert alert-info" %>
       <% end %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-  </div>
+
   <div class="content">
     <%= yield %>
   </div>

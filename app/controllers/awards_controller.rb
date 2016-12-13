@@ -10,3 +10,4 @@ class AwardsController < ApplicationController
     end
   end
 end
+	

@@ -43,7 +43,18 @@ h1, h2, h3, h4, h5, h6 {
   width: 100vw;
   height: 50px;
   background: #1c1c1c;
+  top: 0;
 
+}
+
+@media(max-width: 767px) {
+	.navbar {
+    text-align: center;
+    height: 70px;
+    .navbar_items_container_left .navbar_items_container_left {
+    float: none;
+    }
+  }  
 }
 
 .navbar:after {
@@ -149,6 +160,10 @@ h1, h2, h3, h4, h5, h6 {
     max-height: 100%;
     margin-top: -25px;
 }
+.content {
+	width: 100%;
+	margin: 0 auto;
+}
 
 #sign_up_form{
 	margin: 0 auto;
@@ -240,4 +255,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #7a7a7a;
   font-size:12px;
   }
+}
+
+.devise_sessions {
+	#footer {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	}
 }
