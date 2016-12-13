@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161212035526) do
+ActiveRecord::Schema.define(version: 20161213163550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "artistes", force: :cascade do |t|
+    t.string   "name_eng"
+    t.text     "profile_img"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "awards", force: :cascade do |t|
     t.string   "name"
@@ -22,6 +29,8 @@ ActiveRecord::Schema.define(version: 20161212035526) do
     t.hstore   "judging_criteria", default: {}, null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.text     "masthead_img"
+    t.text     "description"
   end
 
   create_table "digital_sales", force: :cascade do |t|
@@ -63,8 +72,11 @@ ActiveRecord::Schema.define(version: 20161212035526) do
     t.float    "normalized_yv"
     t.float    "normalized_pv"
     t.float    "aggregate_score"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "award_id"
+    t.float    "normalized_remainder"
+    t.index ["award_id"], name: "index_nominations_on_award_id", using: :btree
   end
 
   create_table "popularity_votes", force: :cascade do |t|
@@ -89,6 +101,9 @@ ActiveRecord::Schema.define(version: 20161212035526) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "name"
