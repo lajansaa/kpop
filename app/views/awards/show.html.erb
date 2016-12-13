@@ -30,7 +30,7 @@
 	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_ds %> 0%; background-color: #ffe66b;'></div>
 	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_yv %> 0%; background-color: #6ccff6;'></div>
 	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_pv %> 0%; background-color: #e34a6f;'></div>
-	  			<div class="flex-bar--item horiz-bar" style='flex: <%= 100 - n.normalized_ds - n.normalized_yv - n.normalized_pv %> 0%; background-color: #B8C5D6;'></div>
+	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_remainder %> 0%; background-color: #B8C5D6;'></div>
 			</div>
   			<p class="song_name"><%= n.song %></p>
   			<p class="aggregate_score"><%= n.aggregate_score %></p>

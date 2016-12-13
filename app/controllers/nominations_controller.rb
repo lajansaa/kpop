@@ -297,7 +297,7 @@ class NominationsController < ApplicationController
     #for each nominee, calculate score
     nominees_array = PopularityVote.all.where("vote_start = '#{max_vote_start}'")
     CSV.open('./lib/imports/nominations.csv', 'wb') do |csv|
-      headers = [ "award_index", "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "youtube_views", "popularity_votes", "normalized_ds", "normalized_yv", "normalized_pv", "normalized_remainder", "aggregate_score", "created_at", "updated_at"]
+      headers = [ "award_id", "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "youtube_views", "popularity_votes", "normalized_ds", "normalized_yv", "normalized_pv", "normalized_remainder", "aggregate_score", "created_at", "updated_at"]
       csv << headers
       nominees_array.each do |n|
         vote_start = n.vote_start
