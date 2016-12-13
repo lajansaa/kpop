@@ -266,24 +266,24 @@ class NominationsController < ApplicationController
   def update_nominations
     log = Logger.new(STDOUT)
 
-    log.info("Importing latest mappings...")
-    update_mappings
+    # log.info("Importing latest mappings...")
+    # update_mappings
 
-    log.info("Updating popularity votes...")
-    update_popularity_votes
+    # log.info("Updating popularity votes...")
+    # update_popularity_votes
 
-    log.info("Updating youtube views...")
-    update_youtube_views
+    # log.info("Updating youtube views...")
+    # update_youtube_views
 
-    log.info("Updating digital sales...")
-    update_digital_sales
+    # log.info("Updating digital sales...")
+    # update_digital_sales
 
     log.info("Calculating aggregate score for each nomination...")
     
     #get judging criteria percentages
-    ds_percent = Award.where("name = 'MCOUNTDOWN'").first.judging_criteria["digital_sales"].to_f
-    yv_percent = Award.where("name = 'MCOUNTDOWN'").first.judging_criteria["youtube_views"].to_f
-    pv_percent = Award.where("name = 'MCOUNTDOWN'").first.judging_criteria["popularity_votes"].to_f
+    ds_percent = Award.find_by("name = 'MCOUNTDOWN'").judging_criteria["digital_sales"].to_f
+    yv_percent = Award.find_by("name = 'MCOUNTDOWN'").judging_criteria["youtube_views"].to_f
+    pv_percent = Award.find_by("name = 'MCOUNTDOWN'").judging_criteria["popularity_votes"].to_f
     
     #get the max vote start date of voting cycle
     max_vote_start = PopularityVote.maximum("vote_start")
@@ -293,25 +293,26 @@ class NominationsController < ApplicationController
     sc_total = DigitalSale.where("vote_start='#{max_vote_start}'").sum("streaming_count")
     yv_total = YoutubeView.where("vote_start='#{max_vote_start}'").sum("views")
     pv_total = PopularityVote.where("vote_start='#{max_vote_start}'").sum("votes")
-    
+
     #for each nominee, calculate score
     nominees_array = PopularityVote.all.where("vote_start = '#{max_vote_start}'")
     CSV.open('./lib/imports/nominations.csv', 'wb') do |csv|
-      headers = [ "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "youtube_views", "popularity_votes", "normalized_ds", "normalized_yv", "normalized_pv", "aggregate_score", "created_at", "updated_at"]
+      headers = [ "award_index", "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "youtube_views", "popularity_votes", "normalized_ds", "normalized_yv", "normalized_pv", "normalized_remainder", "aggregate_score", "created_at", "updated_at"]
       csv << headers
       nominees_array.each do |n|
         vote_start = n.vote_start
         artiste = n.artiste
         song = n.song
-        download_count = DigitalSale.where("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).first.download_count
-        streaming_count = DigitalSale.where("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).first.streaming_count
-        views = YoutubeView.where("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).first.views
+        download_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).download_count
+        streaming_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).streaming_count
+        views = YoutubeView.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).views
         normalized_pv = (n.votes / pv_total * pv_percent * 100.0).round(2)
         normalized_yv = (views / yv_total * yv_percent * 100.0).round(2)
         normalized_ds = (((download_count / dc_total) +
                         (streaming_count / sc_total)) * ds_percent * 100.0).round(2)
         aggregate_score = (normalized_pv + normalized_yv + normalized_ds).round(2)
-        csv << [ n.award, vote_start, n.vote_end, artiste, song, download_count, streaming_count, views, n.votes, normalized_pv, normalized_yv, normalized_ds, aggregate_score, Time.now, Time.now ]
+        normalized_remainder = 100.0 - aggregate_score
+        csv << [ 1, n.award, vote_start, n.vote_end, artiste, song, download_count, streaming_count, views, n.votes, normalized_ds, normalized_yv, normalized_pv, normalized_remainder, aggregate_score, Time.now, Time.now ]
       end
     end
 
@@ -324,6 +325,7 @@ class NominationsController < ApplicationController
         normalized_ds: csv_row["normalized_ds"],
         normalized_yv: csv_row["normalized_yv"],
         normalized_pv: csv_row["normalized_pv"],
+        normalized_remainder: csv_row["normalized_remainder"],
         aggregate_score: csv_row["aggregate_score"],
         updated_at: csv_row["updated_at"]
       )
