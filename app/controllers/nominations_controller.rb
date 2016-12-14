@@ -293,26 +293,32 @@ class NominationsController < ApplicationController
     sc_total = DigitalSale.where("vote_start='#{max_vote_start}'").sum("streaming_count")
     yv_total = YoutubeView.where("vote_start='#{max_vote_start}'").sum("views")
     pv_total = PopularityVote.where("vote_start='#{max_vote_start}'").sum("votes")
-
+    
+    final_result = Array.new
     #for each nominee, calculate score
     nominees_array = PopularityVote.all.where("vote_start = '#{max_vote_start}'")
+    nominees_array.each do |n|
+      vote_start = n.vote_start
+      artiste = n.artiste
+      song = n.song
+      download_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).download_count
+      streaming_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).streaming_count
+      views = YoutubeView.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).views
+      normalized_pv = (n.votes / pv_total * pv_percent * 100.0).round(2)
+      normalized_yv = (views / yv_total * yv_percent * 100.0).round(2)
+      normalized_ds = (((download_count / dc_total) +
+                      (streaming_count / sc_total)) * ds_percent * 100.0).round(2)
+      aggregate_score = (normalized_pv + normalized_yv + normalized_ds).round(2)
+      normalized_remainder = 100.0 - aggregate_score
+      final_result.push([ 1, n.award, vote_start, n.vote_end, artiste, song, download_count, streaming_count, views, n.votes, normalized_ds, normalized_yv, normalized_pv, normalized_remainder, aggregate_score, Time.now, Time.now ])
+    end
+    sorting = final_result.sort_by{|record| record[14]}.reverse
     CSV.open('./lib/imports/nominations.csv', 'wb') do |csv|
-      headers = [ "award_id", "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "youtube_views", "popularity_votes", "normalized_ds", "normalized_yv", "normalized_pv", "normalized_remainder", "aggregate_score", "created_at", "updated_at"]
+      headers = [ "award_id", "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "youtube_views", "popularity_votes", "normalized_ds", "normalized_yv", "normalized_pv", "normalized_remainder", "aggregate_score", "created_at", "updated_at", "ranking" ]
       csv << headers
-      nominees_array.each do |n|
-        vote_start = n.vote_start
-        artiste = n.artiste
-        song = n.song
-        download_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).download_count
-        streaming_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).streaming_count
-        views = YoutubeView.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).views
-        normalized_pv = (n.votes / pv_total * pv_percent * 100.0).round(2)
-        normalized_yv = (views / yv_total * yv_percent * 100.0).round(2)
-        normalized_ds = (((download_count / dc_total) +
-                        (streaming_count / sc_total)) * ds_percent * 100.0).round(2)
-        aggregate_score = (normalized_pv + normalized_yv + normalized_ds).round(2)
-        normalized_remainder = 100.0 - aggregate_score
-        csv << [ 1, n.award, vote_start, n.vote_end, artiste, song, download_count, streaming_count, views, n.votes, normalized_ds, normalized_yv, normalized_pv, normalized_remainder, aggregate_score, Time.now, Time.now ]
+      sorting.each do |record|
+        ranking = sorting.find_index(record) + 1
+        csv << record.append(ranking)
       end
     end
 
@@ -327,6 +333,7 @@ class NominationsController < ApplicationController
         normalized_pv: csv_row["normalized_pv"],
         normalized_remainder: csv_row["normalized_remainder"],
         aggregate_score: csv_row["aggregate_score"],
+        ranking: csv_row["ranking"],
         updated_at: csv_row["updated_at"]
       )
     }
