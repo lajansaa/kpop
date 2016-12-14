@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213163550) do
+ActiveRecord::Schema.define(version: 20161214081211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20161213163550) do
     t.datetime "updated_at",           null: false
     t.integer  "award_id"
     t.float    "normalized_remainder"
+    t.integer  "ranking"
     t.index ["award_id"], name: "index_nominations_on_award_id", using: :btree
   end
 
