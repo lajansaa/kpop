@@ -88,7 +88,7 @@
   display: flex;
   flex-wrap: nowrap;
   white-space: nowrap;
-  border-radius: 50px;
+  border-radius: 7px;
   overflow: hidden;
   height: 1.5em;
   color: #ddd;
@@ -121,7 +121,9 @@
 }
 
 .ranking-no {
-  vertical-align: middle;
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .artiste_name {
@@ -129,4 +131,16 @@
   font-size: 1.5em;
 }
 
+.dropdown-menu {
+  font-size: 0.8em !important;
+  padding: 10px !important;
+}
+
+.btn {
+  width: 160px;
+}
+
+.voting_period {
+  margin: 10px 0;
+}
 
