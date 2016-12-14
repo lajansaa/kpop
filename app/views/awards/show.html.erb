@@ -11,15 +11,46 @@
     </div>
   </div>
 
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Sort by
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><%= link_to 'Artiste', award_path(@award.id, :order => "artiste") %></li>
+    <li><%= link_to 'Ranking', award_path(@award.id, :order => "ranking") %></li>
+  </ul>
+</div>
+
+<div id="search_field">
+    <%= form_for award_path(@award.id), :method => :get do %>
+    <%= text_field_tag "keyword" %>
+    <%= submit_tag "Search" %>
+    <% end %>
+</div>
+
+
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <%= @vote_start.to_time.strftime("%d %b %y") + ' ~ ' + @vote_end.to_time.strftime("%d %b %y")  %>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <% @voting_periods.each do |vp| %>
+    	<li class="voting_period"><%= link_to vp[0].strftime("%d %b %y") + ' ~ ' + vp[1].strftime("%d %b %y"), award_path(:vote_start => vp[0], :vote_end => vp[1])  %></li>
+    <% end %>
+  </ul>
+</div>
+
 <div class="ranking_container">
   	<% @nominations.each do |n| %>
   	<div class="row ranking_item">
     	<div class="col-sm-1 ranking">
-    		<%= (@nominations.find_index(n) + 1).ordinalize %>
+    		<p class="ranking-no"><%= n.ranking.ordinalize %></p>
     	</div>
     	<div class="col-sm-4">
 			<% if Artiste.find_by("name_eng='#{n.artiste}'") %>
-				<%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, width: "90%") %>
+				<%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, size: "250x200") %>
 			<% else %>
 			    <p><%= n.artiste %></p>
 			<% end %>
