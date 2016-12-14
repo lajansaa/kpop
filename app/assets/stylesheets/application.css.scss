@@ -137,20 +137,38 @@ h1, h2, h3, h4, h5, h6 {
 	color: #9b9b9b;
 }
 
-.awards_link:hover {
-	color: #ffe66b;
+.awards_link {
+	&:hover {
+	 color: #ffe66b;
+		}
+	&:active {
+	color: #ffff00;
+  }
 }
-
-.artistes_link:hover {
-	color: #6ccff6;	
+.artistes_link {
+    &:hover {
+	 color: #6ccff6;	
+		}
+    &:active {
+	color: #80E3FF;
+  }
 }
-
-.cart_link:hover {
+.cart_link {
+  &:hover {
 	color: #e34a6f;	
+	}
+  &:active {
+  color: #f94f31;
+  }
 }
 
-.session_link:hover {
-	color: #fafaff;	
+.session_link {
+  &:hover {
+	color: #fefcff;	
+}
+  &:active {
+    color: #ffffff;
+  }
 }
 
 .masthead {
@@ -165,7 +183,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #sign_up_form{
-	margin: 0 auto;
+	margin: 60px auto;
+	position:relative;
+	top: 30px;
 	#title_sign_up {
 	  margin: 30px auto;
 	  text-align:center;
@@ -198,8 +218,10 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 #edit_form {
-	margin: 0 auto;
+	margin: 60px auto;
 	padding: 0px;
+	position:relative;
+	top: 30px;
 	#title_edit_form {
 	  margin: 20px auto;
 	  text-align:center;
@@ -220,8 +242,10 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 #sign_in_form {
-	margin: 0 auto;
+	margin: 60px auto;
 	padding: 0px;
+	position:relative;
+	top: 30px;
 	#title_login_form {
 	  margin: 20px auto;
 	  text-align:center;
