@@ -6,15 +6,15 @@
   width: 100%;
   margin: 10px auto 0px;
   background-color: #d8d8d8;
-  @media(max-width: 767px) {
+  @media(max-width: 768px) {
   img {
-  height: 162px;
-  width: 100%
+  height: 302px;
+  width: 100%;
     }
   }
   .main-content {
   width: 80%;
-  margin: 50px auto 100px;
+  margin: 0 auto;
   box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
   background-color: #fff;
   .sort_search {
@@ -22,11 +22,17 @@
   padding-top: 30px;
   position:relative;
   height: 80px;
+  @media(max-width: 780px){
+  height: 120px;
+  }
   #sort_field {
     font-size: 20px;
     padding:10px;
     width: 45%;
     float: left;
+  @media(max-width: 780px){
+  width: 100%;
+  }
     span {
     font-size: 12px;
     .btn-xs {
@@ -37,10 +43,18 @@
     }
   }
   #search_field {
-  	padding:10px;
-    width: 40%;
+    padding:10px;
+    width: 50%;
     float: right;
     text-align: right;
+    @media(max-width: 780px){
+    float:none;
+    text-align: left;
+    width: 100%;
+    padding: 0px;
+    margin-left: 10px;
+    }
+
   }
  }
   #awards {
@@ -72,7 +86,7 @@
 
 .main-box {
   width: 80%;
-  margin: 50px auto 100px;
+  margin: 0 auto;
   box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
   background-color: #fff;
   padding: 40px;
@@ -88,7 +102,7 @@
   display: flex;
   flex-wrap: nowrap;
   white-space: nowrap;
-  border-radius: 7px;
+  border-radius: 50px;
   overflow: hidden;
   height: 1.5em;
   color: #ddd;
@@ -121,9 +135,7 @@
 }
 
 .ranking-no {
-    line-height: 1.5;
-    display: inline-block;
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .artiste_name {
@@ -131,18 +143,6 @@
   font-size: 1.5em;
 }
 
-.dropdown-menu {
-  font-size: 0.8em !important;
-  padding: 10px !important;
-}
-
-.btn {
-  width: 160px;
-}
-
-.voting_period {
-  margin: 10px 0;
-}
 
 .nomination_link,
 .nomination_link:hover {
