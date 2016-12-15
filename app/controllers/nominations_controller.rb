@@ -129,9 +129,10 @@ class NominationsController < ApplicationController
             else
               #get view count using video id
               video_id = search_response["items"].first["id"]["videoId"]
+              thumbnail = search_response["items"].first["snippet"]["thumbnails"]["medium"]["url"]
 
-              #insert youtube video id into table so can skip the step of searching
-              yv = YoutubeVideoId.new(:artiste => artiste, :song => song, :video_id => video_id, :link => "https://www.youtube.com/watch?v=#{video_id}")
+              #insert youtube video id and thumbnail img into table so can skip the step of searching
+              yv = YoutubeVideoId.new(:artiste => artiste, :song => song, :video_id => video_id, :watch_link => "https://www.youtube.com/watch?v=#{video_id}", :thumbnail_img => "thumbnail")
               yv.save
 
               stats_url = "https://www.googleapis.com/youtube/v3/videos?id=#{video_id}&key=#{api_key}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics"
