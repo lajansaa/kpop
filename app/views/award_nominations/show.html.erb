@@ -1,0 +1,74 @@
+<%= image_tag(@award.masthead_img, class: "masthead") %>
+
+<div class="main-box">
+
+<div class="ranking_container">
+  	<div class="row ranking_item">
+    	<div class="col-sm-1 ranking">
+    		<p class="ranking-no"><%= @nomination.ranking.ordinalize %></p>
+    	</div>
+    	<div class="col-sm-4">
+			<% if Artiste.find_by("name_eng='#{@nomination.artiste}'") %>
+				<%= image_tag(Artiste.find_by("name_eng='#{@nomination.artiste}'").profile_img, width: "80%") %>
+			<% else %>
+			    <p><%= @nomination.artiste %></p>
+			<% end %>
+   		</div>
+  		<div class="col-sm-7">
+  			<p class="artiste_name"><%= @nomination.artiste %></p>
+  			<div class="flex-bar">
+	  			<div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_ds %> 0%; background-color: #ffe66b;'></div>
+	  			<div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_yv %> 0%; background-color: #6ccff6;'></div>
+	  			<div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_pv %> 0%; background-color: #e34a6f;'></div>
+	  			<div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_remainder %> 0%; background-color: #B8C5D6;'></div>
+			</div>
+  			<p class="song_name"><%= @nomination.song %></p>
+  			<p class="aggregate_score"><%= @nomination.aggregate_score %></p>
+  	 	</div>
+  	 </div>
+
+  	 <div class="metrics_container">
+  	 	<div class="metrics">
+  	 		<div class="metrics_header">
+            	<p class="ds">Digital Sales</p>
+  	 		</div>
+  	 		<div class="metrics_body">
+            <%= link_to image_tag("http://imgh.us/melon_logo.jpg", width: "50%"), "http://mwave.interest.me/mcountdown/vote/preVote", :target => "_blank"%>
+            <p class="stats"><%= @nomination.download_count %> downloads</p>
+            <p class="stats"><%= @nomination.streaming_count %> streams</p>
+            </div>
+  	 	</div>
+  	 	<div class="metrics">
+  	 		<div class="metrics_header">
+            	<p class="as">Album Sales</p>
+  	 		</div>
+  	 		<div class="metrics_body">
+  	 		<%= link_to image_tag(@nomination_as.album_img), "http://mwave.interest.me/mcountdown/vote/preVote", :target => "_blank" %>
+  	 			<p class="stats">Order now!</p>
+  	 			</div>
+  	 	</div>
+  	 	<div class="metrics">
+  	 		<div class="metrics_header">
+            	<p class="yv">Youtube Views</p>
+  	 		</div>
+  	 		<div class="metrics_body">
+  	 		<% if @nomination.youtube_views == 0 %>
+  	 			<p>No official YouTube video!</p>
+  	 		<% else %>
+  	 			<%= link_to image_tag(@nomination_yv.thumbnail_img), @nomination_yv.watch_link, :target => "_blank" %>
+  	 			<p class="stats"><%= @nomination.youtube_views %> views</p>
+  	 		<% end %>
+  	 		</div>
+  	 	</div>
+  	 	<div class="metrics">
+  	 		<div class="metrics_header">
+            	<p class="pv">Popularity Votes</p>
+  	 		</div>
+  	 		<div class="metrics_body">
+  	 		<%= link_to image_tag("http://imgh.us/Mnet-vector-logo.jpg", width: "50%"), "http://mwave.interest.me/mcountdown/vote/preVote", :target => "_blank" %>
+  	 			<p class="stats"><%= @nomination.popularity_votes %> votes</p>
+  	 	</div>
+  	 </div>
+
+
+</div>
