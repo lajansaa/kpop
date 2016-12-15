@@ -14,7 +14,7 @@
   }
   .main-content {
   width: 80%;
-  margin: 0 auto;
+  margin: 50px auto 100px;
   box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
   background-color: #fff;
   .sort_search {
@@ -86,7 +86,7 @@
 
 .main-box {
   width: 80%;
-  margin: 0 auto;
+  margin: 50px auto 100px;
   box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
   background-color: #fff;
   padding: 40px;
@@ -102,7 +102,7 @@
   display: flex;
   flex-wrap: nowrap;
   white-space: nowrap;
-  border-radius: 50px;
+  border-radius: 7px;
   overflow: hidden;
   height: 1.5em;
   color: #ddd;
@@ -135,7 +135,9 @@
 }
 
 .ranking-no {
-  vertical-align: middle;
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .artiste_name {
@@ -143,4 +145,16 @@
   font-size: 1.5em;
 }
 
+.dropdown-menu {
+  font-size: 0.8em !important;
+  padding: 10px !important;
+}
+
+.btn {
+  width: 160px;
+}
+
+.voting_period {
+  margin: 10px 0;
+}
 
