@@ -37,13 +37,14 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
     <% @voting_periods.each do |vp| %>
-    	<li class="voting_period"><%= link_to vp[0].strftime("%d %b %y") + ' ~ ' + vp[1].strftime("%d %b %y"), award_path(:vote_start => vp[0], :vote_end => vp[1])  %></li>
+    	<li class="voting_period"><%= link_to vp[0].strftime("%d %b %y") + ' ~ ' + vp[1].strftime("%d %b %y"), award_path(:vote_start => vp[0], :vote_end => vp[1], )  %></li>
     <% end %>
   </ul>
 </div>
 
 <div class="ranking_container">
   	<% @nominations.each do |n| %>
+  	<%= link_to award_nomination_path(n.award_id, n.id), class: "nomination_link" do %>
   	<div class="row ranking_item">
     	<div class="col-sm-1 ranking">
     		<p class="ranking-no"><%= n.ranking.ordinalize %></p>
@@ -55,7 +56,7 @@
 			    <p><%= n.artiste %></p>
 			<% end %>
    		</div>
-  		<div class="col-sm-7">
+  		<div class="col-sm-6">
   			<p class="artiste_name"><%= n.artiste %></p>
   			<div class="flex-bar">
 	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_ds %> 0%; background-color: #ffe66b;'></div>
@@ -66,7 +67,11 @@
   			<p class="song_name"><%= n.song %></p>
   			<p class="aggregate_score"><%= n.aggregate_score %></p>
   	 	</div>
+  	 	<div class="col-sm-1">
+  	 		<img src="http://imgh.us/arrow_7.png" width="40%" />
+  	    </div>
   	 </div>
+  	<% end %>
   <% end %>
   
 </div>
