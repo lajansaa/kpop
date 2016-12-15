@@ -6,10 +6,10 @@
   width: 100%;
   margin: 10px auto 0px;
   background-color: #d8d8d8;
-  @media(max-width: 767px) {
+  @media(max-width: 768px) {
   img {
-  height: 162px;
-  width: 100%
+  height: 302px;
+  width: 100%;
     }
   }
   .main-content {
@@ -22,11 +22,17 @@
   padding-top: 30px;
   position:relative;
   height: 80px;
+  @media(max-width: 780px){
+  height: 120px;
+  }
   #sort_field {
     font-size: 20px;
     padding:10px;
     width: 45%;
     float: left;
+  @media(max-width: 780px){
+  width: 100%;
+  }
     span {
     font-size: 12px;
     .btn-xs {
@@ -37,10 +43,18 @@
     }
   }
   #search_field {
-  	padding:10px;
-    width: 40%;
+    padding:10px;
+    width: 50%;
     float: right;
     text-align: right;
+    @media(max-width: 780px){
+    float:none;
+    text-align: left;
+    width: 100%;
+    padding: 0px;
+    margin-left: 10px;
+    }
+
   }
  }
   #awards {
