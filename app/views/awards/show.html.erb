@@ -51,7 +51,7 @@
     	</div>
     	<div class="col-sm-4">
 			<% if Artiste.find_by("name_eng='#{n.artiste}'") %>
-				<%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, size: "250x200") %>
+				<%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, width: "80%") %>
 			<% else %>
 			    <p><%= n.artiste %></p>
 			<% end %>
@@ -68,7 +68,7 @@
   			<p class="aggregate_score"><%= n.aggregate_score %></p>
   	 	</div>
   	 	<div class="col-sm-1">
-  	 		<img src="http://imgh.us/arrow_7.png" width="40%" />
+  	 		<img src="http://imgh.us/arrow_7.png" width="15px" />
   	    </div>
   	 </div>
   	<% end %>
