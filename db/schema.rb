@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214081211) do
+ActiveRecord::Schema.define(version: 20161215145148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "albums", force: :cascade do |t|
+    t.string   "name"
+    t.string   "artiste"
+    t.text     "album_img"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "artistes", force: :cascade do |t|
     t.string   "name_eng"
@@ -77,6 +85,7 @@ ActiveRecord::Schema.define(version: 20161214081211) do
     t.integer  "award_id"
     t.float    "normalized_remainder"
     t.integer  "ranking"
+    t.string   "album"
     t.index ["award_id"], name: "index_nominations_on_award_id", using: :btree
   end
 
@@ -89,6 +98,7 @@ ActiveRecord::Schema.define(version: 20161214081211) do
     t.float    "votes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "album"
   end
 
   create_table "users", force: :cascade do |t|
@@ -126,9 +136,10 @@ ActiveRecord::Schema.define(version: 20161214081211) do
     t.string   "artiste"
     t.string   "song"
     t.string   "video_id"
-    t.text     "link"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "watch_link"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.text     "thumbnail_img"
   end
 
   create_table "youtube_views", force: :cascade do |t|
