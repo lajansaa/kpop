@@ -81,6 +81,10 @@ class ArtistesController < ApplicationController
     render text: 'Update Complete'
   end
 
+  def get_artiste_profile
+    render json: Artiste.all
+  end
+
   private
 
   def no_profile_artistes
