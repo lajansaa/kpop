@@ -97,7 +97,7 @@
 }
 
 .flex-bar {
-  margin: 1em;
+  margin: 0.5em 0 1em;
   background: #ccc;
   display: flex;
   flex-wrap: nowrap;
@@ -138,11 +138,6 @@
   vertical-align: middle;
 }
 
-.artiste_name {
-  font-weight: bold;
-  font-size: 1.5em;
-}
-
 
 .nomination_link,
 .nomination_link:hover {
@@ -150,3 +145,30 @@
   color: #1c1c1c;
 }
 
+.artiste_name {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.artiste_kor {
+  font-size: 1em;
+}
+
+.song_name {
+  font-size: 1.2em;
+}
+
+.song_kor {
+  font-size: 1em;
+}
+
+.album {
+  font-size: 1em;
+  font-style: italic;
+}
+
+.aggregate_score {
+  font-size: 1.5em;
+  font-weight: bold;
+}

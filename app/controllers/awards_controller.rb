@@ -5,7 +5,7 @@ class AwardsController < ApplicationController
   		sort_by = (params[:order] == 'name') ? 'name' : 'created_at'
   		@awards = Award.order(sort_by)
     elsif params[:keyword]
-      	@awards = Award.where( [ "lower(name) like ?", "%#{params[:keyword]}%" ] )
+      	@awards = Award.where( [ "LOWER(name) LIKE ?", "%#{params[:keyword]}%" ] )
     else
       	@awards = Award.all
     end
@@ -17,15 +17,15 @@ class AwardsController < ApplicationController
     @vote_end = params[:vote_end] ||= Nomination.maximum("vote_end")
     sort_by = params[:order] ||= 'ranking'
     #Award.find(params[:id]).nominations.for_week_of(start_date, end_date)    
-
     @award = Award.find(params[:id])
 
     if params[:keyword]
-        @nominations = @award.nominations.where( [ "lower(artiste) like ?", "%#{params[:keyword]}%" ] )
+        @nominations = @award.nomination
+                             .where( [ "LOWER(artiste) LIKE ? OR LOWER(song) LIKE ? ", "%#{params[:keyword]}%", "%#{params[:keyword]}%" ] )
     else
         @nominations = @award.nominations
-                  .where(vote_start: @vote_start, vote_end: @vote_end)
-                  .order(sort_by)
+                             .where(vote_start: @vote_start, vote_end: @vote_end)
+                             .order(sort_by)
     end
   end
 
