@@ -1,5 +1,4 @@
 <%= image_tag(@award.masthead_img, class: "masthead") %>
-
 <div class="main-box">
   <div class="row">
     <div class="col-sm-4 award-profile">
@@ -10,7 +9,6 @@
       <p><%= @award.description %></p>
     </div>
   </div>
-
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Sort by
@@ -21,15 +19,12 @@
       <li><%= link_to 'Ranking', award_path(@award.id, :order => "ranking") %></li>
     </ul>
   </div>
-
   <div id="search_field">
-      <%= form_for award_path(@award.id), :method => :get do %>
+    <%= form_for award_path(@award.id), :method => :get do %>
       <%= text_field_tag "keyword" %>
       <%= submit_tag "Search" %>
-      <% end %>
+    <% end %>
   </div>
-
-
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <%= @vote_start.to_time.strftime("%d %b %y") + ' ~ ' + @vote_end.to_time.strftime("%d %b %y")  %>
@@ -37,45 +32,43 @@
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
       <% @voting_periods.each do |vp| %>
-      	<li class="voting_period"><%= link_to vp[0].strftime("%d %b %y") + ' ~ ' + vp[1].strftime("%d %b %y"), award_path(:vote_start => vp[0], :vote_end => vp[1], )  %></li>
+        <li class="voting_period"><%= link_to vp[0].strftime("%d %b %y") + ' ~ ' + vp[1].strftime("%d %b %y"), award_path(:vote_start => vp[0], :vote_end => vp[1], )  %></li>
       <% end %>
     </ul>
   </div>
-
   <div class="ranking_container">
     <% @nominations.each do |n| %>
-    	<%= link_to award_nomination_path(n.award_id, n.id), class: "nomination_link" do %>
-    	<div class="row ranking_item">
-      	<div class="col-sm-1 ranking">
-      		<p class="ranking-no"><%= n.ranking.ordinalize %></p>
-      	</div>
-      	<div class="col-sm-4">
-  			<% if Artiste.find_by("name_eng='#{n.artiste}'") %>
-  				<%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, width: "80%") %>
-  			<% else %>
-  			    <p><%= n.artiste %></p>
-  			<% end %>
-     		</div>
-    		<div class="col-sm-5">
-    			<p class="artiste_name"><%= n.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor.empty? %></span></p>
-    			<div class="flex-bar">
-  	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_ds %> 0%; background-color: #ffe66b;'></div>
-  	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_yv %> 0%; background-color: #6ccff6;'></div>
-  	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_pv %> 0%; background-color: #e34a6f;'></div>
-  	  			<div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_remainder %> 0%; background-color: #B8C5D6;'></div>
-  			</div>
-          <p class="song_name"><%= n.song %> <span class="song_kor"><%= ('(' +Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor.empty? %></span></p>
-          <p class="album"><%= n.album %></p>
+      <%= link_to award_nomination_path(n.award_id, n.id), class: "nomination_link" do %>
+        <div class="row ranking_item">
+          <div class="col-sm-1 ranking">
+            <p class="ranking-no"><%= n.ranking.ordinalize %></p>
+          </div>
+          <div class="col-sm-4">
+            <% if Artiste.find_by("name_eng='#{n.artiste}'") %>
+              <%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, width: "80%") %>
+            <% else %>
+              <p><%= n.artiste %></p>
+            <% end %>
+          </div>
+          <div class="col-sm-5">
+            <p class="artiste_name"><%= n.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor.empty? %></span></p>
+            <div class="flex-bar">
+              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_ds %> 0%; background-color: #ffe66b;'></div>
+              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_yv %> 0%; background-color: #6ccff6;'></div>
+              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_pv %> 0%; background-color: #e34a6f;'></div>
+              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_remainder %> 0%; background-color: #B8C5D6;'></div>
+            </div>
+            <p class="song_name"><%= n.song %> <span class="song_kor"><%= ('(' +Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor.empty? %></span></p>
+            <p class="album"><%= n.album %></p>
+          </div>
+          <div class="col-sm-1">
+            <p class="aggregate_score"><%= n.aggregate_score.to_f.round(1).to_s + '%' %></p>
+          </div>
+          <div class="col-sm-1">
+            <img src="http://imgh.us/arrow_7.png" width="15px" />
+          </div>
         </div>
-        <div class="col-sm-1">
-    			<p class="aggregate_score"><%= n.aggregate_score.to_f.round(1).to_s + '%' %></p>
-        </div>
-    	 	<div class="col-sm-1">
-    	 		<img src="http://imgh.us/arrow_7.png" width="15px" />
-    	    </div>
-    	 </div>
+      <% end %>
     <% end %>
-    <% end %>
-    </div>
-  
+  </div>
 </div>
