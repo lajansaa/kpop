@@ -36,6 +36,10 @@ gem 'typhoeus'
 # For debugging
 gem 'pry'
 
+# For beautifying html erb
+# https://github.com/threedaymonk/htmlbeautifier
+gem 'htmlbeautifier'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
