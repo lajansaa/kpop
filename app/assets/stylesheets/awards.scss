@@ -41,29 +41,6 @@
     }
     }
   }
-  #search_field {
-    padding: 0;
-    width: 250px;
-    float: right;
-    text-align: right;
-    border: #c3c3c3 solid 1px;
-    border-radius: 50px;
-    margin-top: 10px;
-    input, button {
-      border: none;
-      background-color: #fff;
-      border-radius: 50px;
-    .fa {
-      color: #c3c3c3;
-    @media(max-width: 780px){
-    float:none;
-    text-align: left;
-    width: 100%;
-    padding: 0px;
-    }
-    }
-   }
-  }
  }
   #awards {
   max-width: 100%;
@@ -92,6 +69,30 @@
 }
 }
 }
+
+#search_field {
+  padding: 0;
+  width: 250px;
+  float: right;
+  text-align: right;
+  border: #c3c3c3 solid 1px;
+  border-radius: 50px;
+  margin-top: 10px;
+  input, button {
+    border: none;
+    background-color: #fff;
+    border-radius: 50px;
+  .fa {
+    color: #c3c3c3;
+  @media(max-width: 780px){
+  float:none;
+  text-align: left;
+  width: 100%;
+  padding: 0px;
+    }
+    }
+   }
+  }
 
 .show_all {
   text-align: center;
