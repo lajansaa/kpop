@@ -1,15 +1,17 @@
 <%= image_tag(@award.masthead_img, class: "masthead") %>
 <div class="main-box">
-  <div class="row ranking_item">
-    <div class="col-sm-1 ranking">
-      <p class="ranking-no"><%= @nomination.ranking.ordinalize %></p>
+    <div class="ranking_header_container">
+      <p class="ranking_header">Rank: <%= @nomination.ranking.ordinalize %></p>
     </div>
-    <div class="col-sm-4">
+  <div class="row ranking_item">
+    <div class="col-sm-5">
+    <div class="artiste_img">
       <% if Artiste.find_by("name_eng='#{@nomination.artiste}'") %>
         <%= image_tag(Artiste.find_by("name_eng='#{@nomination.artiste}'").profile_img, width: "80%") %>
       <% else %>
         <p><%= @nomination.artiste %></p>
       <% end %>
+      </div>
     </div>
     <div class="col-sm-5">
       <p class="artiste_name"><%= @nomination.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor.empty? %></span></p>

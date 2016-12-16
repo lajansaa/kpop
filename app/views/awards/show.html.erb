@@ -44,11 +44,13 @@
             <p class="ranking-no"><%= n.ranking.ordinalize %></p>
           </div>
           <div class="col-sm-4">
+          <div class="artiste_img">
             <% if Artiste.find_by("name_eng='#{n.artiste}'") %>
               <%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, width: "80%") %>
             <% else %>
               <p><%= n.artiste %></p>
             <% end %>
+            </div>
           </div>
           <div class="col-sm-5">
             <p class="artiste_name"><%= n.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor.empty? %></span></p>
