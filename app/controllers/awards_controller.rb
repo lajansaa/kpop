@@ -17,7 +17,7 @@ class AwardsController < ApplicationController
     @award = Award.find(params[:id])
 
     if params[:keyword]
-        @nominations = @award.nomination
+        @nominations = @award.nominations
                              .where( [ "LOWER(artiste) LIKE ? OR LOWER(song) LIKE ? ", "%#{params[:keyword]}%", "%#{params[:keyword]}%" ] )
     else
         @nominations = @award.nominations
