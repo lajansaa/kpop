@@ -19,12 +19,6 @@
       <li><%= link_to 'Ranking', award_path(@award.id, :order => "ranking") %></li>
     </ul>
   </div>
-  <div id="search_field">
-    <%= form_for award_path(@award.id), :method => :get do %>
-      <%= text_field_tag "keyword" %>
-      <%= submit_tag "Search" %>
-    <% end %>
-  </div>
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <%= @vote_start.to_time.strftime("%d %b %y") + ' ~ ' + @vote_end.to_time.strftime("%d %b %y")  %>
@@ -35,6 +29,14 @@
         <li class="voting_period"><%= link_to vp[0].strftime("%d %b %y") + ' ~ ' + vp[1].strftime("%d %b %y"), award_path(:vote_start => vp[0], :vote_end => vp[1], )  %></li>
       <% end %>
     </ul>
+  </div>
+  <div id="search_field">
+    <%= form_for award_path(@award.id), :method => :get do %>
+      <%= text_field_tag "keyword", nil, placeholder: 'Search for artiste or song...' %>
+      <%= button_tag(type: 'submit') do %>
+        <i class="fa fa-search" aria-hidden="true"></i>
+      <% end %>
+    <% end %>
   </div>
   <div class="ranking_container">
     <% @nominations.each do |n| %>
