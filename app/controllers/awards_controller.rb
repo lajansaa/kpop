@@ -19,6 +19,7 @@ class AwardsController < ApplicationController
     if params[:keyword]
         @nominations = @award.nominations
                              .where( [ "LOWER(artiste) LIKE ? OR LOWER(song) LIKE ? ", "%#{params[:keyword]}%", "%#{params[:keyword]}%" ] )
+                             .where( "vote_start = ?", @vote_start )
     else
         @nominations = @award.nominations
                              .where(vote_start: @vote_start, vote_end: @vote_end)
