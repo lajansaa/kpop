@@ -1,0 +1,2 @@
+class DigitalServiceProvider < ApplicationRecord
+end
