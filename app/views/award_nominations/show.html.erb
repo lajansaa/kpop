@@ -1,16 +1,16 @@
 <%= image_tag(@award.masthead_img, class: "masthead") %>
 <div class="main-box">
-    <div class="ranking_header_container">
-      <p class="ranking_header">Rank: <%= @nomination.ranking.ordinalize %></p>
-    </div>
+  <div class="ranking_header_container">
+    <p class="ranking_header">Rank: <%= @nomination.ranking.ordinalize %></p>
+  </div>
   <div class="row ranking_item">
     <div class="col-sm-5">
-    <div class="artiste_img">
-      <% if Artiste.find_by("name_eng='#{@nomination.artiste}'") %>
-        <%= image_tag(Artiste.find_by("name_eng='#{@nomination.artiste}'").profile_img, width: "80%") %>
-      <% else %>
-        <p><%= @nomination.artiste %></p>
-      <% end %>
+      <div class="artiste_img">
+        <% if Artiste.find_by("name_eng='#{@nomination.artiste}'") %>
+          <%= image_tag(Artiste.find_by("name_eng='#{@nomination.artiste}'").profile_img, width: "80%") %>
+        <% else %>
+          <p><%= @nomination.artiste %></p>
+        <% end %>
       </div>
     </div>
     <div class="col-sm-5">
@@ -34,9 +34,31 @@
         <p class="ds">Digital Sales</p>
       </div>
       <div class="metrics_body">
-        <%= link_to image_tag("http://imgh.us/melon_logo.jpg", width: "50%"), "http://mwave.interest.me/mcountdown/vote/preVote", :target => "_blank"%>
-        <p class="stats"><%= @nomination.download_count %> downloads</p>
-        <p class="stats"><%= @nomination.streaming_count %> streams</p>
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="gaon_img_container">
+              <%= image_tag("https://ccmworld.files.wordpress.com/2013/07/gaon.jpg", width: "50%", class: "gaon_img") %>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.download_count, :delimiter => ',') %></span> downloads</p>
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.streaming_count, :delimiter => ',') %></span> streams</p>
+          </div>
+        </div>
+        <div class="digital_providers_containers">
+          <div class="row">
+            <% @providers.each do |pr| %>
+              <div class="col-sm-6 col-md-3">
+                <div class="digital_providers">
+                  <div class="dp_profile_container">
+                    <%= image_tag(pr.profile_img, class: "dp_profile") %>
+                  </div>
+                  <a href="#" class="btn btn-default" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</a>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="metrics">
@@ -44,8 +66,22 @@
         <p class="as">Album Sales</p>
       </div>
       <div class="metrics_body">
-        <%= link_to image_tag(@nomination_as.album_img), "http://mwave.interest.me/mcountdown/vote/preVote", :target => "_blank" %>
-        <p class="stats">Order now!</p>
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="album_img_container">
+              <%= image_tag(@nomination_as.album_img, class: "album_img") %>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.download_count, :delimiter => ',') %></span> sold</p>
+            <a href="#" class="btn btn-default" role="button"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Order</a>
+          </div>
+          <div class="col-sm-3">
+            <div class="stats_provider">
+              <img src="https://4.bp.blogspot.com/-W6cUt4IYL1k/VyeRJKGi-vI/AAAAAAAAAAg/ApRsAIY0Stc3zhjnE3sxfzZRtODVwPaBwCK4B/s1600/Hanteo_chart_logo_zps6235a6ee.png" class="stats_provider_img"/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="metrics">
@@ -56,8 +92,24 @@
         <% if @nomination.youtube_views == 0 %>
           <p>No official YouTube video!</p>
         <% else %>
-          <%= link_to image_tag(@nomination_yv.thumbnail_img), @nomination_yv.watch_link, :target => "_blank" %>
-          <p class="stats"><%= @nomination.youtube_views %> views</p>
+          <div class="row">
+            <div class="col-sm-5">
+              <div class="thumbnail_img_container">
+                <%= link_to @nomination_yv.watch_link, :target => "_blank" do %>
+                  <%= image_tag(@nomination_yv.thumbnail_img, class: "thumbnail_img") %>
+                  <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.youtube_views, :delimiter => ',') %></span> views</p>
+            </div>
+            <div class="col-sm-3">
+              <div class="stats_provider">
+                <img src="https://www.youtube.com/yt/brand/media/image/YouTube-logo-full_color.png" class="stats_provider_img"/>
+              </div>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -66,8 +118,22 @@
         <p class="pv">Popularity Votes</p>
       </div>
       <div class="metrics_body">
-        <%= link_to image_tag("http://imgh.us/Mnet-vector-logo.jpg", width: "50%"), "http://mwave.interest.me/mcountdown/vote/preVote", :target => "_blank" %>
-        <p class="stats"><%= @nomination.popularity_votes %> votes</p>
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="gaon_img_container">
+              <%= image_tag("https://pbs.twimg.com/profile_images/710092967336226817/2Hnj7oOl.jpg", width: "50%", class: "gaon_img") %>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.popularity_votes, :delimiter => ',') %></span> votes</p>
+            <a target="_blank" href="http://mwave.interest.me/mcountdown/vote/preVote" class="btn btn-default" role="button"><span><i class="fa fa-heart" aria-hidden="true"></i></span> Vote</a>
+          </div>
+          <div class="col-sm-3">
+            <div class="stats_provider">
+              <img src="http://imgh.us/mnet.jpg" class="stats_provider_img"/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
