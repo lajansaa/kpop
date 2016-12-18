@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215145148) do
+ActiveRecord::Schema.define(version: 20161218071608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,11 @@ ActiveRecord::Schema.define(version: 20161215145148) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "digital_service_providers", force: :cascade do |t|
+    t.string "name"
+    t.text   "profile_img"
+  end
+
   create_table "mappings", force: :cascade do |t|
     t.string "artiste_eng"
     t.string "artiste_kor"
@@ -86,6 +91,7 @@ ActiveRecord::Schema.define(version: 20161215145148) do
     t.float    "normalized_remainder"
     t.integer  "ranking"
     t.string   "album"
+    t.text     "profile_img"
     t.index ["award_id"], name: "index_nominations_on_award_id", using: :btree
   end
 
@@ -112,6 +118,9 @@ ActiveRecord::Schema.define(version: 20161215145148) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "name"
