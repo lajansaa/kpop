@@ -54,6 +54,7 @@
 
 .metrics_body {
   padding: 30px 0;
+  position: relative;
 }
 
 .stats {
@@ -121,11 +122,15 @@
 }
 
 .stats_provider {
-  bottom: 0;
-  position: relative;
+  position: absolute;
 }
 
 .stats_provider_img {
   width: 100%;
+}
+
+.metrics_text_container {
+  top: 50%;
+  position: absolute;
 }
 

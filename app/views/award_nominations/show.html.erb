@@ -4,7 +4,7 @@
     <p class="ranking_header">Rank: <%= @nomination.ranking.ordinalize %></p>
   </div>
   <div class="row ranking_item">
-    <div class="col-sm-5">
+    <div class="col-sm-4">
       <div class="artiste_img">
         <% if Artiste.find_by("name_eng='#{@nomination.artiste}'") %>
           <%= image_tag(Artiste.find_by("name_eng='#{@nomination.artiste}'").profile_img, width: "80%") %>
@@ -13,7 +13,7 @@
         <% end %>
       </div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <p class="artiste_name"><%= @nomination.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor.empty? %></span></p>
       <div class="flex-bar">
         <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_ds %> 0%; background-color: #ffe66b;'></div>
@@ -24,7 +24,7 @@
       <p class="song_name"><%= @nomination.song %> <span class="song_kor"><%= ('(' +Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{@nomination.song.gsub(/\'/, '\'\'')}'").song_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{@nomination.song.gsub(/\'/, '\'\'')}'").song_kor.empty? %></span></p>
       <p class="album"><%= @nomination.album %></p>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1">
       <p class="aggregate_score"><%= @nomination.aggregate_score.to_f.round(1).to_s + '%' %></p>
     </div>
   </div>
@@ -41,8 +41,10 @@
             </div>
           </div>
           <div class="col-sm-7">
+            <div class="metrics_text_container">
             <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.download_count, :delimiter => ',') %></span> downloads</p>
             <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.streaming_count, :delimiter => ',') %></span> streams</p>
+            </div>
           </div>
         </div>
         <div class="digital_providers_containers">
@@ -53,7 +55,7 @@
                   <div class="dp_profile_container">
                     <%= image_tag(pr.profile_img, class: "dp_profile") %>
                   </div>
-                  <a href="#" class="btn btn-default" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</a>
+                  <a target="_blank" href="http://www.melon.com/album/detail.htm?albumId=10018979" class="btn btn-default" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</a>
                 </div>
               </div>
             <% end %>
@@ -66,15 +68,17 @@
         <p class="as">Album Sales</p>
       </div>
       <div class="metrics_body">
-        <div class="row">
+        <div class="row test">
           <div class="col-sm-5">
             <div class="album_img_container">
               <%= image_tag(@nomination_as.album_img, class: "album_img") %>
             </div>
           </div>
           <div class="col-sm-4">
+          <div class="metrics_text_container">
             <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.download_count, :delimiter => ',') %></span> sold</p>
             <a href="#" class="btn btn-default" role="button"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Order</a>
+            </div>
           </div>
           <div class="col-sm-3">
             <div class="stats_provider">
@@ -102,7 +106,9 @@
               </div>
             </div>
             <div class="col-sm-4">
+            <div class="metrics_text_container">
               <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.youtube_views, :delimiter => ',') %></span> views</p>
+              </div>
             </div>
             <div class="col-sm-3">
               <div class="stats_provider">
@@ -125,8 +131,10 @@
             </div>
           </div>
           <div class="col-sm-4">
+          <div class="metrics_text_container">
             <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.popularity_votes, :delimiter => ',') %></span> votes</p>
             <a target="_blank" href="http://mwave.interest.me/mcountdown/vote/preVote" class="btn btn-default" role="button"><span><i class="fa fa-heart" aria-hidden="true"></i></span> Vote</a>
+            </div>
           </div>
           <div class="col-sm-3">
             <div class="stats_provider">

@@ -77,7 +77,7 @@
   text-align: right;
   border: #c3c3c3 solid 1px;
   border-radius: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
   input, button {
     border: none;
     background-color: #fff;
@@ -138,7 +138,7 @@
 
 .ranking_container {
   padding: 30px;
-  margin-top: 10px
+  margin-top: 30px
 }
 
 .ranking_item {
@@ -187,3 +187,52 @@
   font-size: 1.5em;
   font-weight: bold;
 }
+
+.date_sort_search {
+  margin: 50px 0 100px 0;
+}
+
+.ranking {
+  line-height: 140px;
+  text-align: left;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.aggregate_score {
+  font-size: 1.3em;
+  font-weight: bold;
+  line-height: 140px;
+  text-align: left;
+}
+
+.more_details {
+  line-height: 140px;
+  text-align: right;
+}  
+
+
+.ranking_item {
+  border-bottom: 1px solid #dedede;
+  margin: auto;
+  position: relative;
+  vertical-align: middle;
+  padding: 15px;
+  color: #1c1c1c;
+}
+
+.artiste_img {
+  width: 200px;
+  height: 120px;
+  overflow: hidden;
+  margin-top: 20px;
+} 
+
+.ranking_info {
+  width: 100%;
+}
+
+.ranking_board_header {
+  margin-top: 50px;
+  text-align: center;
+}         
