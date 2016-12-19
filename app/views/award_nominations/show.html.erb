@@ -3,9 +3,9 @@
   <div class="ranking_header_container">
     <p class="ranking_header">Rank: <%= @nomination.ranking.ordinalize %></p>
   </div>
-  <div class="row ranking_item">
+  <div class="row ranking_item_a">
     <div class="col-sm-4">
-      <div class="artiste_img">
+      <div class="artiste_img_a">
         <% if Artiste.find_by("name_eng='#{@nomination.artiste}'") %>
           <%= image_tag(Artiste.find_by("name_eng='#{@nomination.artiste}'").profile_img, width: "80%") %>
         <% else %>
@@ -13,7 +13,7 @@
         <% end %>
       </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-5">
       <p class="artiste_name"><%= @nomination.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor.empty? %></span></p>
       <div class="flex-bar">
         <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_ds %> 0%; background-color: #ffe66b;'></div>
@@ -35,7 +35,7 @@
       </div>
       <div class="metrics_body">
         <div class="row">
-          <div class="col-sm-5">
+          <div class="col-sm-3">
             <div class="gaon_img_container">
               <%= image_tag("https://ccmworld.files.wordpress.com/2013/07/gaon.jpg", width: "50%", class: "gaon_img") %>
             </div>
@@ -55,7 +55,7 @@
                   <div class="dp_profile_container">
                     <%= image_tag(pr.profile_img, class: "dp_profile") %>
                   </div>
-                  <a target="_blank" href="http://www.melon.com/album/detail.htm?albumId=10018979" class="btn btn-default" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</a>
+                  <a target="_blank" href="http://www.genie.co.kr/detail/albumInfo?axnm=80893759" class="btn ds_btn" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</a>
                 </div>
               </div>
             <% end %>
@@ -69,18 +69,18 @@
       </div>
       <div class="metrics_body">
         <div class="row test">
-          <div class="col-sm-5">
+          <div class="col-sm-3">
             <div class="album_img_container">
               <%= image_tag(@nomination_as.album_img, class: "album_img") %>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-7">
           <div class="metrics_text_container">
             <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.download_count, :delimiter => ',') %></span> sold</p>
-            <a href="#" class="btn btn-default" role="button"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Order</a>
+            <a href="#" class="btn as_btn" role="button"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Order</a>
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="stats_provider">
               <img src="https://4.bp.blogspot.com/-W6cUt4IYL1k/VyeRJKGi-vI/AAAAAAAAAAg/ApRsAIY0Stc3zhjnE3sxfzZRtODVwPaBwCK4B/s1600/Hanteo_chart_logo_zps6235a6ee.png" class="stats_provider_img"/>
             </div>
@@ -97,7 +97,7 @@
           <p>No official YouTube video!</p>
         <% else %>
           <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <div class="thumbnail_img_container">
                 <%= link_to @nomination_yv.watch_link, :target => "_blank" do %>
                   <%= image_tag(@nomination_yv.thumbnail_img, class: "thumbnail_img") %>
@@ -105,12 +105,12 @@
                 <% end %>
               </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
             <div class="metrics_text_container">
               <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.youtube_views, :delimiter => ',') %></span> views</p>
               </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <div class="stats_provider">
                 <img src="https://www.youtube.com/yt/brand/media/image/YouTube-logo-full_color.png" class="stats_provider_img"/>
               </div>
@@ -125,18 +125,18 @@
       </div>
       <div class="metrics_body">
         <div class="row">
-          <div class="col-sm-5">
+          <div class="col-sm-3">
             <div class="gaon_img_container">
               <%= image_tag("https://pbs.twimg.com/profile_images/710092967336226817/2Hnj7oOl.jpg", width: "50%", class: "gaon_img") %>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-sm-7">
           <div class="metrics_text_container">
             <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.popularity_votes, :delimiter => ',') %></span> votes</p>
-            <a target="_blank" href="http://mwave.interest.me/mcountdown/vote/preVote" class="btn btn-default" role="button"><span><i class="fa fa-heart" aria-hidden="true"></i></span> Vote</a>
+            <a target="_blank" href="http://mwave.interest.me/mcountdown/vote/preVote" class="btn vote_btn" role="button"><span><i class="fa fa-heart" aria-hidden="true"></i></span> Vote</a>
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="stats_provider">
               <img src="http://imgh.us/mnet.jpg" class="stats_provider_img"/>
             </div>

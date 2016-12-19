@@ -63,7 +63,7 @@
 }
 
 .gaon_img_container {
-  width: 100%;
+  width: 90%;
   border: 2px solid #000;
   overflow: hidden;
 }
@@ -116,7 +116,7 @@
   left: 40%;
   top: 30%;
   font-size: 5em;
-  color: #fff;
+  color: #e52d27;
   opacity: 0.8;
 
 }
@@ -132,5 +132,44 @@
 .metrics_text_container {
   top: 50%;
   position: absolute;
+}
+
+
+.artiste_img_a {
+  width: 100%;
+}
+
+.ranking_item_a {
+  margin: auto;
+  position: relative;
+  vertical-align: middle;
+  padding: 15px;
+  color: #1c1c1c;
+}
+
+.ds_btn {
+  background-color: #e34a6f !important;
+  color: #fafaff !important;
+  border-radius: 10px !important;
+  text-decoration: none;
+  border: 1px solid #1c1c1c !important;
+}
+
+.as_btn {
+  background-color: #e34a6f !important;
+  color: #fafaff !important;
+  border-radius: 10px !important;
+  text-decoration: none;
+  border: 1px solid #1c1c1c !important;
+  width: 150px;
+}
+
+.vote_btn {
+  background-color: #e34a6f !important;
+  color: #fafaff !important;
+  border-radius: 10px !important;
+  text-decoration: none;
+  border: 1px solid #1c1c1c !important;
+  width: 150px;
 }
 

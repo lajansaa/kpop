@@ -15,7 +15,7 @@
   <div class="date_sort_search">
    <div class="row">
 
-    <div class="col-sm-4"> 
+    <div class="col-sm-3"> 
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <%= @vote_start.to_time.strftime("%d %b %y") + ' ~ ' + @vote_end.to_time.strftime("%d %b %y")  %>
@@ -29,7 +29,7 @@
   </div>
   </div>
 
-  <div class="col-sm-4"> 
+  <div class="col-sm-5"> 
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Sort by
@@ -75,7 +75,7 @@
             <% end %>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <div class="ranking_info">
             <p class="artiste_name"><%= n.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor.empty? %></span></p>
             <div class="flex-bar">
@@ -88,7 +88,7 @@
             <p class="album"><%= n.album %></p>
             </div>
           </div>
-          <div class="col-sm-1">
+          <div class="col-sm-2">
             <p class="aggregate_score"><%= n.aggregate_score.to_f.round(1).to_s + '%' %></p>
           </div>
           <div class="col-sm-1 more_details">
