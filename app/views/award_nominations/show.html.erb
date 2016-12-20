@@ -26,7 +26,7 @@
       <p class="album"><%= @nomination.album %></p>
     </div>
     <div class="col-sm-1">
-      <p class="aggregate_score"><%= (@nomination.aggregate_score.to_f + 30).round(1).to_s + '%' %></p>
+      <p class="aggregate_score"><%= @nomination.aggregate_score.to_f.round(1).to_s + '%' %></p>
     </div>
   </div>
   <div class="metrics_container">
