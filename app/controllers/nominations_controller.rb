@@ -312,7 +312,7 @@ class NominationsController < ApplicationController
       normalized_av = (volume / av_total * av_percent * 300.0).round(2)
       normalized_yv = (views / yv_total * yv_percent * 400.0).round(2)
       normalized_ds = (((download_count / dc_total) +
-                      (streaming_count / sc_total)) * ds_percent * 150.0).round(2)
+                      (streaming_count / sc_total)) * ds_percent * 70.0).round(2)
       aggregate_score = (normalized_pv + normalized_av + normalized_yv + normalized_ds).round(2)
       normalized_remainder = 50.0 - aggregate_score
       final_result.push([ 1, n.award, vote_start, n.vote_end, artiste, song, download_count, streaming_count, volume, views, n.votes, normalized_ds, normalized_av, normalized_yv, normalized_pv, normalized_remainder, aggregate_score, Time.now, Time.now ])
