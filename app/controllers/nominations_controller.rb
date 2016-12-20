@@ -283,6 +283,7 @@ class NominationsController < ApplicationController
     
     #get judging criteria percentages
     ds_percent = Award.find_by("name = 'MCOUNTDOWN'").judging_criteria["digital_sales"].to_f
+    av_percent = Award.find_by("name = 'MCOUNTDOWN'").judging_criteria["album_volume"].to_f
     yv_percent = Award.find_by("name = 'MCOUNTDOWN'").judging_criteria["youtube_views"].to_f
     pv_percent = Award.find_by("name = 'MCOUNTDOWN'").judging_criteria["popularity_votes"].to_f
     
@@ -292,6 +293,7 @@ class NominationsController < ApplicationController
     #sum individual metrics to get denominator
     dc_total = DigitalSale.where("vote_start='#{max_vote_start}'").sum("download_count")
     sc_total = DigitalSale.where("vote_start='#{max_vote_start}'").sum("streaming_count")
+    av_total = AlbumVolume.where("vote_start='#{max_vote_start}'").sum("volume")
     yv_total = YoutubeView.where("vote_start='#{max_vote_start}'").sum("views")
     pv_total = PopularityVote.where("vote_start='#{max_vote_start}'").sum("votes")
     
@@ -304,18 +306,20 @@ class NominationsController < ApplicationController
       song = n.song
       download_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).download_count
       streaming_count = DigitalSale.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).streaming_count
+      volume = AlbumVolume.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).volume
       views = YoutubeView.find_by("vote_start = ? AND artiste = ? AND song = ?", vote_start, artiste, song).views
       normalized_pv = (n.votes / pv_total * pv_percent * 100.0).round(2)
-      normalized_yv = (views / yv_total * yv_percent * 100.0).round(2)
+      normalized_av = (volume / av_total * av_percent * 300.0).round(2)
+      normalized_yv = (views / yv_total * yv_percent * 400.0).round(2)
       normalized_ds = (((download_count / dc_total) +
-                      (streaming_count / sc_total)) * ds_percent * 100.0).round(2)
-      aggregate_score = (normalized_pv + normalized_yv + normalized_ds).round(2)
-      normalized_remainder = 100.0 - aggregate_score
-      final_result.push([ 1, n.award, vote_start, n.vote_end, artiste, song, download_count, streaming_count, views, n.votes, normalized_ds, normalized_yv, normalized_pv, normalized_remainder, aggregate_score, Time.now, Time.now ])
+                      (streaming_count / sc_total)) * ds_percent * 150.0).round(2)
+      aggregate_score = (normalized_pv + normalized_av + normalized_yv + normalized_ds).round(2)
+      normalized_remainder = 50.0 - aggregate_score
+      final_result.push([ 1, n.award, vote_start, n.vote_end, artiste, song, download_count, streaming_count, volume, views, n.votes, normalized_ds, normalized_av, normalized_yv, normalized_pv, normalized_remainder, aggregate_score, Time.now, Time.now ])
     end
-    sorting = final_result.sort_by{|record| record[14]}.reverse
+    sorting = final_result.sort_by{|record| record[16]}.reverse
     CSV.open('./lib/imports/nominations.csv', 'wb') do |csv|
-      headers = [ "award_id", "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "youtube_views", "popularity_votes", "normalized_ds", "normalized_yv", "normalized_pv", "normalized_remainder", "aggregate_score", "created_at", "updated_at", "ranking" ]
+      headers = [ "award_id", "award", "vote_start", "vote_end", "artiste", "song", "download_count", "streaming_count", "album_volume", "youtube_views", "popularity_votes", "normalized_ds", "normalized_av", "normalized_yv", "normalized_pv", "normalized_remainder", "aggregate_score", "created_at", "updated_at", "ranking" ]
       csv << headers
       sorting.each do |record|
         ranking = sorting.find_index(record) + 1
@@ -327,9 +331,11 @@ class NominationsController < ApplicationController
       instance.update(
         download_count: csv_row["download_count"],
         streaming_count: csv_row["streaming_count"],
+        album_volume: csv_row["album_volume"],
         youtube_views: csv_row["youtube_views"],
         popularity_votes: csv_row["popularity_votes"],
         normalized_ds: csv_row["normalized_ds"],
+        normalized_av: csv_row["normalized_av"],
         normalized_yv: csv_row["normalized_yv"],
         normalized_pv: csv_row["normalized_pv"],
         normalized_remainder: csv_row["normalized_remainder"],

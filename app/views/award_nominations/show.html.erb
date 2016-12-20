@@ -17,15 +17,16 @@
       <p class="artiste_name"><%= @nomination.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{@nomination.artiste}'").artiste_kor.empty? %></span></p>
       <div class="flex-bar">
         <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_ds %> 0%; background-color: #ffe66b;'></div>
-        <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_yv %> 0%; background-color: #6ccff6;'></div>
-        <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_pv %> 0%; background-color: #e34a6f;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_av %> 0%; background-color: #6ccff6;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_yv %> 0%; background-color: #e34a6f;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_pv %> 0%; background-color: #fafaff;'></div>
         <div class="flex-bar--item horiz-bar" style='flex: <%= @nomination.normalized_remainder %> 0%; background-color: #B8C5D6;'></div>
       </div>
       <p class="song_name"><%= @nomination.song %> <span class="song_kor"><%= ('(' +Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{@nomination.song.gsub(/\'/, '\'\'')}'").song_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{@nomination.song.gsub(/\'/, '\'\'')}'").song_kor.empty? %></span></p>
       <p class="album"><%= @nomination.album %></p>
     </div>
     <div class="col-sm-1">
-      <p class="aggregate_score"><%= @nomination.aggregate_score.to_f.round(1).to_s + '%' %></p>
+      <p class="aggregate_score"><%= (@nomination.aggregate_score.to_f + 30).round(1).to_s + '%' %></p>
     </div>
   </div>
   <div class="metrics_container">
@@ -65,7 +66,7 @@
     </div>
     <div class="metrics">
       <div class="metrics_header">
-        <p class="as">Album Sales</p>
+        <p class="as">Album Volumne</p>
       </div>
       <div class="metrics_body">
         <div class="row test">
@@ -76,7 +77,7 @@
           </div>
           <div class="col-sm-7">
           <div class="metrics_text_container">
-            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.download_count, :delimiter => ',') %></span> sold</p>
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nomination.album_volume, :delimiter => ',') %></span> sold</p>
             <a href="#" class="btn as_btn" role="button"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Order</a>
             </div>
           </div>

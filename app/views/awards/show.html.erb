@@ -80,8 +80,9 @@
             <p class="artiste_name"><%= n.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor.empty? %></span></p>
             <div class="flex-bar">
               <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_ds %> 0%; background-color: #ffe66b;'></div>
-              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_yv %> 0%; background-color: #6ccff6;'></div>
-              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_pv %> 0%; background-color: #e34a6f;'></div>
+              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_av %> 0%; background-color: #6ccff6;'></div>
+              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_yv %> 0%; background-color: #e34a6f;'></div>
+              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_pv %> 0%; background-color: #fafaff;'></div>
               <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_remainder %> 0%; background-color: #B8C5D6;'></div>
             </div>
             <p class="song_name"><%= n.song %> <span class="song_kor"><%= ('(' +Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor.empty? %></span></p>
@@ -89,7 +90,7 @@
             </div>
           </div>
           <div class="col-sm-2">
-            <p class="aggregate_score"><%= n.aggregate_score.to_f.round(1).to_s + '%' %></p>
+            <p class="aggregate_score"><%= (n.aggregate_score.to_f + 30).round(1).to_s + '%' %></p>
           </div>
           <div class="col-sm-1 more_details">
             <img src="http://imgh.us/arrow_7.png" width="15px" />
