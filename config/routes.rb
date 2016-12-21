@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   root to: "awards#index"
   
-  get 'api/v1/update_nominations' => 'nominations#update_nominations'
+  # get 'api/v1/update_nominations' => 'nominations#update_nominations'
   get 'api/v1/get_nominations' => 'nominations#get_nominations'
   get 'api/v1/get_artiste_profile' => 'artistes#get_artiste_profile'
   # get 'api/v1/get_artiste_info' => 'artistes#profile_img_mnet'
