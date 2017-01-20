@@ -16,7 +16,7 @@
 //= require turbolinks
 //= require_tree .
 
-
+$(document).ready(function(){
 document.addEventListener('DOMContentLoaded', function() {
 
   var dataBars = document.querySelectorAll('[data-percent]');
@@ -36,4 +36,24 @@ function setBars(dataBars) {
       bar.style.width = percent;
     }
   }
-}
+};
+
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+};
+// $("#nav").addClass("js").before('<div id="menu"><i class="fa fa-bars" aria-hidden="true"></i></div>');
+//   $("#menu").click(function(){
+//     $("#nav").slideToggle("fast");
+//   });
+//   $(window).resize(function(){
+//     if(window.innerWidth > 701) {
+//       $("#nav").removeAttr("style");
+//     }
+//   });
+});
+

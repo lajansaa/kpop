@@ -7,23 +7,24 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body class=<%= css_class_for_controller_action(controller) %>>
+  <body>
     <div class="navbar">
-      <ul class="navbar_items_container_left">
-        <li class="navbar_items"><%= link_to 'Awards', awards_path, class: "awards_link" %></li>
-        <li class="navbar_items"><a href="#" class="artistes_link">Artistes</a></li>
-      </ul>
-      <%= link_to awards_path do %>
-        <div class="navbar_items_logo">
+      <ul class="topnav" id="myTopnav">
+        <li class="icon">
+          <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">&#9776;</a>
+        </li>
+        <li><%= link_to 'Awards', awards_path, class: "awards_link active" %></li>
+        <li><a href="#" class="artistes_link">Artistes</a></li>
+        <li id="logo_clear" class="navbar_items_logo">
+          <%= link_to awards_path do %>
           <img alt="ollida" src="http://imgh.us/logo@3x.png" class="logo">
-        </div>
-      <% end %>
-      <ul class="navbar_items_container_right">
-        <li class="navbar_items"><a href="#" class="cart_link">Cart</a></li>
+          <% end %>
+        </li>
+        <li><a href="#" class="cart_link">Cart</a></li>
         <% if user_signed_in? %>
-          <li class="navbar_items"><%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: "session_link" %></li>
+          <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: "session_link" %></li>
         <% else %>
-          <li class="navbar_items"><%= link_to 'Sign in', new_user_session_path, class: "session_link" %></li>
+          <li><%= link_to 'Sign in', new_user_session_path, class: "session_link" %></li>
         <% end %>
       </ul>
     </div>
@@ -37,5 +38,16 @@
     <div id="footer" class="container-fluid" style="background: #1c1c1c">
       <p>&copy; 2016 olliDa.com Inc. All rights reserved.</p>
     </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>
+      function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
+            };
+    </script>
   </body>
 </html>
