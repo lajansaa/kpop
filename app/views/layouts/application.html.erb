@@ -9,11 +9,12 @@
   </head>
   <body>
     <div class="navbar">
+      <div class="navbar_collapsible">
       <ul class="topnav" id="myTopnav">
         <li class="icon">
-          <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">&#9776;</a>
+          <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()"><i class="fa fa-bars" aria-hidden="true"></i></a>
         </li>
-        <li><%= link_to 'Awards', awards_path, class: "awards_link active" %></li>
+        <li><%= link_to 'Awards', awards_path, class: "awards_link" %></li>
         <li><a href="#" class="artistes_link">Artistes</a></li>
         <li id="logo_clear" class="navbar_items_logo">
           <%= link_to awards_path do %>
@@ -27,6 +28,12 @@
           <li><%= link_to 'Sign in', new_user_session_path, class: "session_link" %></li>
         <% end %>
       </ul>
+      </div>
+      <div class="navbar_items_logo_second">
+          <%= link_to awards_path do %>
+          <img alt="ollida" src="http://imgh.us/logo@3x.png" class="logo-second">
+          <% end %>
+      </div>
     </div>
     <!--notice for Sign-in/out -->
     <% flash.each do |name, msg| %>
