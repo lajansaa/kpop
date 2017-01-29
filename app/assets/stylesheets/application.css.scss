@@ -70,33 +70,37 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
-/*ul.topnav li a:hover {
-  background-color: #555;
-}*/
-
-ul.topnav li.icon {
+.topnav li.icon {
   display: none;
 }
 
-.awards_link {
+.awards_link,
+.awards_link:hover,
+.awards_link.active {
    color: #ffe66b;
  }
  
-.artistes_link {
+.artistes_link,
+.artistes_link:hover,
+.artistes_link.active {
    color: #6ccff6;
  }
 
-.cart_link {
+.cart_link,
+.cart_link:hover,
+.cart_link.active {
   color: #e34a6f; 
 }
 
-.session_link {
+.session_link,
+.session_link:hover,
+.session_link.active {
   color: #fefcff; 
 }
 
 @media screen and (max-width: 786px) {
   
-  ul.topnav li a {
+  .topnav li a {
     display: inline-block;
     padding: 14px 16px;
     text-decoration: none;
@@ -112,11 +116,11 @@ ul.topnav li.icon {
     padding: 0;
   }  
 
-  ul.topnav li {
+  .topnav li {
     display: none;
   }
 
-  ul.topnav li.icon {
+  .topnav li.icon {
     float: left;
     display: inline-block;
 
@@ -126,17 +130,22 @@ ul.topnav li.icon {
     color: #fafaff;
   }
 
-  ul.topnav.responsive li {
+  .topnav.responsive li {
     float: none;
     display: inline;
   }
 
-  ul.topnav.responsive li a {
+  .topnav.responsive li a {
     display: block;
     text-align: left;
     background-color: #1c1c1c;
     width: 150px;
     position: relative;
+  }
+
+
+  .topnav.responsive li:not(:first-child) a:hover {
+    background-color: #555;
   }
 
   .logo-second {
@@ -172,19 +181,28 @@ ul.topnav li.icon {
     z-index: 1;
     text-align: center;
     margin-top: 20px;
-    margin-left: 40px;
   }
 
   .topnav li {
     // border: aqua 2px solid;
     display: inline-block;
     margin-right: 60px;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
   }
 
   .topnav li a {
     text-decoration: none;
   }
+
+  .topnav li a.active,
+  .topnav li a:hover {
+      font-size: 1.5vw;
+  }
+  
+  .topnav li a.active {
+    border-bottom: 3px solid orange;
+    padding: 0 10px 10px;
+  }  
 
   .navbar_items_logo {
     width: 10%;
