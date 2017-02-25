@@ -183,22 +183,18 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .topnav li {
-    // border: aqua 2px solid;
     display: inline-block;
-    margin-right: 60px;
+    margin-right: 40px;
     font-size: 1.3vw;
   }
 
   .topnav li a {
     text-decoration: none;
-  }
-
-  .topnav li a.active,
-  .topnav li a:hover {
-      font-size: 1.5vw;
+    padding: 0 10px 10px;
   }
   
-  .topnav li a.active {
+  .topnav li a.active,
+  .topnav li:not(:nth-child(4)) a:hover {
     border-bottom: 3px solid orange;
     padding: 0 10px 10px;
   }  
@@ -316,6 +312,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /*Footer*/
 #footer {
+  background: #1c1c1c;
   height: 50px;
   z-index: 0;
   p {
@@ -324,4 +321,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #7a7a7a;
   font-size:12px;
   }
+}
+
+.devise_sessions #footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
 }
