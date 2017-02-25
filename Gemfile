@@ -40,6 +40,13 @@ gem 'pry'
 # https://github.com/threedaymonk/htmlbeautifier
 gem 'htmlbeautifier'
 
+# For babel
+gem "sprockets"
+gem "sprockets-es6"
+
+# For react
+gem 'react-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

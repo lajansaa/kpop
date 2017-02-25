@@ -14,46 +14,13 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 $(document).ready(function(){
-document.addEventListener('DOMContentLoaded', function() {
+  
 
-  var dataBars = document.querySelectorAll('[data-percent]');
-
-  // dataBars.onchange(setBars(dataBars));
-
-  setBars(dataBars);
-
-}, false);
-
-function setBars(dataBars) {
-  for (var i = 0; i < dataBars.length; i++) {
-    var bar = dataBars[i];
-    var percent = bar.dataset.percent;
-    bar.innerHTML = percent;
-    if (bar.classList.contains('horiz-bar')) {
-      bar.style.width = percent;
-    }
-  }
-};
-
-function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
-    }
-};
-// $("#nav").addClass("js").before('<div id="menu"><i class="fa fa-bars" aria-hidden="true"></i></div>');
-//   $("#menu").click(function(){
-//     $("#nav").slideToggle("fast");
-//   });
-//   $(window).resize(function(){
-//     if(window.innerWidth > 701) {
-//       $("#nav").removeAttr("style");
-//     }
-//   });
 });
 
