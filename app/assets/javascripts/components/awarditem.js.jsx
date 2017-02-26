@@ -10,9 +10,3 @@ class AwardItem extends React.Component {
         return <ul className="award-box">{awardComponents}</ul>;
   }
 };
- 
- 
- 
-
-
-
