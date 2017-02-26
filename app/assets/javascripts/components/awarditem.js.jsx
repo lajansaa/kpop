@@ -1,10 +1,6 @@
 class AwardItem extends React.Component {
     render() {
-        var awardList = [
-          {name:'mcountdown',url:'mcountdown.com'},
-          {name:'inkigayo',url:'inkigayo.com'}
-        ] 
-        var awardComponents = awardList.map((award, index) => {
+        let awardComponents = this.props.awards.map((award, index) => {
           return (
             <li key={index} className="award-item">
                 {award.name} {award.url}

@@ -17,19 +17,13 @@
       </div>
       <div class="container-fluid">
         <div class="row">
-          <% @awards.each do |award| %>
-            <div class="col-xs-12 col-sm-6 col-md-4">
-              <div class="box">
-                <%= link_to image_tag(award.profile_img), award_path(award.id) %>
-                <h4><%= award.name %></h4>
-              </div>
-            </div>
-          <% end %>
+        <%= react_component('AwardItem', awards: @awards) %>
         </div>
       </div>
       <div class="show_all">
         <p><%= link_to 'Show All', awards_path %></p>
       </div>
     </div>
+
   </div>
 </div>
