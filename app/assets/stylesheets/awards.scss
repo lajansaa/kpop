@@ -2,110 +2,30 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#home_page {
-  width: 100%;
-  margin: 10px auto 0px;
-  background-color: #d8d8d8;
-  @media(max-width: 768px) {
-  img {
-  height: 302px;
-  width: 100%;
-    }
-  }
-  .main-content {
-  width: 80%;
-  margin: 50px auto;
-  box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
-  background-color: #fff;
-  .sort_search {
-  margin: 30px;
-  padding-top: 30px;
-  position:relative;
-  height: 80px;
-  @media(max-width: 780px){
-  height: 120px;
-  }
-  #sort_field {
-    font-size: 30px;
-    padding:10px;
-    float: left;
-  @media(max-width: 780px){
-  width: 100%;
-  }
-    span {
-    font-size: 12px;
-    .btn-xs {
-    width: 100px;
-    text-align: left;
-    font-size: 10px;
-    }
-    }
-  }
- }
-  #awards {
-  max-width: 100%;
-  margin: 0 auto;
-  position:relative;
-  display: block;
-  .row {
-    margin: 10px auto 100px;
-    text-align: center;
-  .box{
-    padding:5px;
-    margin: 0 auto 20px;
-    width: 100%;
-  img {
-      width: 200px;
-      height: 150px;
-      box-shadow: 0 1px 2px 0 rgba(74, 74, 74, 0.97);
-      margin:5px;
-      }
-  h4 {
-  text-align: center;
-  font-size: 1.3em;
-    }
-  }
-  }
-}
-}
+
+#box-header {
+  font-size: 30px;
+  padding:10px;
+  float: left;
 }
 
-#search_field {
-  padding: 0;
-  width: 250px;
+#search-field input {
+  padding: 5px 10px;
+  width: 200px;
   float: right;
-  text-align: right;
-  border: #c3c3c3 solid 1px;
-  border-radius: 50px;
-  margin-top: 5px;
-  input, button {
-    border: none;
-    background-color: #fff;
-    border-radius: 50px;
-  .fa {
-    color: #c3c3c3;
-  @media(max-width: 780px){
-  float:none;
   text-align: left;
-  width: 100%;
-  padding: 0px;
-    }
-    }
-   }
-  }
+  border: #c3c3c3 solid 1px;
+  border-radius: 20px;
+  margin-top: 5px;
+  outline: none;
+}
+
 
 .show_all {
   text-align: center;
   padding: 0 0 50px;
 }
 
-.main-box {
-  width: 80%;
-  margin: 50px auto;
-  box-shadow: 0 1px 3px 1px rgba(0, 2, 3, 1);
-  background-color: #fff;
-  padding: 40px;
-}
 
 .award-profile {
   text-align: center;
