@@ -1,11 +1,7 @@
 class AwardsController < ApplicationController
   
   def index
-  	if params[:keyword]
-      	@awards = Award.where( [ "LOWER(name) LIKE ?", "%#{params[:keyword]}%" ] )
-    else
-      	@awards = Award.all.order("name")
-    end
+  	@awards = Award.all.order("name")
   end
 
   def show
