@@ -2,31 +2,36 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
+/*Award Index*/
 #box-header {
   font-size: 30px;
   padding:10px;
   float: left;
 }
 
-#search-field input {
-  padding: 5px 10px;
+.search-container {
+  text-align: right;
+}
+
+#search-field {
+  border-radius: 20px;
   width: 200px;
-  float: right;
   text-align: left;
   border: #c3c3c3 solid 1px;
-  border-radius: 20px;
-  margin-top: 5px;
   outline: none;
+  font-size: 12px;
+  padding: 4px 8px;
+
 }
 
-
-.show_all {
-  text-align: center;
-  padding: 0 0 50px;
+.fa-search {
+  background: none;
+  border: none;
+  outline: none;
+  margin-left: -30px;
 }
 
-
+/*Ranking Board*/
 .award-profile {
   text-align: center;
 }

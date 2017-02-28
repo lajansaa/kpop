@@ -26,22 +26,24 @@ class SearchBox extends React.Component {
     let award_list = this.props.award_list;
     let searchString = this.state.searchString.trim().toLowerCase();
     if (searchString.length > 0) {
-      award_list = this.props.award_list.filter( (award) => 
+      award_list = this.props.award_list.filter( (award) =>
                award.name.toLowerCase().match(searchString)
             );
     }
     
   return (
-      <div id="search-field">
-        <i className="fa fa-search" aria-hidden="true"></i>
-        <input value={this.state.searchString} onChange={this.handleSearch} placeholder="Search..." />
+      <div>
+        <div className="search-container">
+          <input id="search-field" value={this.state.searchString} onChange={this.handleSearch} placeholder="Search..." />
+          <button type="submit" className="fa fa-search"></button>
+        </div>
+        <ul className="award-list">
+          {award_list.map( (award, index) =>
+            <li key={index} className="award-item">
+              <a href={'/awards/' + award.id}>{award.name}</a>
+            </li>)}
+        </ul>
       </div>
-      <ul className="award-list">
-        {award_list.map( (award, index) => 
-          <li key={index} className="award-item">
-            <p>{award.name}</p>
-          </li>)}
-      </ul>      
     )
   }
 }

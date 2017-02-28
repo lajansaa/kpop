@@ -1,15 +1,8 @@
-
-  <img alt="homepage_masthead" src="http://imgh.us/home_page.png" class="masthead" >
-  <div class="main-container">
-      <div class="container-fluid">
-        <div class="row">
-        <%= react_component('AwardBox', award_list: @awards) %>
-        </div>
-      </div>
-      <div class="show_all">
-        <p><%= link_to 'Show All', awards_path %></p>
-      </div>
+<img alt="homepage_masthead" src="http://imgh.us/home_page.png" class="masthead" >
+<div class="main-container">
+  <div class="container-fluid">
+    <div class="row">
+      <%= react_component('AwardBox', award_list: @awards) %>
     </div>
-
   </div>
-
+</div>
