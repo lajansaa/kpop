@@ -37,12 +37,17 @@ class SearchBox extends React.Component {
           <input id="search-field" value={this.state.searchString} onChange={this.handleSearch} placeholder="Search..." />
           <button type="submit" className="fa fa-search"></button>
         </div>
-        <ul className="award-list">
-          {award_list.map( (award, index) =>
-            <li key={index} className="award-item">
-              <a href={'/awards/' + award.id}>{award.name}</a>
-            </li>)}
-        </ul>
+        <div className="container-fluid">
+          <div className="row award-container">
+            {award_list.map( (award, index) =>
+            <div key={index} className="col-xs-12 col-sm-6 col-md-4">
+              <div className="award-item-container">
+                <img className="award-logo" href={'/awards/' + award.id} src={award.profile_img} />
+                <h4>{award.name}</h4>
+              </div>
+            </div>)}
+          </div>
+        </div>
       </div>
     )
   }
