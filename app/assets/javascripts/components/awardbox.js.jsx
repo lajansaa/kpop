@@ -1,8 +1,8 @@
 class AwardBox extends React.Component {
   render() {
     return (
-      <div className="box">
-        <h1 className="box-header">Awards:</h1>
+      <div className="award-box">
+        <h1 className="award-box-header">Awards:</h1>
         <SearchBox award_list={this.props.award_list}/>
       </div>
     );
@@ -42,8 +42,10 @@ class SearchBox extends React.Component {
             {award_list.map( (award, index) =>
             <div key={index} className="col-xs-12 col-sm-6 col-md-4">
               <div className="award-item-container">
-                <img className="award-logo" href={'/awards/' + award.id} src={award.profile_img} />
-                <h4>{award.name}</h4>
+                <a href={'/awards/' + award.id}>
+                  <img className="award-logo" src={award.profile_img} />
+                  <h4>{award.name}</h4>
+                </a>
               </div>
             </div>)}
           </div>

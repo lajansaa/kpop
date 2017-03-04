@@ -3,9 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 /*Award Index*/
+.award-container {
+  height: 1000px;
+}
+
 #box-header {
   font-size: 30px;
-  padding:10px;
+  padding: 10px;
   float: left;
 }
 
@@ -43,6 +47,12 @@
   height: 230px;
 }
 
+.award-item-container a,
+.award-item-container a:hover {
+  text-decoration: none;
+  color: #1c1c1c;
+}
+
 .award-logo {
   width: 200px;
   height: 150px;
@@ -51,6 +61,10 @@
 }
 
 /*Ranking Board*/
+.ranking-board-container {
+  height: 10600px;
+}
+
 .award-profile {
   text-align: center;
 }
