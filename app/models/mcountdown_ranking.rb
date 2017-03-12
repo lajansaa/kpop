@@ -1,0 +1,2 @@
+class McountdownRanking < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class McountdownVote < ApplicationRecord
+end
