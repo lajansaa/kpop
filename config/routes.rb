@@ -17,4 +17,5 @@ Rails.application.routes.draw do
     resources :nominations, :controller => "award_nominations"
   end
   resources :nominations
+  resources :admins
 end
