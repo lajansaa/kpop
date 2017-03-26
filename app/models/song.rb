@@ -1,4 +1,4 @@
 class Song < ApplicationRecord
-  belongs_to :album
-  has_one :youtube_video, optional: true
+  belongs_to :album, optional: true
+  has_one :youtube_video
 end
