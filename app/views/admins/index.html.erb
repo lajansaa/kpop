@@ -1,0 +1,36 @@
+<%= image_tag(@award.masthead_img, class: "masthead") %>
+<div class="main-container ranking-board-container">
+
+<table>
+  <tr>
+    <th>Artiste ID</th>
+    <th>MCOUNTDOWN</th>
+    <th>Standardised Eng</th>
+    <th>Standardised Kor</th>
+  </tr>
+
+  <% @to_be_checked.each do |e| %>
+    <tr>
+      <td><%= e.id %></td>
+      <td><%= e.mcountdown %></td>
+      <td>
+        <%= form_for :artiste, :url => {:artiste_id => e.id} do |f| %>
+          <%= f.text_field :name_eng, label: false, :value => e.name_eng %>
+          <%= f.submit "Save" %>
+        <% end %>
+      </td>
+      <td>
+        <%= form_for :artiste, :url => {:artiste_id => e.id} do |f| %>
+          <%= f.text_field :name_kor, label: false, :value => e.name_kor %>
+          <%= f.submit "Save" %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+</div>
+
+<script>
+
+</script>
