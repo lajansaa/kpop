@@ -47,6 +47,10 @@ gem "sprockets-es6"
 # For react
 gem 'react-rails'
 
+# For scraping names
+gem 'phantomjs'
+gem 'watir-webdriver'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
