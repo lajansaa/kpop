@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312094319) do
+
+ActiveRecord::Schema.define(version: 20170326171430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,11 +245,12 @@ ActiveRecord::Schema.define(version: 20170312094319) do
   create_table "youtube_videos", force: :cascade do |t|
     t.integer  "artiste_id"
     t.integer  "song_id"
-    t.integer  "video_id"
+    t.string   "video_id"
     t.text     "watch_link"
     t.text     "thumbnail_img"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "video_title"
   end
 
   create_table "youtube_view_v2s", force: :cascade do |t|

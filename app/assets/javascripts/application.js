@@ -13,14 +13,11 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
-//= require turbolinks
 //= require react
 //= require react_ujs
 //= require components
+//= require angular
+//= require angular-mocks
 //= require_tree .
 
-$(document).ready(function(){
-  
-
-});
 
