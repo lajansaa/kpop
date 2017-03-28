@@ -8,11 +8,11 @@ require "watir-webdriver"
 
 class NamesStandardizer
 
-  def self.artiste_eng_name
+  def self.mcountdown_eng_name(class_type)
     log = Logger.new(STDOUT)
-    null_names = ArtisteV2.where(:name_eng => nil)
+    null_names = class_type.where(:name_eng => nil)
     null_names.each do |n|
-      suggested_name = n.mcountdown.gsub(/([a-z])([A-Z])/, '\1 \2').gsub(/`/, '\'')
+      suggested_name = n.mcountdown.gsub(/([a-z])([A-Z])/, '\1 \2').gsub(/`/, '\'').gsub(/(\w)(\()/, '\1 \2')
       n.update(:name_eng => suggested_name)
       log.info("Updated #{n.mcountdown} to #{suggested_name}")
     end
@@ -50,5 +50,6 @@ class NamesStandardizer
         log.info("Updated #{n.mcountdown}'s korean name to #{suggested_name}")
       end
     end
+  end
 
 end

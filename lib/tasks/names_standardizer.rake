@@ -4,7 +4,12 @@ namespace :names_standardizer do
 
   desc "Standardize artiste english names"
   task artiste_eng_name: :environment do
-    NamesStandardizer.artiste_eng_name
+    NamesStandardizer.mcountdown_eng_name(ArtisteV2)
+  end
+
+  desc "Standardize song english names"
+  task song_eng_name: :environment do
+    NamesStandardizer.mcountdown_eng_name(Song)
   end
 
   desc "Standardize artiste korean names"
