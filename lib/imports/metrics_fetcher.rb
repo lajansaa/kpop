@@ -67,18 +67,86 @@ class MetricsFetcher
                                     :thumbnail_img => thumbnail,
                                     :video_title => video_title
                                     ).id
+      else
+        log.info("Youtube Video ID exists for #{yt_artiste_name}'s #{yt_song_name}")
+        video_id = yt.video_id
+        yt_id = yt.id
+        stats_url = "https://www.googleapis.com/youtube/v3/videos?id=#{video_id}&key=#{api_key}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics"
+        request = Typhoeus::Request.new(stats_url)
+        sleep 3
+        response = JSON.parse(request.run.body)
+        view_count = response["items"].first["statistics"]["viewCount"]
       end
       
       log.info("Inserting #{view_count} views for #{yt_song_name}")
-      YoutubeViewV2.where(:date_d => formatted_time_now,
-                          :youtube_id => yt_id
-                          )
+      YoutubeView.where(:date_d => formatted_time_now,
+                        :artiste_id => n["artiste_id"],
+                        :song_id => n["song_id"],
+                        )
                    .first_or_create(:date_d => formatted_time_now,
+                                    :artiste_id => n["artiste_id"],
+                                    :song_id => n["song_id"],
                                     :youtube_id => yt_id,
-                                    :views => view_count
+                                    :youtube_views => view_count
                                     )
-                   .update(:views => view_count)
+                   .update(:youtube_views => view_count)
     end
+  end
+
+  def self.digital_sales
+    log = Logger.new(STDOUT)
+    api_key = ENV['GOOGLE_API_KEY']
+    time_now = Time.now.in_time_zone("Seoul")
+    formatted_time_now = time_now.strftime("%Y-%m-%d")
+
+    log.info("Getting nominees for ongoing nominations")
+    ongoing_cycle_id = NominationCycle.where('start_date <= ? AND end_date >= ?', time_now, time_now)
+                                      .select("id")
+    nominees_array = Nominee.where(cycle_id: ongoing_cycle_id)
+
+    download_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=S1020"
+    log.info("Getting top 100 downloads")
+    download_list = get_result_list_gaon(download_url)
+    log.info("Getting top 100 streams")
+    streaming_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=S1040"
+    stream_list = get_result_list_gaon(streaming_url)
+
+    nominees_array.each do |n|
+      artiste_obj = Artiste.find_by(:id => n["artiste_id"])
+      song_obj = Song.find_by(:id => n["song_id"], :artiste_id => n["artiste_id"])
+      std_artiste_name = artiste_obj.name_kor ||= artiste_obj.name_eng
+      std_song_name = song_obj.name_kor ||= song_obj.name_eng
+      download_cnt = download_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }.nil? ? 0 : download_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }["count"].gsub(/,/, '').to_i
+      stream_cnt = stream_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }.nil? ? 0 : stream_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }["count"].gsub(/,/, '').to_i
+      log.info("Inserting #{download_cnt} downloads and #{stream_cnt} streams for #{std_song_name}")
+      DigitalSale.where(:date_d => formatted_time_now,
+                        :artiste_id => n["artiste_id"],
+                        :song_id => n["song_id"],
+                        )
+                 .first_or_create(:date_d => formatted_time_now,
+                                  :artiste_id => n["artiste_id"],
+                                  :song_id => n["song_id"],
+                                  :download_cnt => download_cnt,
+                                  :stream_cnt => stream_cnt
+                                  )
+                 .update(:download_cnt => download_cnt,
+                         :stream_cnt => stream_cnt
+                         )
+    end
+  end
+
+  def self.get_result_list_gaon(url)
+    doc = Nokogiri::HTML(open(url))
+    result_list = Array.new
+    chart_list = doc.css(".chart tr")
+
+    chart_list.drop(1).each do |c|
+        song = c.css(".subject p")[0].attributes["title"].content.gsub(/`/, '\'')
+        artiste = c.css(".subject p")[1].attributes["title"].content.split("|")[0].strip.gsub(/`/, '\'')
+        count = c.css(".count").children.text.strip
+        result_list.push({"artiste" => artiste, "song" => song, "count" => count})
+    end
+   return result_list
   end
 
 end
