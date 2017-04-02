@@ -1,2 +1,0 @@
-class PopularityVote < ApplicationRecord
-end

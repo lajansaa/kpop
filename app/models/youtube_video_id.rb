@@ -1,2 +1,0 @@
-class YoutubeVideoId < ApplicationRecord
-end
