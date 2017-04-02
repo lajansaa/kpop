@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20170326171430) do
+ActiveRecord::Schema.define(version: 20170402154708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,18 +44,11 @@ ActiveRecord::Schema.define(version: 20170326171430) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "artiste_v2s", force: :cascade do |t|
+  create_table "artistes", force: :cascade do |t|
     t.string   "profile_img"
     t.string   "name_eng"
     t.string   "name_kor"
     t.string   "mcountdown"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "artistes", force: :cascade do |t|
-    t.string   "name_eng"
-    t.text     "profile_img"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -71,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170326171430) do
     t.text     "description"
   end
 
-  create_table "digital_sale_v2s", force: :cascade do |t|
+  create_table "digital_sales", force: :cascade do |t|
     t.date     "date_d"
     t.integer  "artiste_id"
     t.integer  "song_id"
@@ -81,34 +73,9 @@ ActiveRecord::Schema.define(version: 20170326171430) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "digital_sales", force: :cascade do |t|
-    t.date     "vote_start"
-    t.date     "vote_end"
-    t.string   "award"
-    t.string   "artiste"
-    t.string   "song"
-    t.bigint   "download_count"
-    t.bigint   "streaming_count"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
   create_table "digital_service_providers", force: :cascade do |t|
     t.string "name"
     t.text   "profile_img"
-  end
-
-  create_table "mappings", force: :cascade do |t|
-    t.string "artiste_eng"
-    t.string "artiste_kor"
-    t.string "song_eng"
-    t.string "song_kor"
-    t.string "mnet_artiste"
-    t.string "mnet_song"
-    t.string "youtube_artiste"
-    t.string "youtube_song"
-    t.string "gaon_artiste"
-    t.string "gaon_song"
   end
 
   create_table "mcountdown_rankings", force: :cascade do |t|
@@ -120,20 +87,20 @@ ActiveRecord::Schema.define(version: 20170326171430) do
     t.float    "download_cnt"
     t.float    "stream_cnt"
     t.float    "normalized_ds"
-    t.float    "normalized_remainder"
-    t.float    "normalized_score"
+    t.float    "remainder"
+    t.float    "score"
     t.integer  "ranking"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "mcountdown_votes", force: :cascade do |t|
     t.date     "date_d"
     t.integer  "artiste_id"
     t.integer  "song_id"
-    t.float    "votes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.float    "mcountdown_votes"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "nomination_cycles", force: :cascade do |t|
@@ -179,18 +146,6 @@ ActiveRecord::Schema.define(version: 20170326171430) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "popularity_votes", force: :cascade do |t|
-    t.date     "vote_start"
-    t.date     "vote_end"
-    t.string   "award"
-    t.string   "artiste"
-    t.string   "song"
-    t.float    "votes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "album"
-  end
-
   create_table "songs", force: :cascade do |t|
     t.string   "name_eng"
     t.string   "name_kor"
@@ -232,16 +187,6 @@ ActiveRecord::Schema.define(version: 20170326171430) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "youtube_video_ids", force: :cascade do |t|
-    t.string   "artiste"
-    t.string   "song"
-    t.string   "video_id"
-    t.text     "watch_link"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.text     "thumbnail_img"
-  end
-
   create_table "youtube_videos", force: :cascade do |t|
     t.integer  "artiste_id"
     t.integer  "song_id"
@@ -253,23 +198,14 @@ ActiveRecord::Schema.define(version: 20170326171430) do
     t.string   "video_title"
   end
 
-  create_table "youtube_view_v2s", force: :cascade do |t|
+  create_table "youtube_views", force: :cascade do |t|
     t.date     "date_d"
     t.integer  "youtube_id"
-    t.float    "views"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "youtube_views", force: :cascade do |t|
-    t.date     "vote_start"
-    t.date     "vote_end"
-    t.string   "award"
-    t.string   "artiste"
-    t.string   "song"
-    t.bigint   "views"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.float    "youtube_views"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "artiste_id"
+    t.integer  "song_id"
   end
 
 end
