@@ -13,32 +13,30 @@ class MetricsFetcher
     formatted_time_now = time_now.strftime("%Y-%m-%d")
 
     log.info("Getting nominees for ongoing nominations")
-    # ongoing_cycle_id = NominationCycle.find_by('start_date <= ? AND end_date >= ?', time_now, time_now).id
-    ongoing_cycle_id = NominationCycle.find_by('start_date <= ? AND end_date >= ?', '2017-03-11', '2017-03-11').id
-    nominees_array = Nominee.where(:cycle_id => ongoing_cycle_id)
+    ongoing_cycle_id = NominationCycle.where('start_date <= ? AND end_date >= ?', time_now, time_now)
+                                      .select("id")
+    nominees_array = Nominee.where(cycle_id: ongoing_cycle_id)
+
     nominees_array.each do |n|
-      artiste_obj = ArtisteV2.find_by(:id => n["artiste_id"])
+      artiste_obj = Artiste.find_by(:id => n["artiste_id"])
       song_obj = Song.find_by(:id => n["song_id"], :artiste_id => n["artiste_id"])
       yt_artiste_name = artiste_obj.name_kor ||= artiste_obj.name_eng
       yt_song_name = song_obj.name_kor ||= song_obj.name_eng
                      
       yt = YoutubeVideo.find_by(:artiste_id => n["artiste_id"], :song_id => n["song_id"])
 
-      if yt
-        log.info("Youtube Video ID exists for #{yt_artiste_name}'s #{yt_song_name}")
-        video_id = yt.video_id
+      if yt.video_id == 'NA'
+        video_id = 'NA'
         yt_id = yt.id
-        stats_url = "https://www.googleapis.com/youtube/v3/videos?id=#{video_id}&key=#{api_key}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics"
-        request = Typhoeus::Request.new(stats_url)
-        response = JSON.parse(request.run.body)
-        view_count = response["items"].first["statistics"]["viewCount"]
-      else
+        view_count = 0
+      elsif yt.nil?
         log.info("Getting Youtube Video ID for #{yt_artiste_name}'s #{yt_song_name}")
         record_artiste = yt_artiste_name.gsub(/\s/, '+').strip
         record_song = yt_song_name.gsub(/\s/, '+').strip
         search_term = "#{record_artiste}+#{record_song}+mv"
         search_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=#{search_term}&type=video&key=#{api_key}"
         search_request = Typhoeus::Request.new(search_url)
+        sleep 3
         search_response = JSON.parse(search_request.run.body)["items"].first
 
         if search_response.nil?
@@ -56,6 +54,7 @@ class MetricsFetcher
 
           stats_url = "https://www.googleapis.com/youtube/v3/videos?id=#{video_id}&key=#{api_key}&fields=items(id,snippet(channelId,title,categoryId),statistics)&part=snippet,statistics"
           request = Typhoeus::Request.new(stats_url)
+          sleep 3
           response = JSON.parse(request.run.body)
           view_count = response["items"].first["statistics"]["viewCount"]
         end
