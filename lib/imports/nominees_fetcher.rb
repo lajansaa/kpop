@@ -40,10 +40,10 @@ class NomineesFetcher
         artiste = record.css('dd.artist a')
         artiste_name = artiste.text.strip
         song_name = record.css('dl .title a').text.strip
-        votes = record.css('dl .per').text.strip.gsub( /%/, "")
+        mcountdown_votes = record.css('dl .per').text.strip.gsub( /%/, "")
 
         #insert artiste's profile image if not yet available
-        artiste_array = ArtisteV2.where(:mcountdown => artiste_name)
+        artiste_array = Artiste.where(:mcountdown => artiste_name)
         if artiste_array.empty?
           m_artiste_id = artiste.first.attributes["onclick"].value.split("\'")[1]
           artiste_url = "http://mwave.interest.me/en/kstar/#{m_artiste_id}/dummy"
@@ -59,8 +59,8 @@ class NomineesFetcher
             end
           end
 
-          log.info("Inserting profile image for #{artiste_name} into ArtisteV2 relation")
-          artiste_id = ArtisteV2.where(:mcountdown => artiste_name)
+          log.info("Inserting profile image for #{artiste_name} into Artiste relation")
+          artiste_id = Artiste.where(:mcountdown => artiste_name)
                                 .first_or_create(profile_img: artiste_profile_img,
                                                  mcountdown: artiste_name
                                                  ).id
@@ -110,7 +110,7 @@ class NomineesFetcher
                                        album_id: album_id
                                        ).id
 
-        log.info("Updating votes for #{artiste_name}'s nominated #{song_name}")
+        log.info("Updating mcountdown_votes for #{artiste_name}'s nominated #{song_name}")
         McountdownVote.where(:date_d => formatted_time_now,
                              :artiste_id => artiste_id,
                              :song_id => song_id
@@ -118,9 +118,9 @@ class NomineesFetcher
                       .first_or_create(date_d: formatted_time_now,
                                        artiste_id: artiste_id,
                                        song_id: song_id,
-                                       votes: votes
+                                       mcountdown_votes: mcountdown_votes
                                        )
-                      .update(votes: votes)
+                      .update(mcountdown_votes: mcountdown_votes)
 
         log.info("Inserting #{artiste_name}'s nominated #{song_name} into Nominee relation")
         Nominee.where(:cycle_id => cycle_id,

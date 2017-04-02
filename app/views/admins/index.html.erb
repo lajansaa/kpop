@@ -73,7 +73,7 @@
   <% @to_be_checked_yt_videos.each do |e| %>
     <tr>
       <td><%= e.id %></td>
-      <td><%= e.artiste_v2.name_eng %></td>
+      <td><%= e.artiste.name_eng %></td>
       <td><%= e.song.name_eng %></td>
       <td>
         <%= form_for :yt, :url => {:yt_id => e.id} do |f| %>

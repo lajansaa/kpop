@@ -20,7 +20,7 @@ class NamesStandardizer
 
   def self.artiste_kor_name_mnet
     log = Logger.new(STDOUT)
-    null_names = ArtisteV2.where(:name_kor => nil)
+    null_names = Artiste.where(:name_kor => nil)
     browser = Watir::Browser.new(:phantomjs)
     null_names.each do |n|
       mnet_name = n.name_eng.gsub(/\s/, '+').downcase
@@ -36,7 +36,7 @@ class NamesStandardizer
 
   def self.artiste_kor_name_kpop_scene
     log = Logger.new(STDOUT)
-    null_names = ArtisteV2.where(:name_kor => nil)
+    null_names = Artiste.where(:name_kor => nil)
     null_names.each do |n|
       kpopscene_name = n.name_eng.gsub(/\W/, '-').downcase
       url = "http://www.kpopscene.com/#{kpopscene_name}/"
