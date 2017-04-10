@@ -24,12 +24,7 @@ class MetricsFetcher
       yt_song_name = song_obj.name_kor ||= song_obj.name_eng
                      
       yt = YoutubeVideo.find_by(:artiste_id => n["artiste_id"], :song_id => n["song_id"])
-
-      if yt.video_id == 'NA'
-        video_id = 'NA'
-        yt_id = yt.id
-        view_count = 0
-      elsif yt.nil?
+      if yt.nil?
         log.info("Getting Youtube Video ID for #{yt_artiste_name}'s #{yt_song_name}")
         record_artiste = yt_artiste_name.gsub(/\s/, '+').strip
         record_song = yt_song_name.gsub(/\s/, '+').strip
@@ -56,7 +51,11 @@ class MetricsFetcher
           request = Typhoeus::Request.new(stats_url)
           sleep 3
           response = JSON.parse(request.run.body)
-          view_count = response["items"].first["statistics"]["viewCount"]
+          if response["items"].first["statistics"].nil?
+            view_count = 0
+          else
+            view_count = response["items"].first["statistics"]["viewCount"]
+          end
         end
 
         #insert youtube video id and thumbnail img into table so can skip the step of searching
@@ -67,6 +66,11 @@ class MetricsFetcher
                                     :thumbnail_img => thumbnail,
                                     :video_title => video_title
                                     ).id
+      elsif yt.video_id == 'NA'
+        yt.video_id == 'NA'
+        video_id = 'NA'
+        yt_id = yt.id
+        view_count = 0
       else
         log.info("Youtube Video ID exists for #{yt_artiste_name}'s #{yt_song_name}")
         video_id = yt.video_id
@@ -75,7 +79,11 @@ class MetricsFetcher
         request = Typhoeus::Request.new(stats_url)
         sleep 3
         response = JSON.parse(request.run.body)
-        view_count = response["items"].first["statistics"]["viewCount"]
+        if response["items"].first["statistics"].nil?
+          view_count = 0
+        else
+          view_count = response["items"].first["statistics"]["viewCount"]
+        end
       end
       
       log.info("Inserting #{view_count} views for #{yt_song_name}")
