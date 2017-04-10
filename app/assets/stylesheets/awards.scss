@@ -63,6 +63,12 @@
 /*Ranking Board*/
 .ranking-board-container {
   height: 10600px;
+  min-width: 800px;
+}
+
+.btn {
+  padding: 3px 12px !important;
+  border-radius: 20px !important;
 }
 
 .award-profile {
@@ -94,8 +100,27 @@
   }
 }
 
-.ranking_container {
-  padding: 30px;
+#ranking-ajax {
+  margin: 50px 0 0;
+  border: none;
+}
+
+#ranking-ajax th {
+  padding: 20px 0;
+  font-size: 2rem;
+}
+
+#ranking-ajax th, tr {
+  text-align: center;
+}
+
+#ranking-ajax .nominee-col {
+  text-align: left;
+}
+
+#ranking-ajax td {
+  border-bottom: 1px solid #1c1c1c;
+  padding: 30px 0 !important;
 }
 
 .ranking_item {
@@ -152,15 +177,12 @@
 }
 
 .aggregate_score {
-  font-size: 2em;
+  font-size: 1.8em;
   font-weight: bold;
-  line-height: 140px;
-  text-align: left;
 }
 
-.more_details {
-  line-height: 140px;
-  text-align: right;
+.fa-chevron-right {
+  font-size: 1.5em !important;
 }  
 
 
