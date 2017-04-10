@@ -1,0 +1,28 @@
+<tr>
+  <th>Rank</th>
+  <th colspan="2">Nominee</th>
+  <th>Score</th>
+  <th></th>
+</tr>
+<% mcountdown_nominees.each do |mn| %>
+  <tr>
+    <td><%= mn.mcountdown_ranking.ranking %></td>
+    <td>
+      <%= image_tag(mn.artiste.profile_img, size: "200x150", alt: mn.artiste.name_eng ) %>
+    </td>
+    <td class="nominee-col">
+      <div class="flex-bar">
+        <div class="flex-bar--item horiz-bar" style='flex: <%= mn.mcountdown_ranking.normalized_ds %> 0%; background-color: #ffe66b;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= mn.mcountdown_ranking.normalized_yv %> 0%; background-color: #e34a6f;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= mn.mcountdown_ranking.normalized_mv %> 0%; background-color: #fafaff;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= mn.mcountdown_ranking.remainder %> 0%; background-color: #B8C5D6;'></div>
+      </div>
+      <div>
+        <p><%= mn.song.name_eng %> | <%= mn.song.name_kor %></p>
+        <p><%= mn.artiste.name_eng %> | <%= mn.artiste.name_kor %></p>
+      </div>
+    </td>
+    <td class="aggregate_score"><%= mn.mcountdown_ranking.score.round(1).to_s + '%' %></td>
+    <td><i class="fa fa-chevron-right" aria-hidden="true"></i></td>
+    </tr>
+  <% end %> 

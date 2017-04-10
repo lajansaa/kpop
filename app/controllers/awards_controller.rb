@@ -5,21 +5,19 @@ class AwardsController < ApplicationController
   end
 
   def show
-    @voting_periods = Nomination.pluck("DISTINCT vote_start, vote_end") 
-    @vote_start = params[:vote_start] ||= Nomination.maximum("vote_start")
-    @vote_end = params[:vote_end] ||= Nomination.maximum("vote_end")
-    sort_by = params[:order] ||= 'ranking'
-    #Award.find(params[:id]).nominations.for_week_of(start_date, end_date)    
     @award = Award.find(params[:id])
+    @nomination_cycles = NominationCycle.where(:award_id => @award).order(id: :desc)
+    @max_cycyle_id = @nomination_cycles.first.id
+    @start_date = @nomination_cycles.first.start_date
+    @end_date = @nomination_cycles.first.end_date
+    @mcountdown_nominees = Nominee.where(:cycle_id => @max_cycyle_id).sort_by {|r| r.mcountdown_ranking.ranking}
+    
+  end
 
-    if params[:keyword]
-        @nominations = @award.nominations
-                             .where( [ "LOWER(artiste) LIKE ? OR LOWER(song) LIKE ? ", "%#{params[:keyword]}%", "%#{params[:keyword]}%" ] )
-                             .where( "vote_start = ?", @vote_start )
-    else
-        @nominations = @award.nominations
-                             .where(vote_start: @vote_start, vote_end: @vote_end)
-                             .order(sort_by)
+  def from_nomination_cycle
+    @selected = Nominee.where(:cycle_id => params[:cycle_id]).sort_by {|r| r.mcountdown_ranking.ranking}
+    respond_to do |format|
+      format.js
     end
   end
 

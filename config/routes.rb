@@ -3,15 +3,8 @@ Rails.application.routes.draw do
   
   root to: "awards#index"
   
-  # get 'api/v1/update_nominations' => 'nominations#update_nominations'
-  get 'api/v1/get_nominations' => 'nominations#get_nominations'
-  get 'api/v1/get_artiste_profile' => 'artistes#get_artiste_profile'
-  # get 'api/v1/get_artiste_info' => 'artistes#profile_img_mnet'
-  # get 'api/v2/get_artiste_info' => 'artistes#profile_img_kpop_scene'
-  # get 'api/v1/get_thumbnails' => 'youtube_video_ids#thumbnail_img'
-  # get 'api/v1/get_album_artiste' => 'albums#album_img'
+  get "awards/:id/:cycle_id" => 'awards#from_nomination_cycle', as: 'fetch_nominees'
 
-  get 'awards/:id/:vote_start/:vote_end/:order(.:format)' => 'awards#show'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :awards do
     resources :nominations, :controller => "award_nominations"

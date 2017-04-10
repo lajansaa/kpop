@@ -11,92 +11,28 @@
   </div>
 
 
-
-  <div class="date_sort_search">
-   <div class="row">
-
-    <div class="col-sm-3"> 
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <%= @vote_start.to_time.strftime("%d %b %y") + ' ~ ' + @vote_end.to_time.strftime("%d %b %y")  %>
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle pull-right" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <%= @start_date.to_s + ' ~ ' + @end_date.to_s %>
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <% @voting_periods.each do |vp| %>
-        <li class="voting_period"><%= link_to vp[0].strftime("%d %b %y") + ' ~ ' + vp[1].strftime("%d %b %y"), award_path(:vote_start => vp[0], :vote_end => vp[1], )  %></li>
+      <% @nomination_cycles.each do |nc| %>
+        <li><%= link_to nc.start_date.to_s + ' ~ ' + nc.end_date.to_s, fetch_nominees_path(:cycle_id => nc.id), :remote => true %></li>
       <% end %>
     </ul>
   </div>
-  </div>
 
-  <div class="col-sm-5"> 
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      Sort by
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><%= link_to 'Artiste', award_path(@award.id, :order => "artiste") %></li>
-      <li><%= link_to 'Ranking', award_path(@award.id, :order => "ranking") %></li>
-    </ul>
-  </div>
-  </div>
-
-  <div class="col-sm-4"> 
-  <div id="search_field">
-    <%= form_for award_path(@award.id), :method => :get do %>
-      <%= text_field_tag "keyword", nil, placeholder: 'Search for artiste or song...' %>
-      <%= button_tag(type: 'submit') do %>
-        <i class="fa fa-search" aria-hidden="true"></i>
-      <% end %>
-    <% end %>
-  </div>
-  </div>
-  </div>
+  
 
  <div class="ranking_board_header">
   <h1>Ranking Board</h1>
-  </div>
+ </div>
 
-
-  <div class="ranking_container">
-    <% @nominations.each do |n| %>
-      <%= link_to award_nomination_path(n.award_id, n.id), class: "nomination_link" do %>
-        <div class="row ranking_item">
-          <div class="col-sm-1 ranking">
-            <p class="ranking-no"><%= n.ranking.ordinalize %></p>
-          </div>
-          <div class="col-sm-3">
-          <div class="artiste_img">
-            <% if Artiste.find_by("name_eng='#{n.artiste}'") %>
-              <%= image_tag(Artiste.find_by("name_eng='#{n.artiste}'").profile_img, width: "80%") %>
-            <% else %>
-              <p><%= n.artiste %></p>
-            <% end %>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="ranking_info">
-            <p class="artiste_name"><%= n.artiste %> <span class="artiste_kor"><%= ('(' + Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.artiste_eng = nominations.artiste").find_by("nominations.artiste = '#{n.artiste}'").artiste_kor.empty? %></span></p>
-            <div class="flex-bar">
-              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_ds %> 0%; background-color: #ffe66b;'></div>
-              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_av %> 0%; background-color: #6ccff6;'></div>
-              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_yv %> 0%; background-color: #e34a6f;'></div>
-              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_pv %> 0%; background-color: #fafaff;'></div>
-              <div class="flex-bar--item horiz-bar" style='flex: <%= n.normalized_remainder %> 0%; background-color: #B8C5D6;'></div>
-            </div>
-            <p class="song_name"><%= n.song %> <span class="song_kor"><%= ('(' +Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor + ')') unless Mapping.joins("JOIN nominations ON mappings.song_eng = nominations.song").find_by("nominations.song = '#{n.song.gsub(/\'/, '\'\'')}'").song_kor.empty? %></span></p>
-            <p class="album"><%= n.album %></p>
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <p class="aggregate_score"><%= n.aggregate_score.to_f.round(1).to_s + '%' %></p>
-          </div>
-          <div class="col-sm-1 more_details">
-            <img src="http://imgh.us/arrow_7.png" width="15px" />
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
+ <div class="ranking-container">
+  <table id='ranking-ajax'>
+    <%= render partial: 'ranking', locals: { mcountdown_nominees: @mcountdown_nominees} %>
+  </table>
+ </div>
 </div>
+     
