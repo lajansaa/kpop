@@ -120,60 +120,13 @@
 
 #ranking-ajax td {
   border-bottom: 1px solid #1c1c1c;
-  padding: 30px 0 !important;
+  padding: 30px 20px;
 }
-
-.ranking_item {
-  margin-bottom: 20px;
-}
-
-.ranking {
-  text-align: center;
-}
-
-.ranking-no {
-  vertical-align: middle;
-}
-
 
 .nomination_link,
 .nomination_link:hover {
   text-decoration: none;
   color: #1c1c1c;
-}
-
-.artiste_name {
-  margin: 0;
-  font-weight: bold;
-  font-size: 1.5em;
-}
-
-.artiste_kor {
-  font-size: 1em;
-}
-
-.song_name {
-  font-size: 1.2em;
-}
-
-.song_kor {
-  font-size: 1em;
-}
-
-.album {
-  font-size: 1em;
-  font-style: italic;
-}
-
-.date_sort_search {
-  margin: 50px 0 100px 0;
-}
-
-.ranking {
-  line-height: 140px;
-  text-align: left;
-  font-size: 1.5em;
-  font-weight: bold;
 }
 
 .aggregate_score {
@@ -184,31 +137,4 @@
 .fa-chevron-right {
   font-size: 1.5em !important;
 }  
-
-
-.ranking_item {
-  border-bottom: 1px solid #dedede;
-  margin: auto;
-  position: relative;
-  vertical-align: middle;
-  padding: 15px;
-  color: #1c1c1c;
-}
-
-.artiste_img {
-  width: 250px;
-  height: 150px;
-  overflow: hidden;
-  margin-top: 20px;
-} 
-
-.ranking_info {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.ranking_board_header {
-  margin-top: 50px;
-  text-align: center;
-}
 

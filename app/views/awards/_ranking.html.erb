@@ -8,7 +8,9 @@
   <tr>
     <td><%= mn.mcountdown_ranking.ranking %></td>
     <td>
-      <%= image_tag(mn.artiste.profile_img, size: "200x150", alt: mn.artiste.name_eng ) %>
+      <% unless mn.artiste.profile_img == 'no available image' %>
+        <%= image_tag(mn.artiste.profile_img, size: "200x150", alt: mn.artiste.name_eng ) %>
+      <% end %>
     </td>
     <td class="nominee-col">
       <div class="flex-bar">
