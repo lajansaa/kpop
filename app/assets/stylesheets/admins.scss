@@ -6,11 +6,45 @@ table {
   width: 100%;
 }
 
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+.tab {
+  overflow: hidden;
 }
 
-th, tr {
-  text-align: center !important;
+.tab button {
+  background-color: #ccc;
+  float: left;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  border: 1px black solid;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  font-size: 17px;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tab button.active {
+  background-color: #fff;
+  border-bottom: none;
+}
+
+.tabcontent {
+  display: none;
+  margin-top: 50px;
+}
+
+#artiste-check.tabcontent {
+  display: block;
+}
+
+.check-table td, .check-table th {
+  border: 1px solid #1c1c1c;
+}
+
+.check-table th, .check-table tr {
+  text-align: center;
 }

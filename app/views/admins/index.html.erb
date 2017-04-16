@@ -1,10 +1,16 @@
 <%= image_tag(@award.masthead_img, class: "masthead") %>
 <div class="main-container ranking-board-container">
 
-<h3>Artiste</h3>
-<table>
+<div class="tab">
+  <button class="tablinks active" onclick="showCheck(event, 'artiste-check')" >Artiste</button>
+  <button class="tablinks" onclick="showCheck(event, 'song-check')">Song</button>
+  <button class="tablinks" onclick="showCheck(event, 'yt-video-check')">Youtube Video</button>
+</div>
+
+<div id="artiste-check" class="tabcontent" >
+<table class="check-table">
   <tr>
-    <th>Artiste ID</th>
+    <th>ID</th>
     <th>MCOUNTDOWN</th>
     <th>Standardised Eng</th>
     <th>Standardised Kor</th>
@@ -29,11 +35,12 @@
     </tr>
   <% end %>
 </table>
+</div>
 
-<h3>Song</h3>
-<table>
+<div id="song-check" class="tabcontent">
+<table class="check-table">
   <tr>
-    <th>Song ID</th>
+    <th>ID</th>
     <th>MCOUNTDOWN</th>
     <th>Standardised Eng</th>
     <th>Standardised Kor</th>
@@ -58,11 +65,12 @@
     </tr>
   <% end %>
 </table>
+</div>
 
-<h3>Youtube Video</h3>
-<table>
+<div id="yt-video-check" class="tabcontent">
+<table class="check-table"">
   <tr>
-    <th>Youtube Video ID</th>
+    <th>ID</th>
     <th>Artiste Name</th>
     <th>Song Name</th>
     <th>Video ID</th>
@@ -86,9 +94,22 @@
     </tr>
   <% end %>
 </table>
-
 </div>
 
 <script>
+function showCheck(event, what) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i=0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i=0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className. replace(" active", "");
+  }
+  document.getElementById(what).style.display = "block";
+  event.currentTarget.className += " active";
+
+}
 
 </script>
