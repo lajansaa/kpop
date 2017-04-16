@@ -113,8 +113,12 @@
   font-size: 2rem;
 }
 
-#ranking-ajax th, tr {
+#ranking-ajax th, #ranking-ajax td {
   text-align: center;
+}
+
+#ranking-ajax tr:not(:first-child):not(:last-child) {
+  border-bottom: 1px solid #1c1c1c;
 }
 
 #ranking-ajax .nominee-col {
@@ -122,7 +126,6 @@
 }
 
 #ranking-ajax td {
-  border-bottom: 1px solid #1c1c1c;
   padding: 30px 20px;
 }
 

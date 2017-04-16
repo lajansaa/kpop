@@ -20,8 +20,18 @@
         <div class="flex-bar--item horiz-bar" style='flex: <%= mn.mcountdown_ranking.remainder %> 0%; background-color: #B8C5D6;'></div>
       </div>
       <div>
-        <p><%= mn.song.name_eng %> | <%= mn.song.name_kor %></p>
-        <p><%= mn.artiste.name_eng %> | <%= mn.artiste.name_kor %></p>
+        <p>
+          <span><%= mn.song.name_eng %></span>
+          <% unless mn.song.name_kor.nil?%>
+            <span> | <%= mn.song.name_kor %></span>
+          <% end %>
+        </p>
+        <p>
+          <span><%= mn.artiste.name_eng %></span>
+          <% unless mn.artiste.name_kor.nil?%>
+            <span> | <%= mn.artiste.name_kor %></span>
+          <% end %>
+        </p>
       </div>
     </td>
     <td class="aggregate_score"><%= mn.mcountdown_ranking.score.round(1).to_s + '%' %></td>
