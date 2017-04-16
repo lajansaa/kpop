@@ -10,22 +10,14 @@
     </div>
   </div>
 
+<select id="date-picker">
+  <% @nomination_cycles.each do |nc| %>
+    <option value="<%= nc.id %>"><%= nc.start_date.to_s + ' ~ ' + nc.end_date.to_s %></option>
+  <% end %>
+</select>
+ 
 
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle pull-right" type="button" id="voting-period-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <%= @start_date.to_s + ' ~ ' + @end_date.to_s %>
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <% @nomination_cycles.each do |nc| %>
-        <li><%= link_to nc.start_date.to_s + ' ~ ' + nc.end_date.to_s, fetch_nominees_path(:cycle_id => nc.id), :remote => true %></li>
-      <% end %>
-    </ul>
-  </div>
-
-  
-
- <div class="ranking_board_header">
+ <div class="ranking_board_header clear">
   <h1>Ranking Board</h1>
  </div>
 
@@ -35,4 +27,15 @@
   </table>
  </div>
 </div>
+<script>
+$(function() {
+
+  $('#date-picker').change(function(event){
+    $.get(
+      '/from_nomination_cycle',
+      {cycle_id: $(event.target).val()}
+    );
+  });
+});
+</script>
      

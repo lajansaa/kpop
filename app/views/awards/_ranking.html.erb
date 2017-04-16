@@ -9,7 +9,7 @@
     <td><%= mn.mcountdown_ranking.ranking %></td>
     <td>
       <% unless mn.artiste.profile_img == 'no available image' %>
-        <%= image_tag(mn.artiste.profile_img, size: "200x150", alt: mn.artiste.name_eng ) %>
+        <%= image_tag(mn.artiste.profile_img, class: "artiste-profile", alt: mn.artiste.name_eng ) %>
       <% end %>
     </td>
     <td class="nominee-col">

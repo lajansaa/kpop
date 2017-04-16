@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.clear {
+    clear: both;
+}
+
 /*Award Index*/
 .award-container {
   height: 1000px;
@@ -60,15 +64,19 @@
   margin: 5px;
 }
 
+#date-picker {
+  float: right;
+  margin: 50px 0;
+}
+
 /*Ranking Board*/
 .ranking-board-container {
   height: 10600px;
   min-width: 800px;
 }
 
-.btn {
-  padding: 3px 12px !important;
-  border-radius: 20px !important;
+.ranking_board_header {
+  text-align: center;
 }
 
 .award-profile {
@@ -136,5 +144,12 @@
 
 .fa-chevron-right {
   font-size: 1.5em !important;
-}  
+}
+
+.artiste-profile {
+  width: 200px;
+  height: 150px;
+}
+
+
 

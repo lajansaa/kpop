@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   root to: "awards#index"
   
-  get "awards/:id/:cycle_id" => 'awards#from_nomination_cycle', as: 'fetch_nominees'
+  get "/from_nomination_cycle" => 'awards#from_nomination_cycle', as: 'fetch_nominees'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :awards do
