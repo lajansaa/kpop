@@ -13,6 +13,7 @@ class AwardsController < ApplicationController
 
   def from_nomination_cycle
     @selected = Nominee.where(:cycle_id => params[:cycle_id]).sort_by {|r| r.mcountdown_ranking.ranking}
+    @award_id = params[:award_id]
     respond_to do |format|
       format.js
     end
