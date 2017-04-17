@@ -1,1 +1,1 @@
-$("#ranking-ajax").html("<%= escape_javascript(render partial: 'ranking', locals: { mcountdown_nominees: @selected } ) %>"); 
+$("#ranking-ajax").html("<%= escape_javascript(render partial: 'ranking', locals: { mcountdown_nominees: @selected, award_id: @award_id } ) %>");
