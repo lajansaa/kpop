@@ -1,0 +1,155 @@
+<%= image_tag(@award.masthead_img, class: "masthead") %>
+<div class="main-container ranking-board-container">
+<table>
+<tr>
+<td><%= @nominee.mcountdown_ranking.ranking %></td>
+    <td>
+      <% unless @nominee.artiste.profile_img == 'no available image' %>
+        <%= image_tag(@nominee.artiste.profile_img, class: "artiste-profile", alt: @nominee.artiste.name_eng ) %>
+      <% end %>
+    </td>
+    <td class="nominee-col">
+      <div class="flex-bar">
+        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_ds %> 0%; background-color: #ffe66b;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_yv %> 0%; background-color: #e34a6f;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_mv %> 0%; background-color: #fafaff;'></div>
+        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.remainder %> 0%; background-color: #B8C5D6;'></div>
+      </div>
+      <div>
+        <p>
+          <span><%= @nominee.song.name_eng %></span>
+          <% unless @nominee.song.name_kor.nil?%>
+            <span> | <%= @nominee.song.name_kor %></span>
+          <% end %>
+        </p>
+        <p>
+          <span><%= @nominee.artiste.name_eng %></span>
+          <% unless @nominee.artiste.name_kor.nil?%>
+            <span> | <%= @nominee.artiste.name_kor %></span>
+          <% end %>
+        </p>
+      </div>
+    </td>
+    <td class="aggregate_score"><%= @nominee.mcountdown_ranking.score.round(1).to_s + '%' %></td>
+</tr>
+</table>
+
+<div class="metrics_container">
+    <div class="metrics">
+      <div class="metrics_header">
+        <p class="ds">Digital Sales</p>
+      </div>
+      <div class="metrics_body">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="gaon_img_container">
+              <%= image_tag("https://ccmworld.files.wordpress.com/2013/07/gaon.jpg", width: "50%", class: "gaon_img") %>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="metrics_text_container">
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nominee.mcountdown_ranking.download_cnt, :delimiter => ',') %></span> downloads</p>
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nominee.mcountdown_ranking.stream_cnt, :delimiter => ',') %></span> streams</p>
+            </div>
+          </div>
+        </div>
+        <div class="digital_providers_containers">
+          <div class="row">
+            <% @providers.each do |pr| %>
+              <div class="col-sm-6 col-md-3">
+                <div class="digital_providers">
+                  <div class="dp_profile_container">
+                    <%= image_tag(pr.profile_img, class: "dp_profile") %>
+                  </div>
+                  <a target="_blank" href="http://www.genie.co.kr/detail/albumInfo?axnm=80893759" class="btn ds_btn" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</a>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metrics_header">
+        <p class="as">Album Volume</p>
+      </div>
+      <div class="metrics_body">
+        <div class="row test">
+          <div class="col-sm-3">
+            <div class="album_img_container">
+              <%= image_tag(@nominee.song.album.profile_img, class: "album_img") %>
+            </div>
+          </div>
+          <div class="col-sm-7">
+          <div class="metrics_text_container">
+            <p class="metrics_text"><span class="stats"><%= 0 %></span> sold</p>
+            <a href="#" class="btn as_btn" role="button"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Order</a>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="stats_provider">
+              <img src="https://4.bp.blogspot.com/-W6cUt4IYL1k/VyeRJKGi-vI/AAAAAAAAAAg/ApRsAIY0Stc3zhjnE3sxfzZRtODVwPaBwCK4B/s1600/Hanteo_chart_logo_zps6235a6ee.png" class="stats_provider_img"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metrics_header">
+        <p class="yv">Youtube Views</p>
+      </div>
+      <div class="metrics_body">
+        <% if @nominee.song.youtube_video.video_id == 'NA' %>
+          <p>No official YouTube video!</p>
+        <% else %>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="thumbnail_img_container">
+                <%= link_to @nominee.song.youtube_video.watch_link, :target => "_blank" do %>
+                  <%= image_tag(@nominee.song.youtube_video.thumbnail_img, class: "thumbnail_img") %>
+                  <i class="fa fa-play-circle-o" aria-hidden="true"></i>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="metrics_text_container">
+              <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nominee.mcountdown_ranking.youtube_views, :delimiter => ',') %></span> views</p>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="stats_provider">
+                <img src="https://www.youtube.com/yt/brand/media/image/YouTube-logo-full_color.png" class="stats_provider_img"/>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metrics_header">
+        <p class="pv">Popularity Votes</p>
+      </div>
+      <div class="metrics_body">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="gaon_img_container">
+              <%= image_tag("https://pbs.twimg.com/profile_images/710092967336226817/2Hnj7oOl.jpg", width: "50%", class: "gaon_img") %>
+            </div>
+          </div>
+          <div class="col-sm-7">
+          <div class="metrics_text_container">
+            <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nominee.mcountdown_ranking.mcountdown_votes, :delimiter => ',') %></span> votes</p>
+            <a target="_blank" href="http://mwave.interest.me/mcountdown/vote/preVote" class="btn vote_btn" role="button"><span><i class="fa fa-heart" aria-hidden="true"></i></span> Vote</a>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="stats_provider">
+              <img src="http://imgh.us/mnet.jpg" class="stats_provider_img"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

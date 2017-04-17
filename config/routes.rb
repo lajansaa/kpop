@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :awards do
     resources :nominations, :controller => "award_nominations"
   end
+  resources :awards do
+    resources :nominees, :controller => "award_nominees"
+  end
   resources :nominations
   resources :admins
 end
