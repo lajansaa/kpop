@@ -89,6 +89,7 @@
   height: 1.5em;
   color: #ddd;
   width: 250px;
+  border: 1px solid #ddd;
   &--item {
     height: 0%;
     display: block;
@@ -121,18 +122,21 @@
   border-bottom: 1px solid #1c1c1c;
 }
 
+#ranking-ajax .clickable-row {
+  cursor: pointer;
+}
+
 #ranking-ajax .nominee-col {
   text-align: left;
 }
 
-#ranking-ajax td {
-  padding: 30px 20px;
+.artiste-profile {
+  width: 200px;
+  height: 150px;
 }
 
-.nomination_link,
-.nomination_link:hover {
-  text-decoration: none;
-  color: #1c1c1c;
+#ranking-ajax td {
+  padding: 30px 20px;
 }
 
 .aggregate_score {
@@ -144,10 +148,6 @@
   font-size: 1.5em !important;
 }
 
-.artiste-profile {
-  width: 200px;
-  height: 150px;
-}
 
 
 
