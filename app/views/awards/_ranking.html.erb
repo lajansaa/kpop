@@ -5,7 +5,7 @@
   <th></th>
 </tr>
 <% mcountdown_nominees.each do |mn| %>
-  <tr>
+  <tr class='clickable-row' data-href="<%= award_nominee_path(award_id, mn.id) %>">
     <td><%= mn.mcountdown_ranking.ranking %></td>
     <td>
       <% unless mn.artiste.profile_img == 'no available image' %>
@@ -38,3 +38,8 @@
     <td><i class="fa fa-chevron-right" aria-hidden="true"></i></td>
     </tr>
   <% end %> 
+<script>
+  $("tr[data-href]").click(function() {
+    window.location = $(this).data("href")
+  })
+</script>
