@@ -10,20 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170402154708) do
+ActiveRecord::Schema.define(version: 20170416170142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-
-  create_table "album_v2s", force: :cascade do |t|
-    t.string   "name_eng"
-    t.string   "name_kor"
-    t.text     "profile_img"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "mcountdown"
-  end
 
   create_table "album_volumes", force: :cascade do |t|
     t.date     "vote_start"
@@ -37,11 +28,12 @@ ActiveRecord::Schema.define(version: 20170402154708) do
   end
 
   create_table "albums", force: :cascade do |t|
-    t.string   "name"
-    t.string   "artiste"
-    t.text     "album_img"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name_eng"
+    t.string   "name_kor"
+    t.text     "profile_img"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "mcountdown"
   end
 
   create_table "artistes", force: :cascade do |t|
