@@ -2,11 +2,12 @@
 <div class="main-container ranking-board-container">
   <div class="row">
     <div class="col-sm-4 award-profile">
-      <%= image_tag(@award.profile_img, width: "100%") %>
+      <%= image_tag(@award.profile_img, class: "award-logo") %>
     </div>
     <div class="col-sm-8">
-      <h3><%= @award.name %></h3>
+      <h3 class='award-name'><%= @award.name %></h3>
       <p><%= @award.description %></p>
+      <%= render partial: 'legend', locals: {judging_criteria: @award.judging_criteria, color: ['#ffe66b', '#e34a6f', '#fafaff']} %>
     </div>
   </div>
 

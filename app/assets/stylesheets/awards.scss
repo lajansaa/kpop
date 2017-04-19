@@ -60,9 +60,29 @@
   margin: 5px;
 }
 
+.award-name {
+  margin-top: 0;
+  @media screen and (max-width: 767px) {
+    margin-top: 10px;
+  }
+}
+
 #date-picker {
   float: right;
   margin: 50px 0;
+}
+
+/*Legend*/
+.legend-item {
+  float: left;
+  margin: 10px 10px 0 0;
+}
+
+.color-square {
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
 }
 
 /*Ranking Board*/

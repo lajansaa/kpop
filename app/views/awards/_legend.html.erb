@@ -1,0 +1,8 @@
+<div class="legend">
+  <% judging_criteria.each_with_index do |jc, index| %>
+    <div class="legend-item">
+      <div class="color-square" style="background-color: <%= color[index] %>;" ></div>
+      <p><%= jc[0].gsub(/_/, ' ').split.map(&:capitalize).join(' ') %></p>
+    </div>
+  <% end %>
+</div>
