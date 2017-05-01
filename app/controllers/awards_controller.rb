@@ -6,7 +6,7 @@ class AwardsController < ApplicationController
 
   def show
     @award = Award.find(params[:id])
-    @nomination_cycles = NominationCycle.where(:award_id => @award).order(id: :desc)
+    @nomination_cycles = NominationCycle.where("award_id = ? and ranking_present", @award).order(id: :desc)
     @max_cycyle_id = @nomination_cycles.first.id
     @mcountdown_nominees = Nominee.where(:cycle_id => @max_cycyle_id).sort_by {|r| r.mcountdown_ranking.ranking}
   end

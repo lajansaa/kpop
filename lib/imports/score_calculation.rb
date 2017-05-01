@@ -6,7 +6,6 @@ require "nokogiri"
 require "active_record"
 require "postgres-copy"
 require "pg"
-require "pry"
 
 class ScoreCalculation
 
@@ -48,6 +47,7 @@ class ScoreCalculation
             )
         end
       end
+      NominationCycle.where(:id => c.id).update(:ranking_present => true)
     end
   end
 
