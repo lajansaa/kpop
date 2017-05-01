@@ -92,10 +92,10 @@ class NomineesFetcher
           end
   
           log.info("Inserting profile image for #{album_name} into Album relation")
-          album_id = AlbumV2.where(:mcountdown => album_name)
-                            .first_or_create(profile_img: album_profile_img,
-                                             mcountdown: album_name
-                                             ).id
+          album_id = Album.where(:mcountdown => album_name)
+                          .first_or_create(profile_img: album_profile_img,
+                                           mcountdown: album_name
+                                           ).id
         else
           album_id = song_array[0].album_id
         end
