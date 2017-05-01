@@ -4,6 +4,7 @@ require "nokogiri"
 require "active_record"
 require "pg"
 require "pry"
+require "watir-webdriver"
 
 class MetricsFetcher
   def self.youtube_views
@@ -119,14 +120,16 @@ class MetricsFetcher
     streaming_url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=S1040"
     stream_list = get_result_list_gaon(streaming_url)
 
+    gaon_index = Array.new
+
     nominees_array.each do |n|
       artiste_obj = Artiste.find_by(:id => n["artiste_id"])
       song_obj = Song.find_by(:id => n["song_id"], :artiste_id => n["artiste_id"])
-      std_artiste_name = artiste_obj.name_kor ||= artiste_obj.name_eng
-      std_song_name = song_obj.name_kor ||= song_obj.name_eng
-      download_cnt = download_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }.nil? ? 0 : download_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }["count"].gsub(/,/, '').to_i
-      stream_cnt = stream_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }.nil? ? 0 : stream_list.find { |result| Regexp.new(Regexp.escape(std_artiste_name)).match(result["artiste"]) && Regexp.new(Regexp.escape(std_song_name)).match(result["song"]) }["count"].gsub(/,/, '').to_i
-      log.info("Inserting #{download_cnt} downloads and #{stream_cnt} streams for #{std_song_name}")
+      
+      download_cnt = get_ds_cnt(artiste_obj, song_obj, download_list, 'find')
+      stream_cnt = get_ds_cnt(artiste_obj, song_obj, stream_list, 'find')
+
+      log.info("Inserting #{download_cnt} downloads and #{stream_cnt} streams for #{artiste_obj.name_eng}'s #{song_obj.name_eng}")
       DigitalSale.where(:date_d => formatted_time_now,
                         :artiste_id => n["artiste_id"],
                         :song_id => n["song_id"],
@@ -140,7 +143,16 @@ class MetricsFetcher
                  .update(:download_cnt => download_cnt,
                          :stream_cnt => stream_cnt
                          )
+
+      download_match = get_ds_cnt(artiste_obj, song_obj, download_list, 'find_index')
+      if download_match
+        gaon_index.push({"song_id" => n["song_id"], "song_index" => download_match + 2})
+      end
     end
+    
+    log.info("Getting providers links")
+    get_links(download_url, gaon_index)
+
   end
 
   def self.get_result_list_gaon(url)
@@ -155,6 +167,73 @@ class MetricsFetcher
         result_list.push({"artiste" => artiste, "song" => song, "count" => count})
     end
    return result_list
+  end
+
+  def self.get_ds_cnt(artiste_obj, song_obj, list, find_method)
+    if find_method == 'find_index'
+      result = list.find_index { |result| 
+                 (Regexp.new(Regexp.escape(artiste_obj.name_kor ||= 'NA')).match(result["artiste"]) ||
+                  Regexp.new(Regexp.escape(artiste_obj.name_eng)).match(result["artiste"])
+                 ) &&
+                 (Regexp.new(Regexp.escape(song_obj.name_kor ||= 'NA')).match(result["song"]) ||
+                  Regexp.new(Regexp.escape(song_obj.name_eng)).match(result["song"])
+                 )
+               }
+      return result
+    else
+      result = list.find { |result| 
+                 (Regexp.new(Regexp.escape(artiste_obj.name_kor ||= 'NA')).match(result["artiste"]) ||
+                  Regexp.new(Regexp.escape(artiste_obj.name_eng)).match(result["artiste"])
+                 ) &&
+                 (Regexp.new(Regexp.escape(song_obj.name_kor ||= 'NA')).match(result["song"]) ||
+                  Regexp.new(Regexp.escape(song_obj.name_eng)).match(result["song"])
+                 )
+               }
+    return result.nil? ? 0 : result["count"].gsub(/,/, '').to_i
+    end
+  end
+
+  def self.get_links(url, gaon_index)
+    log = Logger.new(STDOUT)
+    # url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=S1020"
+    # log.info("Getting top 100 downloads")
+    # download_list = get_result_list_gaon(url)
+    # gaon_index = Array.new
+    # Song.where("id = 153").each do |s|
+    #   download_match = get_ds_cnt(s.artiste, s, download_list, 'find_index')
+    #   if download_match
+    #     gaon_index.push({"song_id" => s.id, "song_index" => download_match + 2})
+    #   end
+    # end
+      
+    browser = Watir::Browser.new :phantomjs
+    browser.window.maximize
+    browser.goto url
+
+    gaon_index.each do |i|
+      play_button = browser.driver.find_element(xpath: "//*[@id='wrap']/div[4]/table/tbody/tr[#{i["song_index"]}]/td[8]/div/span")
+      browser.driver.execute_script("$('.chart tr')[#{i["song_index"]}-1].scrollIntoView()")
+      sleep 5
+      log.info("Inserting Bugs link")
+      browser.driver.action.move_to(play_button).move_by(-360, -30).click.perform
+      sleep 5
+      Song.find(i["song_id"]).update(bugs: browser.windows.last.url)
+      browser.windows.last.close
+
+      log.info("Inserting Genie link")
+      browser.driver.action.move_to(play_button).move_by(-330, 20).click.perform
+      sleep 5
+      Song.find(i["song_id"]).update(genie: browser.windows.last.url)
+      browser.windows.last.close
+
+      log.info("Inserting Melon link")
+      browser.driver.action.move_to(play_button).move_by(-400, -30).click.perform
+      sleep 5
+      Song.find(i["song_id"]).update(melon: browser.windows.last.url)
+      browser.windows.last.close
+      sleep 5
+    end
+    browser.close
   end
 
 end
