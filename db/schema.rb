@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416170142) do
+ActiveRecord::Schema.define(version: 20170430173239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20170416170142) do
   create_table "digital_service_providers", force: :cascade do |t|
     t.string "name"
     t.text   "profile_img"
+    t.text   "home_url"
   end
 
   create_table "mcountdown_rankings", force: :cascade do |t|
@@ -100,34 +101,9 @@ ActiveRecord::Schema.define(version: 20170416170142) do
     t.date     "start_date"
     t.date     "end_date"
     t.string   "period_type"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "nominations", force: :cascade do |t|
-    t.string   "award"
-    t.date     "vote_start"
-    t.date     "vote_end"
-    t.string   "artiste"
-    t.string   "song"
-    t.bigint   "download_count"
-    t.bigint   "streaming_count"
-    t.bigint   "youtube_views"
-    t.float    "popularity_votes"
-    t.float    "normalized_ds"
-    t.float    "normalized_yv"
-    t.float    "normalized_pv"
-    t.float    "aggregate_score"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "award_id"
-    t.float    "normalized_remainder"
-    t.integer  "ranking"
-    t.string   "album"
-    t.text     "profile_img"
-    t.integer  "album_volume"
-    t.float    "normalized_av"
-    t.index ["award_id"], name: "index_nominations_on_award_id", using: :btree
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.boolean  "ranking_present", default: false
   end
 
   create_table "nominees", force: :cascade do |t|
@@ -146,6 +122,9 @@ ActiveRecord::Schema.define(version: 20170416170142) do
     t.string   "mcountdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "melon"
+    t.string   "bugs"
+    t.string   "genie"
   end
 
   create_table "users", force: :cascade do |t|
