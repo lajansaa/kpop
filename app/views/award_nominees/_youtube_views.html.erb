@@ -1,0 +1,24 @@
+<div class="metrics">
+  <div class="metrics_header">
+    <p class="yv">Youtube Views</p>
+  </div>
+  <div class="metrics_body">
+    <div class="thumbnail_img_container">
+      <% if @nominee.song.youtube_video.video_id == 'NA' %>
+       <p>No official YouTube video!</p>
+      <% else %>
+        <%= link_to @nominee.song.youtube_video.watch_link, :target => "_blank" do %>
+          <%= image_tag(@nominee.song.youtube_video.thumbnail_img, class: "thumbnail_img") %>
+          <span>
+            <i class="fa fa-youtube-play"></i>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="metrics_text_container">
+      <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nominee.mcountdown_ranking.youtube_views.to_i, :delimiter => ',') %></span> views</p>
+      <a target="_blank" href="<%= @nominee.song.youtube_video.watch_link %>" class="btn as_btn" role="button"><span><i class="fa fa-play-circle-o" aria-hidden="true"></i></span> Watch</a>
+    </div>
+  </div>
+</div>
+<div style="clear: both;"></div>
