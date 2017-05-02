@@ -5,8 +5,8 @@
   <th></th>
 </tr>
 <% mcountdown_nominees.each do |mn| %>
-  <tr class='clickable-row' data-href="<%= award_nominee_path(award_id, mn.id) %>">
-    <td><%= mn.mcountdown_ranking.ranking %></td>
+  <tr class="clickable-row" data-href="<%= award_nominee_path(award_id, mn.id) %>">
+    <td class="ranking-no"><%= mn.mcountdown_ranking.ranking.ordinalize %></td>
     <td>
       <% unless mn.artiste.profile_img == 'no available image' %>
         <%= image_tag(mn.artiste.profile_img, class: "artiste-profile", alt: mn.artiste.name_eng ) %>

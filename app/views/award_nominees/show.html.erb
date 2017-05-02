@@ -1,38 +1,31 @@
 <%= image_tag(@award.masthead_img, class: "masthead") %>
 <div class="main-container ranking-board-container">
-<table>
-<tr>
-<td><%= @nominee.mcountdown_ranking.ranking %></td>
-    <td>
-      <% unless @nominee.artiste.profile_img == 'no available image' %>
-        <%= image_tag(@nominee.artiste.profile_img, class: "artiste-profile", alt: @nominee.artiste.name_eng ) %>
-      <% end %>
-    </td>
-    <td class="nominee-col">
-      <div class="flex-bar">
-        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_ds %> 0%; background-color: #ffe66b;'></div>
-        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_yv %> 0%; background-color: #e34a6f;'></div>
-        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_mv %> 0%; background-color: #fafaff;'></div>
-        <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.remainder %> 0%; background-color: #B8C5D6;'></div>
-      </div>
-      <div>
-        <p>
-          <span><%= @nominee.song.name_eng %></span>
-          <% unless @nominee.song.name_kor.nil?%>
-            <span> | <%= @nominee.song.name_kor %></span>
-          <% end %>
-        </p>
-        <p>
-          <span><%= @nominee.artiste.name_eng %></span>
-          <% unless @nominee.artiste.name_kor.nil?%>
-            <span> | <%= @nominee.artiste.name_kor %></span>
-          <% end %>
-        </p>
-      </div>
-    </td>
-    <td class="aggregate_score"><%= @nominee.mcountdown_ranking.score.round(1).to_s + '%' %></td>
-</tr>
-</table>
+  <div>
+    <span class="ranking-no"><%= @nominee.mcountdown_ranking.ranking.ordinalize %></span>
+    <span class="title"><span><%= @nominee.artiste.name_eng %></span>
+    <% unless @nominee.artiste.name_kor.nil?%>
+      <span> (<%= @nominee.artiste.name_kor %>)</span>
+    <% end %>
+    <span> - <%= @nominee.song.name_eng %></span>
+    <% unless @nominee.song.name_kor.nil?%>
+      <span> (<%= @nominee.song.name_kor %>)</span>
+    <% end %>
+    </span>
+  </div>
+  <% unless @nominee.artiste.profile_img == 'no available image' %>
+    <%= image_tag(@nominee.artiste.profile_img, class: "artiste-profile", alt: @nominee.artiste.name_eng ) %>
+  <% end %>
+
+<div class="bar-score">
+  <div class="flex-bar">
+    <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_ds %> 0%; background-color: #ffe66b;'></div>
+    <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_yv %> 0%; background-color: #e34a6f;'></div>
+    <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.normalized_mv %> 0%; background-color: #fafaff;'></div>
+    <div class="flex-bar--item horiz-bar" style='flex: <%= @nominee.mcountdown_ranking.remainder %> 0%; background-color: #B8C5D6;'></div>
+  </div>
+  <div class="aggregate_score"><%= @nominee.mcountdown_ranking.score.round(1).to_s + '%' %></div>
+</div>
+<div style="clear: both;"></div>
 
 <div class="metrics_container">
   <%= render partial: 'digital_sales'%>
