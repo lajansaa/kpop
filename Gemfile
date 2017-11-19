@@ -51,6 +51,13 @@ gem 'react-rails'
 gem 'phantomjs'
 gem 'watir-webdriver'
 
+# For scheduler
+gem 'sidekiq'
+gem 'sinatra'
+gem 'sidekiq-client-cli'
+gem 'redis'
+gem 'whenever', :require => false
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
