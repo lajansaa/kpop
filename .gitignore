@@ -30,3 +30,8 @@
 /lib/imports/nominations.csv
 /lib/imports/artistes.csv
 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
