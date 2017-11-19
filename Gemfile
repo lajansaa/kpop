@@ -49,7 +49,7 @@ gem 'react-rails'
 
 # For scraping names
 gem 'phantomjs'
-gem 'watir-webdriver'
+gem 'watir'
 
 # For scheduler
 gem 'sidekiq'
