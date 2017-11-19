@@ -16,8 +16,6 @@
 //= require react
 //= require react_ujs
 //= require components
-//= require angular
-//= require angular-mocks
 //= require_tree .
 
 
