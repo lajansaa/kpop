@@ -9,8 +9,19 @@
     <div class="metrics_text_container">
       <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nominee.mcountdown_ranking.download_cnt.to_i, :delimiter => ',') %></span> downloads</p>
       <p class="metrics_text"><span class="stats"><%= number_with_delimiter(@nominee.mcountdown_ranking.stream_cnt.to_i, :delimiter => ',') %></span> streams</p>
-      <a target="_blank" href="<%= @nominee.song.genie ||= 'http://www.genie.co.kr/'%>" class="btn ds_btn" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</a>
+    
+      <ul id="dsp-dropdown">
+        <li class="btn ds_btn" role="button"><span><i class="fa fa-cloud-download" aria-hidden="true"></i></span> Download / <span><i class="fa fa-play" aria-hidden="true"></i></span> Stream</li>
+        <% @provider_links.each do |pl| %>
+          <li><a target="_blank" href="<%= pl.link ||= pl.digital_service_provider.home_url %>" ><%= image_tag(pl.digital_service_provider.profile_img, class: "dsp-profile-img") %></a></li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>
 <div style="clear: both;"></div>
+<script>
+      $('.ds_btn').click(function() {
+        $('#dsp-dropdown').toggleClass('show-dsp')
+      });
+</script>

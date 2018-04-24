@@ -11,11 +11,33 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-sprockets
 //= require jquery_ujs
 //= require react
 //= require react_ujs
 //= require components
+//= require bootstrap-sprockets
+//= require bootstrap/modal
 //= require_tree .
 
 
+$('document').ready(function() {
+$('#hamburger-icon').mouseover(function() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } 
+        $('.topnav li a').each(function(index) { 
+        if ($(this).attr('href') == window.location.pathname && index != 3) {
+          $(this).addClass('active') 
+        } 
+        });
+      });
+
+      $('#myTopnav').mouseleave(function() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav responsive") {
+          x.classList.remove("responsive");
+        }
+      });
+
+});

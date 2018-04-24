@@ -4,7 +4,7 @@ require "nokogiri"
 require "active_record"
 require "pg"
 require "pry"
-require "watir-webdriver"
+require "watir"
 
 class MetricsFetcher
   def self.youtube_views
@@ -151,7 +151,7 @@ class MetricsFetcher
     end
     
     log.info("Getting providers links")
-    get_links(download_url, gaon_index)
+    get_links(url: download_url, gaon_index: gaon_index)
 
   end
 
@@ -193,18 +193,24 @@ class MetricsFetcher
     end
   end
 
-  def self.get_links(url, gaon_index)
+  def self.get_links(options={})
     log = Logger.new(STDOUT)
-    # url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=S1020"
-    # log.info("Getting top 100 downloads")
-    # download_list = get_result_list_gaon(url)
-    # gaon_index = Array.new
-    # Song.where("id = 153").each do |s|
-    #   download_match = get_ds_cnt(s.artiste, s, download_list, 'find_index')
-    #   if download_match
-    #     gaon_index.push({"song_id" => s.id, "song_index" => download_match + 2})
-    #   end
-    # end
+
+    unless options[:url] && options[:gaon_index]
+      url = "http://www.gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=S1020"
+      log.info("Getting top 100 downloads")
+      download_list = get_result_list_gaon(url)
+      gaon_index = Array.new
+      Song.all.each do |s|
+        download_match = get_ds_cnt(s.artiste, s, download_list, 'find_index')
+        if download_match
+          gaon_index.push({"song_id" => s.id, "song_index" => download_match + 2})
+        end
+      end
+    else
+      url = options[:url]
+      gaon_index = options[:gaon_index]
+    end
       
     browser = Watir::Browser.new :phantomjs
     browser.window.maximize
@@ -214,23 +220,55 @@ class MetricsFetcher
       play_button = browser.driver.find_element(xpath: "//*[@id='wrap']/div[4]/table/tbody/tr[#{i["song_index"]}]/td[8]/div/span")
       browser.driver.execute_script("$('.chart tr')[#{i["song_index"]}-1].scrollIntoView()")
       sleep 5
-      log.info("Inserting Bugs link")
-      browser.driver.action.move_to(play_button).move_by(-360, -30).click.perform
-      sleep 5
-      Song.find(i["song_id"]).update(bugs: browser.windows.last.url)
-      browser.windows.last.close
+      
+      bugs_link = DigitalServiceProvidersLink.where(:song_id => i["song_id"],
+                                                    :digital_service_provider_id => 2
+                                                    )
+      if bugs_link.nil?
+        log.info("Inserting Bugs link")
+        browser.driver.action.move_to(play_button).move_by(-360, -30).click.perform
+        sleep 5
+        bugs_link.first_or_create(song_id: i["song_id"],
+                                  digital_service_provider_id: 2,
+                                  link: browser.windows.last.url
+                                  )
+        browser.windows.last.close
+      else
+        log.info("Bugs link already exists, skipping...")
+      end
+       
+      genie_link = DigitalServiceProvidersLink.where(:song_id => i["song_id"],
+                                                     :digital_service_provider_id => 4
+                                                     )
+      if genie_link.nil?
+        log.info("Inserting Genie link")
+        browser.driver.action.move_to(play_button).move_by(-330, 20).click.perform
+        sleep 5
+        genie_link.first_or_create(song_id: i["song_id"],
+                                   digital_service_provider_id: 4,
+                                   link: browser.windows.last.url
+                                   )
+        browser.windows.last.close
+      else
+        log.info("Genie link already exists, skipping...")
+      end
 
-      log.info("Inserting Genie link")
-      browser.driver.action.move_to(play_button).move_by(-330, 20).click.perform
-      sleep 5
-      Song.find(i["song_id"]).update(genie: browser.windows.last.url)
-      browser.windows.last.close
+      melon_link = DigitalServiceProvidersLink.where(:song_id => i["song_id"],
+                                                     :digital_service_provider_id => 1
+                                                     )
+      if melon_link.nil?
+        log.info("Inserting Melon link")
+        browser.driver.action.move_to(play_button).move_by(-400, -30).click.perform
+        sleep 5
+        melon_link.first_or_create(song_id: i["song_id"],
+                                   digital_service_provider_id: 1,
+                                   link: browser.windows.last.url
+                                   )
+        browser.windows.last.close
+      else
+        log.info("Melon link already exists, skipping...")
+      end
 
-      log.info("Inserting Melon link")
-      browser.driver.action.move_to(play_button).move_by(-400, -30).click.perform
-      sleep 5
-      Song.find(i["song_id"]).update(melon: browser.windows.last.url)
-      browser.windows.last.close
       sleep 5
     end
     browser.close

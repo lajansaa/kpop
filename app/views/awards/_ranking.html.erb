@@ -1,18 +1,16 @@
-<tr>
-  <th>Rank</th>
-  <th colspan="2">Nominee</th>
-  <th>Score</th>
-  <th></th>
-</tr>
-<% mcountdown_nominees.each do |mn| %>
-  <tr class="clickable-row" data-href="<%= award_nominee_path(award_id, mn.id) %>">
-    <td class="ranking-no"><%= mn.mcountdown_ranking.ranking.ordinalize %></td>
-    <td>
+
+  <% mcountdown_nominees.each do |mn| %>
+  <div class="ranking-item clickable-row" data-href="<%= award_nominee_path(award_id, mn.id) %>">
+    <div class="row">
+    <div class="col-xs-1 col-sm-1 ranking-no">
+      <%= mn.mcountdown_ranking.ranking.ordinalize %>
+    </div>
+    <div class="col-xs-1 col-sm-4">
       <% unless mn.artiste.profile_img == 'no available image' %>
-        <%= image_tag(mn.artiste.profile_img, class: "artiste-profile", alt: mn.artiste.name_eng ) %>
+        <%= image_tag(mn.artiste.profile_img, class: 'artiste-profile', alt: mn.artiste.name_eng ) %>
       <% end %>
-    </td>
-    <td class="nominee-col">
+    </div>
+    <div class="col-xs-1 col-sm-4 nominee-col">
       <div class="flex-bar">
         <div class="flex-bar--item horiz-bar" style='flex: <%= mn.mcountdown_ranking.normalized_ds %> 0%; background-color: #ffe66b;'></div>
         <div class="flex-bar--item horiz-bar" style='flex: <%= mn.mcountdown_ranking.normalized_yv %> 0%; background-color: #e34a6f;'></div>
@@ -33,13 +31,22 @@
           <% end %>
         </p>
       </div>
-    </td>
-    <td class="aggregate_score"><%= mn.mcountdown_ranking.score.round(1).to_s + '%' %></td>
-    <td><i class="fa fa-chevron-right" aria-hidden="true"></i></td>
-    </tr>
-  <% end %> 
+    </div>
+    <div class="col-xs-1 col-sm-2 aggregate_score">
+      <%= mn.mcountdown_ranking.score.round(1).to_s + '%' %>
+    </div>
+    <div class="col-xs-1 col-sm-1">
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+
+</div>
+</div>
+    <% end %>
+    
 <script>
-  $("tr[data-href]").click(function() {
+  $("div[data-href]").click(function() {
     window.location = $(this).data("href")
   })
+
+  $('.ranking-item:last').addClass('last');
 </script>

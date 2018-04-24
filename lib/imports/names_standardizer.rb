@@ -4,7 +4,7 @@ require "nokogiri"
 require "active_record"
 require "pg"
 require "pry"
-require "watir-webdriver"
+require "watir"
 
 class NamesStandardizer
 

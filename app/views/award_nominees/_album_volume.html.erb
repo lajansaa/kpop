@@ -5,9 +5,71 @@
   <div class="metrics_body">
     <%= image_tag(@nominee.song.album.profile_img, class: "album_img") %>
     <div class="metrics_text_container">
-      <p class="metrics_text"><span class="stats">0</span> sold</p>
-      <a href="#" class="btn as_btn" role="button"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Order</a>
+      <p class="metrics_text"><span class="stats">1</span> sold</p>
+      <p><span onclick="decrease()"><i class="fa fa-minus-square-o" aria-hidden="true" type="button"></i></span> <input type="text" id="quantity" name="quantity" value=1> <span onclick="increase()"><i class="fa fa-plus-square-o" aria-hidden="true" type="button"></i></span></p>
+      
+
+      <% if user_signed_in? %>
+        
+        <!-- add to cart modal -->
+        <%= link_to add_to_cart_modal_path, :remote => true, "data-toggle" =>  "modal", "data-target" => '#add-to-cart-modal' do %>
+          <button id="add-to-cart" class="btn as_btn" onclick="addToCart()"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Add to Cart</button>
+        <% end %>
+
+        <div class="modal fade" id="add-to-cart-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+
+      <% else %>
+
+        <!-- sign in modal -->
+        <%= link_to sign_in_modal_path, :remote => true, "data-toggle" =>  "modal", "data-target" => '#sign-in-modal' do %>
+          <button id="add-to-cart" class="btn as_btn" onclick="addToCart()"><span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span> Add to Cart</button>
+        <% end %>
+
+        <div class="modal fade" id="sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+
+      <% end %>
+
+
     </div>
   </div>
+
 </div>
+
 <div style="clear: both;"></div>
+
+<script>
+
+      function decrease() {
+        var lowerLimit = 1;
+        var newQ = parseInt(document.getElementById("quantity").value);
+        if (newQ > lowerLimit) {
+          newQ--;
+        } else {
+          newQ = lowerLimit;
+        }
+        document.getElementById("quantity").value = newQ;
+      };
+
+      function increase() {
+        var upperLimit = 50;
+        var newQ = parseInt(document.getElementById("quantity").value);
+        if (newQ < upperLimit) {
+          newQ++;
+        } else {
+          newQ = upperLimit;
+        }
+        document.getElementById("quantity").value = newQ;
+
+      };
+
+      function addToCart() {
+        var quantity = document.getElementById("quantity").value;
+
+      };
+
+      function promptSignIn() {
+
+      };
+
+
+</script>

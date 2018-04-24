@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170430173239) do
+ActiveRecord::Schema.define(version: 20171105162703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,17 @@ ActiveRecord::Schema.define(version: 20170430173239) do
     t.text     "description"
   end
 
+  create_table "carts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.decimal  "subtotal",     precision: 12, scale: 3
+    t.decimal  "tax",          precision: 12, scale: 3
+    t.decimal  "shipping",     precision: 12, scale: 3
+    t.decimal  "total",        precision: 12, scale: 3
+    t.integer  "order_status"
+  end
+
   create_table "digital_sales", force: :cascade do |t|
     t.date     "date_d"
     t.integer  "artiste_id"
@@ -69,6 +80,23 @@ ActiveRecord::Schema.define(version: 20170430173239) do
     t.string "name"
     t.text   "profile_img"
     t.text   "home_url"
+  end
+
+  create_table "digital_service_providers_links", force: :cascade do |t|
+    t.integer  "song_id"
+    t.integer  "digital_service_provider_id"
+    t.text     "link"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.integer  "cart_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.decimal  "unit_price", precision: 12, scale: 3
   end
 
   create_table "mcountdown_rankings", force: :cascade do |t|
@@ -112,6 +140,21 @@ ActiveRecord::Schema.define(version: 20170430173239) do
     t.integer  "song_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "order_statuses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string   "name"
+    t.string   "resource_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.decimal  "price",        precision: 12, scale: 3
+    t.boolean  "purchaseable"
   end
 
   create_table "songs", force: :cascade do |t|

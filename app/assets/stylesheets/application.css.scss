@@ -36,7 +36,7 @@ body {
 /*NavBar*/
 .navbar {
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 50px;
   background: #1c1c1c;
   top: 0;
@@ -59,6 +59,7 @@ body {
   
   height: 10vw; /* Not really related */
   bottom: -10vw;
+  right: 0;
   
   border-left-width: 50vw;
   border-right-width: 50vw;
@@ -66,35 +67,39 @@ body {
 
 }
 
-.topnav li.icon {
+.topnav li.hamburger-menu-icon {
   display: none;
 }
 
 .awards_link,
 .awards_link:hover,
-.awards_link.active {
+.awards_link.active,
+.awards_link:visited {
    color: #ffe66b;
  }
  
 .artistes_link,
 .artistes_link:hover,
-.artistes_link.active {
+.artistes_link.active,
+.artistes_link:visited {
    color: #6ccff6;
  }
 
 .cart_link,
 .cart_link:hover,
-.cart_link.active {
+.cart_link.active,
+.cart_link:visited {
   color: #e34a6f; 
 }
 
 .session_link,
 .session_link:hover,
-.session_link.active {
+.session_link.active,
+.session_link:visited {
   color: #fefcff; 
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 785px) {
   
   .topnav li a {
     display: inline-block;
@@ -116,7 +121,7 @@ body {
     display: none;
   }
 
-  .topnav li.icon {
+  .topnav li.hamburger-menu-icon {
     float: left;
     display: inline-block;
 
@@ -181,7 +186,7 @@ body {
   .topnav li {
     display: inline-block;
     margin-right: 40px;
-    font-size: 1.3vw;
+    font-size: 1.5vw;
   }
 
   .topnav li a {
@@ -193,6 +198,7 @@ body {
   .topnav li:not(:nth-child(4)) a:hover {
     border-bottom: 3px solid orange;
     padding: 0 10px 10px;
+    background-color: transparent;
   }  
 
   .navbar_items_logo {
@@ -212,6 +218,7 @@ body {
 
 /*MastHead*/
 .masthead {
+  width: 100vw;
   margin: 0 0;
   max-width: 100%;
   max-height: 100%;

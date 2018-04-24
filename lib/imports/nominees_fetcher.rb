@@ -7,6 +7,10 @@ require "pry"
 
 class NomineesFetcher
 
+  def self.test_method
+    puts 'success'
+  end
+
   def self.mcountdown_nominees_and_votes
     log = Logger.new(STDOUT)
 

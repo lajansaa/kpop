@@ -1,7 +1,9 @@
 class AwardsController < ApplicationController
   
   def index
-  	@awards = Award.all.order("name")
+  	@awards = Rails.cache.fetch('awards', :expires_in => 5.minutes) {
+      Award.all.order("name")
+    }
   end
 
   def show
@@ -16,6 +18,13 @@ class AwardsController < ApplicationController
     @award_id = params[:award_id]
     respond_to do |format|
       format.js
+    end
+  end
+
+  def fetch_mcountdown_nominees
+    FetcherWorker.perform_async()
+    respond_to do |format|
+      format.html
     end
   end
 

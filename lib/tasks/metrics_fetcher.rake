@@ -11,4 +11,9 @@ namespace :metrics_fetcher do
   task digital_sales: :environment do
     MetricsFetcher.digital_sales
   end
+
+  desc "Get digital service provider links"
+  task get_links: :environment do
+    MetricsFetcher.get_links
+  end
 end

@@ -47,6 +47,9 @@ gem "sprockets-es6"
 # For react
 gem 'react-rails'
 
+# For memcached
+gem 'dalli'
+
 # For scraping names
 gem 'phantomjs'
 gem 'watir'
@@ -57,6 +60,9 @@ gem 'sinatra'
 gem 'sidekiq-client-cli'
 gem 'redis'
 gem 'whenever', :require => false
+
+# For vue
+gem 'webpacker'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

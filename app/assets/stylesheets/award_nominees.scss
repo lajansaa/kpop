@@ -8,7 +8,7 @@
   margin-left: 30px;
 }
 
-.artiste-profile {
+.artiste-profile-detail {
   float: left;
   margin-top: 30px;
 }
@@ -91,26 +91,6 @@
   width: 100%;
 }
 
-.digital_providers_containers {
-  padding: 30px;
-}
-
-.digital_providers {
-  text-align: center;
-}
-
-.dp_profile_container {
-  width: 100%;
-  height: 150px;
-  @media(max-width: 768px){
-    height: 200px;
-  }
-}
-
-.dp_profile {
-  width: 80%;
-}
-
 .album_img_container,
 .thumbnail_img_container {
   float: left;
@@ -167,7 +147,10 @@
   color: #1c1c1c;
 }
 
-.ds_btn {
+.as_btn,
+.vote_btn,
+.ds_btn,
+.yv_btn {
   background-color: #e34a6f !important;
   color: #fafaff !important;
   border-radius: 10px !important;
@@ -175,21 +158,42 @@
   border: 1px solid #1c1c1c !important;
 }
 
-.as_btn {
-  background-color: #e34a6f !important;
-  color: #fafaff !important;
-  border-radius: 10px !important;
-  text-decoration: none;
-  border: 1px solid #1c1c1c !important;
-  width: 150px;
-}
-
+.as_btn,
 .vote_btn {
-  background-color: #e34a6f !important;
-  color: #fafaff !important;
-  border-radius: 10px !important;
-  text-decoration: none;
-  border: 1px solid #1c1c1c !important;
   width: 150px;
 }
+
+#dsp-dropdown {
+  padding: 0;
+  margin: 0;
+}
+
+#dsp-dropdown li {
+  display: none;
+  transition: .15s;
+}
+
+#dsp-dropdown li.ds_btn {
+  display: inline-block;
+}
+
+.dsp-profile-img {
+  width: 100px;
+  height: 50px;
+  overflow: hidden;
+}
+
+#dsp-dropdown.show-dsp li {
+  float: none;
+  display: block;
+
+}
+
+#dsp-dropdown.show-dsp li a {
+  position: relative;
+  
+}
+
+
+
 

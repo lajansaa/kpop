@@ -1,10 +1,10 @@
 <%= image_tag(@award.masthead_img, class: "masthead") %>
-<div class="main-container ranking-board-container">
+<div class="main-container">
   <div class="row">
-    <div class="col-sm-4 award-profile">
+    <div class="col-md-4 award-profile">
       <%= image_tag(@award.profile_img, class: "award-logo") %>
     </div>
-    <div class="col-sm-8">
+    <div class="col-md-8">
       <h3 class='award-name'><%= @award.name %></h3>
       <p><%= @award.description %></p>
       <%= render partial: 'legend', locals: {judging_criteria: @award.judging_criteria, color: ['#ffe66b', '#e34a6f', '#fafaff']} %>
@@ -17,29 +17,18 @@
   <% end %>
 </select>
  
+<div class="nominees-fetcher">
+  <%= button_to 'Fetch Nominees', fetch_mcountdown_nominees_path, method: :get %>
+</div>  
 
  <div class="ranking-board-header clear">
   <h1>Ranking Board</h1>
  </div>
 
  <div class="ranking-container">
-  <table id='ranking-ajax'>
+  <div id='ranking-ajax'>
     <%= render partial: 'ranking', locals: { mcountdown_nominees: @mcountdown_nominees, award_id: @award} %>
-  </table>
+  </div>
  </div>
 </div>
-<script>
-$(function() {
-
-  $('#date-picker').change(function(event){
-    console.log($(event.target).val());
-    data = JSON.parse($(event.target).val());
-    $.get(
-      '/from_nomination_cycle',
-      {cycle_id: data.cycle_id,
-       award_id: data.award_id}
-    );
-  });
-});
-</script>
      

@@ -13,7 +13,7 @@
     </span>
   </div>
   <% unless @nominee.artiste.profile_img == 'no available image' %>
-    <%= image_tag(@nominee.artiste.profile_img, class: "artiste-profile", alt: @nominee.artiste.name_eng ) %>
+    <%= image_tag(@nominee.artiste.profile_img, class: "artiste-profile-detail", alt: @nominee.artiste.name_eng ) %>
   <% end %>
 
 <div class="bar-score">
