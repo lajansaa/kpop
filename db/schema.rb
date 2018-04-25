@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171105162703) do
+ActiveRecord::Schema.define(version: 20180424061256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,14 @@ ActiveRecord::Schema.define(version: 20171105162703) do
     t.decimal  "unit_price", precision: 12, scale: 3
   end
 
+  create_table "listings", force: :cascade do |t|
+    t.integer  "seller_id"
+    t.string   "album_id"
+    t.float    "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mcountdown_rankings", force: :cascade do |t|
     t.integer  "nominee_id"
     t.float    "mcountdown_votes"
@@ -168,6 +176,15 @@ ActiveRecord::Schema.define(version: 20171105162703) do
     t.string   "melon"
     t.string   "bugs"
     t.string   "genie"
+    t.index ["id"], name: "id_idx", unique: true, using: :btree
+  end
+
+  create_table "track_award_nominees", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "award_id"
+    t.integer  "nominee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

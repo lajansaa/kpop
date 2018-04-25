@@ -36,4 +36,13 @@ class AwardNomineesController < ApplicationController
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+  def track
+    track_id = params[:track_id]
+    if track_id == '1'
+      TrackAwardNominee.new(user_id: current_user.id, award_id: params[:award_id], nominee_id: params[:nominee_id]).save!
+    else
+      TrackAwardNominee.where(user_id: current_user.id, award_id: params[:award_id], nominee_id: params[:nominee_id]).destroy
+    end
+  end
 end
