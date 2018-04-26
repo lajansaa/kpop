@@ -1,0 +1,19 @@
+<div class="main-container">
+  <p>Hi</p>
+  <p>Hi</p>
+  <p>Hi</p>
+  <table>
+    <tr>
+      <th>All Listings</th>
+    </tr>
+
+    <% @listings.each do |listing| %>
+      <tr>
+        <td>Seller Id: <%= listing.seller_id %></td>
+        <td>Album Name: <%= Album.find_by_id(listing.album_id).mcountdown %> </td>
+        <td>Price: <%= listing.price %></td>
+        <td><%= link_to 'Details', listing_path(listing) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

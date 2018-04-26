@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20180425094003) do
 
   # These are extensions that must be enabled in order to support this database
@@ -104,11 +105,12 @@ ActiveRecord::Schema.define(version: 20180425094003) do
   end
 
   create_table "listings", force: :cascade do |t|
-    t.integer  "seller_id"
-    t.string   "album_id"
+    t.integer  "album_id"
     t.float    "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "seller_id"
+    t.index ["seller_id"], name: "index_listings_on_seller_id", using: :btree
   end
 
   create_table "mcountdown_rankings", force: :cascade do |t|
@@ -167,6 +169,17 @@ ActiveRecord::Schema.define(version: 20180425094003) do
     t.datetime "updated_at",                            null: false
     t.decimal  "price",        precision: 12, scale: 3
     t.boolean  "purchaseable"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.integer  "quantity"
+    t.boolean  "approved"
+    t.boolean  "paid"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "listing_id"
+    t.index ["listing_id"], name: "index_requests_on_listing_id", using: :btree
   end
 
   create_table "songs", force: :cascade do |t|
@@ -273,4 +286,5 @@ ActiveRecord::Schema.define(version: 20180425094003) do
     t.integer  "song_id"
   end
 
+  add_foreign_key "requests", "listings"
 end

@@ -1,0 +1,54 @@
+<div class="main-container">
+  <p>Hi</p>
+  <p>Hi</p>
+  <p>Hi</p>
+
+  <p>
+    <strong>Album (MCountdown) Name:</strong>
+    <%= @album.mcountdown %>
+  </p>
+
+  <p>
+    <strong>Seller Name:</strong>
+    <%= @seller.username %>
+  </p>
+
+  <p>
+    <strong>Seller Email:</strong>
+    <%= @seller.email %>
+  </p>
+
+  <p>
+    <strong>Seller Id:</strong>
+    <%= @listing.seller_id %>
+  </p>
+
+  <p>
+    <strong>Album Id:</strong>
+    <%= @listing.album_id %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= @listing.price %>
+  </p>
+
+  <%= form_for @request, :url => requests_path do |f| %>
+
+    <%= f.hidden_field :listing_id, :value => @listing.id %>
+    <%= f.hidden_field :customer_id, :value => current_user.id %>
+    <%= f.hidden_field :approved, :value => false %>
+    <%= f.hidden_field :paid, :value => false %>
+
+    <p><%= f.label :quantity %></p>
+    <p><%= f.number_field :quantity %></p>
+
+    <p><%= f.submit 'Request to Buy' %></p>
+  <% end %>
+
+  <p>
+    <%= link_to 'Show Requests', listing_requests_path(@listing) %>
+    <%= link_to 'Back', listings_path %>
+    <%= link_to 'Edit', edit_listing_path(@listing) %>
+  </p>
+</div>

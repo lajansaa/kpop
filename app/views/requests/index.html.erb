@@ -1,0 +1,41 @@
+<div class="main-container">
+  <p>Hi</p>
+  <p>Hi</p>
+  <p>Hi</p>
+  <table>
+    <tr>
+      <th>All Requests</th>
+    </tr>
+
+    <% @requests.each do |request| %>
+      <tr>
+        <td>Listing Id: <%= request.listing_id %></td>
+        <td>Customer Id: <%= request.customer_id %> </td>
+        <td>Quantity: <%= request.quantity %></td>
+        <td>Approved? <% if request.approved == false %>
+          <%= "No" %><% else %><%="Yes" %><%end%></td>
+        <td>Paid? <% if request.paid == false %>
+          <%= "No" %>
+          <% else %>
+          <%="Yes" %>
+          <%end%></td>
+
+        <% if request.paid == false && request.approved == false %>
+          <% @request = Request.find(request.id) %>
+          <%= form_for @request, :url => myrequests_path do |f| %>
+            <%= f.hidden_field :id, :value => @request.id %>
+            <%= f.hidden_field :listing_id, :value => @request.listing_id %>
+            <%= f.hidden_field :customer_id, :value => current_user.id %>
+            <%= f.hidden_field :quantity, :value => @request.quantity %>
+            <%= f.hidden_field :approved, :value => true %>
+            <%= f.hidden_field :paid, :value => false %>
+
+            <td><%= f.submit 'Approve' %></td>
+        <% end %>
+
+        <% end %>
+
+      </tr>
+    <% end %>
+  </table>
+</div>
