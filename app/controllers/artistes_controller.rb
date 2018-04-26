@@ -65,7 +65,6 @@ class ArtistesController < ApplicationController
           log.info("Finding and inserting #{match_artiste[0]}'s profile image based on link...")
           doc = Nokogiri::HTML(open(match_artiste[1]))
         # profile_img = doc.css('.entry-content img').first.attributes["src"].value
-        # binding.pry
         # if profile_img.match("a3-lazy-load")
           profile_img = doc.css('.images-1 img').first.attributes["src"].value
         # end

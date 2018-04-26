@@ -3,7 +3,6 @@ require "typhoeus"
 require "nokogiri"
 require "active_record"
 require "pg"
-require "pry"
 require "watir"
 
 class MetricsFetcher
