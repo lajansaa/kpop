@@ -68,6 +68,9 @@ gem 'whenever', :require => false
 # For vue
 gem 'webpacker'
 
+gem 'rack-cors'
+gem 'devise_token_auth'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -88,7 +91,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'devise', '~> 4.2'
+# gem 'devise', '~> 4.2'
 gem 'paperclip', '~> 4.2'
-gem 'omniauth-facebook'
+# gem 'omniauth-facebook'
 gem "koala", "~> 2.2"

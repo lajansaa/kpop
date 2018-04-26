@@ -1,0 +1,2 @@
+class TrackAwardNominee < ApplicationRecord
+end

@@ -86,10 +86,13 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    dotenv (2.4.0)
-    dotenv-rails (2.4.0)
-      dotenv (= 2.4.0)
-      railties (>= 3.2, < 6.0)
+    devise_token_auth (0.1.43)
+      devise (> 3.5.2, < 4.5)
+      rails (< 6)
+    dotenv (2.1.1)
+    dotenv-rails (2.1.1)
+      dotenv (= 2.1.1)
+      railties (>= 4.0, < 5.1)
     erubis (2.7.0)
     ethon (0.11.0)
       ffi (>= 1.3.0)
@@ -99,8 +102,7 @@ GEM
     ffi (1.9.23)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    hashie (3.5.7)
-    htmlbeautifier (1.3.1)
+    htmlbeautifier (1.2.1)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
@@ -110,8 +112,7 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    jwt (1.5.6)
-    koala (2.5.0)
+    koala (2.4.0)
       addressable
       faraday
     listen (3.0.8)
@@ -130,27 +131,12 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
-    multi_json (1.13.1)
-    multi_xml (0.6.0)
+    multi_json (1.12.1)
     multipart-post (2.0.0)
     mustermann (1.0.2)
     nio4r (2.3.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
-    oauth2 (1.4.0)
-      faraday (>= 0.8, < 0.13)
-      jwt (~> 1.0)
-      multi_json (~> 1.3)
-      multi_xml (~> 0.5)
-      rack (>= 1.2, < 3)
-    omniauth (1.8.1)
-      hashie (>= 3.4.6, < 3.6.0)
-      rack (>= 1.6.2, < 3)
-    omniauth-facebook (5.0.0)
-      omniauth-oauth2 (~> 1.2)
-    omniauth-oauth2 (1.5.0)
-      oauth2 (~> 1.1)
-      omniauth (~> 1.2)
     orm_adapter (0.5.0)
     paperclip (4.3.7)
       activemodel (>= 3.2.0)
@@ -170,7 +156,8 @@ GEM
     public_suffix (3.0.2)
     puma (3.11.4)
     rack (2.0.5)
-    rack-protection (2.0.1)
+    rack-cors (1.0.2)
+    rack-protection (2.0.0)
       rack
     rack-proxy (0.6.4)
       rack
@@ -296,7 +283,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   dalli
-  devise (~> 4.2)
+  devise_token_auth
   dotenv-rails
   htmlbeautifier
   jbuilder (~> 2.5)
@@ -304,13 +291,13 @@ DEPENDENCIES
   koala (~> 2.2)
   listen (~> 3.0.5)
   nokogiri
-  omniauth-facebook
   paperclip (~> 4.2)
   pg
   phantomjs
   postgres-copy
   pry
   puma (~> 3.0)
+  rack-cors
   rails (~> 5.0.0, >= 5.0.0.1)
   react-rails
   redis

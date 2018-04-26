@@ -1,10 +1,31 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", registrations: 'users/registrations', passwords: 'users/passwords' }
 
   require 'sidekiq/web'
   mount Sidekiq::Web => "/sidekiq"
 
   root to: "awards#index"
+
+  namespace :api do
+    namespace :v1 do
+
+      mount_devise_token_auth_for 'User', at: 'auth'
+      
+      resources :awards do
+        resources :nominations, :controller => "award_nominations"
+      end
+
+      resources :awards do
+        resources :nominees, :controller => "award_nominees"
+      end
+
+      resources :nominations
+      resources :admins
+      
+      # track award nominees
+      post "awards/:award_id/nominees/:nominee_id/track" => 'award_nominees#track', :as => 'track_award_nominee'
+
+    end
+  end
 
   # test fetch nominees button
   get "/fetch_mcountdown_nominees" => 'awards#fetch_mcountdown_nominees', as: 'fetch_mcountdown_nominees'
@@ -26,16 +47,6 @@ Rails.application.routes.draw do
 
   post '/requests/:id/charge' => 'charges#create', :as => 'request_charged'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :awards do
-    resources :nominations, :controller => "award_nominations"
-  end
-  resources :awards do
-    resources :nominees, :controller => "award_nominees"
-  end
-  resources :nominations
-  resources :admins
-
   resources :listings do
     resources :requests
   end
@@ -43,4 +54,6 @@ Rails.application.routes.draw do
   resources :requests
 
   resources :charges
+
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
