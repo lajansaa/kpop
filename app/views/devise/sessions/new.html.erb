@@ -23,13 +23,6 @@
         </div>
         <%end %>
         <p class="text-center">or<p>
-        <div class="form-group btn_facebook">
-            <div>
-            <% resource_class.omniauth_providers.each do |provider|%>
-              <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: "btn btn-primary form-control" %>
-              <% end -%>
-            </div>
-          </div>
         <div class="render">
           <%= render "devise/shared/links" %>
         </div>

@@ -90,6 +90,10 @@ ActiveRecord::Schema.define(version: 20180425094003) do
     t.datetime "updated_at",                  null: false
   end
 
+  create_table "films", id: :integer, force: :cascade do |t|
+    t.string "title", limit: 40, null: false
+  end
+
   create_table "line_items", force: :cascade do |t|
     t.integer  "cart_id"
     t.integer  "product_id"
