@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171105162703) do
+ActiveRecord::Schema.define(version: 20180425051130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,15 @@ ActiveRecord::Schema.define(version: 20171105162703) do
     t.decimal  "unit_price", precision: 12, scale: 3
   end
 
+  create_table "listings", force: :cascade do |t|
+    t.integer  "album_id"
+    t.float    "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "seller_id"
+    t.index ["seller_id"], name: "index_listings_on_seller_id", using: :btree
+  end
+
   create_table "mcountdown_rankings", force: :cascade do |t|
     t.integer  "nominee_id"
     t.float    "mcountdown_votes"
@@ -155,6 +164,17 @@ ActiveRecord::Schema.define(version: 20171105162703) do
     t.datetime "updated_at",                            null: false
     t.decimal  "price",        precision: 12, scale: 3
     t.boolean  "purchaseable"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.integer  "quantity"
+    t.boolean  "approved"
+    t.boolean  "paid"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "listing_id"
+    t.index ["listing_id"], name: "index_requests_on_listing_id", using: :btree
   end
 
   create_table "songs", force: :cascade do |t|
@@ -222,4 +242,5 @@ ActiveRecord::Schema.define(version: 20171105162703) do
     t.integer  "song_id"
   end
 
+  add_foreign_key "requests", "listings"
 end

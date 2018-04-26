@@ -1,0 +1,21 @@
+<div class="main-container">
+  <p>hi</p>
+  <p>hi</p>
+  <p>hi</p>
+
+  <%= form_for @request, :url => request_path do |f| %>
+
+    <%= f.hidden_field :listing_id, :value => @request.listing_id %>
+    <%= f.hidden_field :customer_id, :value => current_user.id %>
+    <%= f.hidden_field :approved, :value => false %>
+    <%= f.hidden_field :paid, :value => false %>
+
+    <p><%= f.label :quantity %></p>
+    <p><%= f.number_field :quantity %></p>
+
+    <p><%= f.submit 'Edit' %></p>
+  <% end %>
+
+<%= link_to 'Back', requests_path %>
+
+</div>

@@ -1,7 +1,7 @@
 class AwardsController < ApplicationController
-  
+
   def index
-  	@awards = Rails.cache.fetch('awards', :expires_in => 5.minutes) {
+    @awards = Rails.cache.fetch('awards', :expires_in => 5.minutes) {
       Award.all.order("name")
     }
   end
@@ -29,4 +29,3 @@ class AwardsController < ApplicationController
   end
 
 end
-	
