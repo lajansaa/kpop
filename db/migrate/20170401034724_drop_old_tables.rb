@@ -4,5 +4,6 @@ class DropOldTables < ActiveRecord::Migration[5.0]
     drop_table :popularity_votes
     drop_table :mappings
     drop_table :artistes
+    drop_table :albums
   end
 end
