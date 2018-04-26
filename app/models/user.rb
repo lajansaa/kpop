@@ -17,7 +17,7 @@ class User < ApplicationRecord
        user.save!
        return user
     end
-    
+
     # Case 2: Find existing user by email
     existing_user = User.find_by_email( auth.info.email )
     if existing_user
@@ -31,12 +31,12 @@ class User < ApplicationRecord
     # Case 3: Create new password
     user = User.new
     user.fb_uid = auth.uid
-    user.fb_token = auth.credentials.token     
+    user.fb_token = auth.credentials.token
     user.email = auth.info.email
     user.password = Devise.friendly_token[0,20]
     #user.fb_raw_data = auth
     user.save!
     return user
   end
-	
+
 end
