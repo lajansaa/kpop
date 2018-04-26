@@ -36,7 +36,6 @@ gem 'nokogiri'
 gem 'typhoeus'
 
 # For debugging
-gem 'pry'
 
 # For beautifying html erb
 # https://github.com/threedaymonk/htmlbeautifier
@@ -62,9 +61,6 @@ gem 'sinatra'
 gem 'sidekiq-client-cli'
 gem 'redis'
 gem 'whenever', :require => false
-
-# For vue
-gem 'webpacker'
 
 gem 'rack-cors'
 gem 'devise_token_auth'
