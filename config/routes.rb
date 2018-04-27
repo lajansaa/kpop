@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       resources :nominations
       resources :admins
       
+      # show award nominees being tracked
+      get "users/following" => 'users#following', :as => 'following'
+
       # track award nominees
       post "awards/:award_id/nominees/:nominee_id/track" => 'award_nominees#track', :as => 'track_award_nominee'
 
