@@ -18,6 +18,7 @@ module Api::V1
                     profile_img: @nominee.artiste.profile_img
                   },
                   song: {
+                    album_id: @nominee.song.album.id,
                     name_eng: @nominee.song.name_eng,
                     name_kor: @nominee.song.name_kor
                   },
@@ -36,11 +37,15 @@ module Api::V1
                       digital_service_providers: digital_service_providers,
                       profile_img: "https://ccmworld.files.wordpress.com/2013/07/gaon.jpg"
                     },
+                    album_volume: {
+                      profile_img_present: @nominee.song.album.profile_img == 'no available image' ? false : true,
+                      profile_img: @nominee.song.album.profile_img
+                    },
                     youtube_views: {
                       video_present: @nominee.song.youtube_video.video_id == 'NA' ? false : true,
                       view_cnt: @nominee.mcountdown_ranking.youtube_views,
                       thumbnail_img: @nominee.song.youtube_video.thumbnail_img,
-                      video_link: @nominee.song.youtube_video.watch_link
+                      video_id: @nominee.song.youtube_video.video_id
                     },
                     mcountdown_votes: {
                       votes: @nominee.mcountdown_ranking.mcountdown_votes,
