@@ -6,7 +6,6 @@ require "nokogiri"
 require "active_record"
 require "postgres-copy"
 require "pg"
-require "pry"
 
 
 class NominationsController < ApplicationController

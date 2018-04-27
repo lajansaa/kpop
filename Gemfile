@@ -19,8 +19,6 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
-gem 'dotenv-rails', groups: [:development, :test]
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -38,7 +36,6 @@ gem 'nokogiri'
 gem 'typhoeus'
 
 # For debugging
-gem 'pry'
 
 # For beautifying html erb
 # https://github.com/threedaymonk/htmlbeautifier
@@ -64,9 +61,6 @@ gem 'sinatra'
 gem 'sidekiq-client-cli'
 gem 'redis'
 gem 'whenever', :require => false
-
-# For vue
-gem 'webpacker'
 
 gem 'rack-cors'
 gem 'devise_token_auth'
