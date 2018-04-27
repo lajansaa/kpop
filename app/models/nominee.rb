@@ -3,4 +3,5 @@ class Nominee < ApplicationRecord
   has_one :mcountdown_ranking
   belongs_to :artiste
   belongs_to :song
+  has_many :track_award_nominees
 end
