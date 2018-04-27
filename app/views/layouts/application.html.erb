@@ -6,49 +6,16 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all'%>
-    
+
     <script src="https://use.fontawesome.com/34946f66a5.js"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <%= javascript_include_tag 'application'%>
-    
+
   </head>
   <body class=<%= css_class_for_controller_action(controller) %>>
-    <div class="navbar">
-      <div class="navbar_collapsible">
-        <ul class="topnav" id="myTopnav">
-          <li id="hamburger-icon" class="hamburger-menu-icon">
-            <a href="javascript:void(0);" style="font-size:15px;"><i class="fa fa-bars" aria-hidden="true"></i></a>
-          </li>
-          <li><a href="/awards" class="awards_link">Awards</a></li>
-          <li><a href="#" class="artistes_link">Artistes</a></li>
-          <li id="logo_clear" class="navbar_items_logo">
-            <a href="/awards"><img alt="ollida" src="https://image.ibb.co/m8rgOG/Logo.png" class="logo"></a>
-          </li>
-          <li><a href="#" class="cart_link">Cart</a></li>
-          <% if user_signed_in? %>
-            <li><a href="/users/sign_out" class="session_link" data-method="delete">Sign Out</a></li>
-          <% else %>
-            <li><a href="/users/sign_in" class="session_link">Sign In</a></li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="navbar_items_logo_second">
-        <%= link_to awards_path do %>
-          <img alt="ollida" src="https://image.ibb.co/m8rgOG/Logo.png" class="logo-second">
-        <% end %>
-      </div>
-    </div>
-    <!--notice for Sign-in/out -->
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: "alert alert-info" %>
-    <% end %>
-    <div class="content">
-      <%= yield %>
-    </div>
-    <div id="footer" class="container-fluid">
-      <p>&copy; 2017 olliDa.com Inc. All rights reserved.</p>
-    </div>
+
+    <%= yield %>
   </body>
 </html>
