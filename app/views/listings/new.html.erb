@@ -4,10 +4,12 @@
   <p>hi</p>
   <%= form_for @listing, :url => listings_path do |f| %>
 
+    <%= form.collection_check_boxes :album_ids, @albums, :id, :mcoundown %>
+
     <%= f.hidden_field :seller_id, :value => current_user.id %>
 
-    <p><%= f.label :album_id %></p>
-    <p><%= f.number_field :album_id %></p>
+    <!-- <p><%= f.label :album_id %></p>
+    <p><%= f.number_field :album_id %></p> -->
 
     <p><%= f.label :price %></p>
     <p><%= f.number_field :price %></p>

@@ -7,7 +7,31 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      
+
+      resources :albums do
+        resources :listings
+      end
+
+      resources :users do
+        resources :listings
+      end
+
+      resources :listings do
+        resources :requests
+      end
+
+      resources :requests
+
+      get "mylistings" => 'listings#current_user_listings', :as => 'mylistings'
+
+      get "myrequests" => 'requests#current_customer_requests', :as => 'myrequests'
+
+      patch 'myrequests' => 'requests#approve_request'
+
+      post '/requests/:id/charge' => 'charges#create', :as => 'request_charged'
+
+      resources :charges
+
       resources :awards do
         resources :nominations, :controller => "award_nominations"
       end
@@ -18,10 +42,10 @@ Rails.application.routes.draw do
 
       resources :nominations
       resources :admins
-      
+
       # show award nominees being tracked
       get "users/following" => 'users#following', :as => 'following'
-
+      
       # track award nominees
       post "awards/:award_id/nominees/:nominee_id/track" => 'award_nominees#track', :as => 'track_award_nominee'
 
@@ -39,22 +63,6 @@ Rails.application.routes.draw do
 
   # add to cart modal
   get "award_nominees/add_to_cart_modal" => 'award_nominees#add_to_cart_modal', :as => 'add_to_cart_modal'
-
-  get "mylistings" => 'listings#current_user_listings', :as => 'mylistings'
-
-  get "myrequests" => 'requests#current_customer_requests', :as => 'myrequests'
-
-  patch 'myrequests' => 'requests#approve_request'
-
-  post '/requests/:id/charge' => 'charges#create', :as => 'request_charged'
-
-  resources :listings do
-    resources :requests
-  end
-
-  resources :requests
-
-  resources :charges
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
