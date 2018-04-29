@@ -5,4 +5,7 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   has_many :listings
+
+  has_many :track_award_nominee
+
 end
