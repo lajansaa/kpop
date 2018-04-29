@@ -70,7 +70,7 @@ module Api::V1
     end
 
     def request_params
-      params.require(:request).permit(:id, :customer_id, :quantity, :approved, :paid, :created_at, :updated_at, :listing_id)
+      params.require(:request).permit(:id, :customer_id, :quantity, :approved, :paid, :created_at, :updated_at, :listing_ids => [])
     end
 
   end

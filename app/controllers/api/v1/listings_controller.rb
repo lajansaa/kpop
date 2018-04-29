@@ -7,22 +7,76 @@ module Api::V1
       if params[:album_id] == nil
         @listings = Listing.all
 
-        render json: {listings: @listings}
+        listings = []
+
+        @listings.each do |listing|
+          obj = {
+            id: listing.id,
+            price: listing.price,
+            created_at: listing.created_at,
+            updated_at: listing.updated_at,
+            album_id: listing.album_id,
+            album_pic: listing.album.profile_img,
+            album_name_eng: listing.album.name_eng,
+            album_name_kor: listing.album.name_kor,
+            seller_id: listing.seller_id,
+            seller_name: listing.seller.name
+          }
+          listings.push(obj)
+        end
+
+        render json: {listings: listings}
       else
         @listings = Listing.where(album_id: params[:album_id].to_i)
         @album = Album.find(params[:album_id].to_i)
 
+        listings = []
+
+        @listings.each do |listing|
+          obj = {
+            id: listing.id,
+            price: listing.price,
+            created_at: listing.created_at,
+            updated_at: listing.updated_at,
+            album_id: listing.album_id,
+            seller_id: listing.seller_id,
+            seller_name: listing.seller.name
+          }
+          listings.push(obj)
+        end
+
         render json: {album: @album,
-                      listings: @listings
+                      listings: listings
                       }
       end
 
     end
 
     def current_user_listings
-      @listings = Listing.where(seller_id: current_user.id)
+      # @listings = Listing.where(seller_id: current_user.id)
 
-      render json: @listings
+      @listings = Listing.all
+
+      listings = []
+
+      @listings.each do |listing|
+        obj = {
+          id: listing.id,
+          price: listing.price,
+          created_at: listing.created_at,
+          updated_at: listing.updated_at,
+          album_id: listing.album_id,
+          album_pic: listing.album.profile_img,
+          album_name_eng: listing.album.name_eng,
+          album_name_kor: listing.album.name_kor,
+          seller_id: listing.seller_id,
+          seller_name: listing.seller.name
+        }
+        listings.push(obj)
+      end
+
+      render json: {listings: listings}
+
     end
 
     # shows a listing
@@ -33,15 +87,14 @@ module Api::V1
       @listing = Listing.find(params[:id])
 
       # @album = Album.find_by_id(@listing.album_id)
-
       # @seller = User.find_by_id(@listing.seller_id)
 
-      puts @listing.seller
+      # puts @listing.requests
 
       render json: {request: @request,
                     listing: @listing,
-                    album: @listing.album
-                    # seller: @listing.seller
+                    album: @listing.album,
+                    seller: @listing.seller
                    }
 
     end
@@ -92,6 +145,6 @@ module Api::V1
     def listing_params
       params.require(:listing).permit(:seller_id, :album_id, :price)
     end
-
   end
+
 end

@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20180426105831) do
+ActiveRecord::Schema.define(version: 20180427063936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,11 +83,10 @@ ActiveRecord::Schema.define(version: 20180426105831) do
     t.float    "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "seller_id"
     t.integer  "album_id"
+    t.integer  "seller_id"
     t.index ["album_id"], name: "index_listings_on_album_id", using: :btree
     t.index ["seller_id"], name: "index_listings_on_seller_id", using: :btree
-
   end
 
   create_table "mcountdown_rankings", force: :cascade do |t|
@@ -217,7 +215,7 @@ ActiveRecord::Schema.define(version: 20180426105831) do
     t.integer  "song_id"
   end
 
-  add_foreign_key "listings", "users"
   add_foreign_key "listings", "albums"
+  add_foreign_key "listings", "users", column: "seller_id"
   add_foreign_key "requests", "listings"
 end
