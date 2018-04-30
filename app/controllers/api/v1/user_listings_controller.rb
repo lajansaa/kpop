@@ -1,5 +1,5 @@
 module Api::V1
-  class ListingsController < ApplicationController
+  class UserListingsController < ApplicationController
 
     # shows all listings
     def index

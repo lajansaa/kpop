@@ -54,6 +54,8 @@ gem 'dalli'
 # For scraping names
 gem 'phantomjs'
 gem 'watir'
+gem 'selenium-webdriver'
+gem 'chromedriver-helper'
 
 # For scheduler
 gem 'sidekiq'

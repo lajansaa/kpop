@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Stripe"]
-  s.date = "2018-04-26"
+  s.date = "2018-04-29"
   s.description = "Stripe is the easiest way to accept payments online.  See https://stripe.com for details."
   s.email = "support@stripe.com"
   s.executables = ["stripe-console"]
@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = "2.5.1"
   s.summary = "Ruby bindings for the Stripe API"
   s.test_files = ["test/api_stub_helpers.rb", "test/stripe/account_external_accounts_operations_test.rb", "test/stripe/account_login_links_operations_test.rb", "test/stripe/account_test.rb", "test/stripe/alipay_account_test.rb", "test/stripe/api_operations_test.rb", "test/stripe/api_resource_test.rb", "test/stripe/apple_pay_domain_test.rb", "test/stripe/application_fee_refund_test.rb", "test/stripe/application_fee_refunds_operations_test.rb", "test/stripe/application_fee_test.rb", "test/stripe/balance_test.rb", "test/stripe/bank_account_test.rb", "test/stripe/charge_test.rb", "test/stripe/country_spec_test.rb", "test/stripe/coupon_test.rb", "test/stripe/customer_card_test.rb", "test/stripe/customer_sources_operations_test.rb", "test/stripe/customer_test.rb", "test/stripe/dispute_test.rb", "test/stripe/ephemeral_key_test.rb", "test/stripe/errors_test.rb", "test/stripe/exchange_rate_test.rb", "test/stripe/file_upload_test.rb", "test/stripe/invoice_item_test.rb", "test/stripe/invoice_line_item_test.rb", "test/stripe/invoice_test.rb", "test/stripe/list_object_test.rb", "test/stripe/login_link_test.rb", "test/stripe/oauth_test.rb", "test/stripe/order_return_test.rb", "test/stripe/order_test.rb", "test/stripe/payout_test.rb", "test/stripe/plan_test.rb", "test/stripe/product_test.rb", "test/stripe/recipient_test.rb", "test/stripe/refund_test.rb", "test/stripe/reversal_test.rb", "test/stripe/sku_test.rb", "test/stripe/source_test.rb", "test/stripe/source_transaction_test.rb", "test/stripe/stripe_client_test.rb", "test/stripe/stripe_object_test.rb", "test/stripe/stripe_response_test.rb", "test/stripe/subscription_item_test.rb", "test/stripe/subscription_test.rb", "test/stripe/three_d_secure_test.rb", "test/stripe/topup_test.rb", "test/stripe/transfer_reversals_operations_test.rb", "test/stripe/transfer_test.rb", "test/stripe/usage_record_test.rb", "test/stripe/util_test.rb", "test/stripe/webhook_test.rb", "test/stripe_test.rb", "test/test_data.rb", "test/test_helper.rb"]
+
+  s.installed_by_version = "2.5.1" if s.respond_to? :installed_by_version
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
