@@ -2,7 +2,7 @@ module Api::V1
   class AwardsController < ApplicationController
   
     def index
-    	@awards = Award.select("id, name, profile_img").order(:name)
+      @awards = Award.select("id, name, profile_img").order(:name)
 
       render json: @awards
     end

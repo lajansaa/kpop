@@ -1,10 +1,9 @@
 module Api::V1
   class UsersController < ApplicationController
-    # before_action :authenticate_user!
+    before_action :authenticate_user!
 
     def following
-      @followings = TrackAwardNominee.where(:user_id => 1)
-      # @followings = TrackAwardNominee.where(:user_id => current_user.id)
+      @followings = TrackAwardNominee.where(:user_id => current_user.id)
       followings = []
       @followings.each do |f|
         followings.push({ award_id: f.award.id,
@@ -17,10 +16,7 @@ module Api::V1
                           ranking: f.nominee.mcountdown_ranking.ranking
                         })
       end
-      # render json: { user_name: current_user.name,
-      #                followings: followings
-      #              }
-      render json: { user_name: 'Isa',
+      render json: { user_name: current_user.name,
                      followings: followings
                    }
     end
