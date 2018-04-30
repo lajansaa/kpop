@@ -1,6 +1,6 @@
 module Api::V1
   class AwardNomineesController < ApplicationController
-    before_action :authenticate_user!, only: [:track]
+    # before_action :authenticate_user!, only: [:track]
 
     def show
       @award = Award.find(params[:award_id])
@@ -73,11 +73,15 @@ module Api::V1
     end
 
     def track
-      track_id = params[:track_id]
-      if track_id == '1'
-        TrackAwardNominee.new(user_id: current_user.id, award_id: params[:award_id], nominee_id: params[:nominee_id]).save!
+      # if params[:track_id] == '1'
+      #   TrackAwardNominee.new(user_id: current_user.id, award_id: params[:award_id], nominee_id: params[:nominee_id]).save!
+      # else
+      #   TrackAwardNominee.where(user_id: current_user.id, award_id: params[:award_id], nominee_id: params[:nominee_id]).destroy_all
+      # end
+      if params[:track_id] == '1'
+        TrackAwardNominee.new(user_id: 1, award_id: params[:award_id], nominee_id: params[:nominee_id]).save!
       else
-        TrackAwardNominee.where(user_id: current_user.id, award_id: params[:award_id], nominee_id: params[:nominee_id]).destroy_all
+        TrackAwardNominee.where(user_id: 1, award_id: params[:award_id], nominee_id: params[:nominee_id]).destroy_all
       end
     end
   end
