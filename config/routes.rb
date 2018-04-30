@@ -12,10 +12,6 @@ Rails.application.routes.draw do
         resources :listings
       end
 
-      resources :users do
-        resources :listings
-      end
-
       resources :listings do
         resources :requests
       end
