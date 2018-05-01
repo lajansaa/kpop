@@ -20,13 +20,19 @@ module Api::V1
             album_name_eng: listing.album.name_eng,
             album_name_kor: listing.album.name_kor,
             seller_id: listing.seller_id,
-            seller_name: listing.seller.name
+            seller_name: listing.seller.name,
+            seller_email: listing.seller.email
           }
           listings.push(obj)
         end
 
-        render json: {listings: listings}
+        render json: {
+          current_user_id: current_user.id,
+          listings: listings
+        }
       else
+        # render all the listings of an album
+
         @listings = Listing.where(album_id: params[:album_id].to_i)
         @album = Album.find(params[:album_id].to_i)
 
@@ -40,22 +46,24 @@ module Api::V1
             updated_at: listing.updated_at,
             album_id: listing.album_id,
             seller_id: listing.seller_id,
-            seller_name: listing.seller.name
+            seller_name: listing.seller.name,
+            seller_email: listing.seller.email
           }
           listings.push(obj)
         end
 
         render json: {album: @album,
-                      listings: listings
+                      listings: listings,
+                      current_user_id: current_user.id
                       }
       end
 
     end
 
     def current_user_listings
-      # @listings = Listing.where(seller_id: current_user.id)
+      @listings = Listing.where(seller_id: current_user.id)
 
-      @listings = Listing.all
+      # @listings = Listing.all
 
       listings = []
 
@@ -70,7 +78,8 @@ module Api::V1
           album_name_eng: listing.album.name_eng,
           album_name_kor: listing.album.name_kor,
           seller_id: listing.seller_id,
-          seller_name: listing.seller.name
+          seller_name: listing.seller.name,
+          seller_email: listing.seller.email
         }
         listings.push(obj)
       end

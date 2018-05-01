@@ -3,13 +3,38 @@ module Api::V1
 
     def index
 
+      requests = []
+
       if params[:listing_id] == nil
         @requests = Request.all
+
       else
         @requests = Request.where(listing_id: params[:listing_id].to_i)
       end
 
-      render json: @requests
+      @requests.each do |request|
+
+        @customer = User.find(1)
+
+        obj = {
+          id: request.id,
+          customer_id: request.customer_id,
+          customer_name: @customer.name,
+          customer_email: @customer.email,
+          quantity: request.quantity,
+          approved: request.approved,
+          paid: request.paid,
+          created_at: request.created_at,
+          updated_at: request.updated_at,
+          listing_id: request.listing_id,
+          total_price: request.listing.price.to_i * request.quantity.to_i,
+          album_name: request.listing.album.name_eng,
+          album_pic: request.listing.album.profile_img
+        }
+        requests.push(obj)
+      end
+
+      render json: {requests: requests}
 
     end
 
@@ -33,19 +58,19 @@ module Api::V1
 
       @request.update(request_params)
       render json: @request
-      redirect_to @request
+      # redirect_to @request
     end
 
     # approve a request
     def approve_request
-      puts "id is"
-      puts request_params[:id]
+      # puts "id is"
+      # puts request_params[:id]
 
-      @request = Request.find(request_params[:id].to_i)
+      @request = Request.where("listing_id = ? AND customer_id = ? AND id = ?", request_params[:listing_id], request_params[:customer_id], request_params[:id])
 
       @request.update(request_params)
       render json: @request
-      redirect_to myrequests_path
+      # redirect_to myrequests_path
     end
 
     # destroy a request
@@ -58,7 +83,29 @@ module Api::V1
 
     def current_customer_requests
       @requests = Request.where(customer_id: current_user.id)
-      render json: @requests
+
+      # @requests = Request.all
+
+      requests = []
+
+      @requests.each do |request|
+        obj = {
+          id: request.id,
+          customer_id: request.customer_id,
+          quantity: request.quantity,
+          approved: request.approved,
+          paid: request.paid,
+          created_at: request.created_at,
+          updated_at: request.updated_at,
+          listing_id: request.listing_id,
+          total_price: request.listing.price.to_i * request.quantity.to_i,
+          album_name: request.listing.album.name_eng,
+          album_pic: request.listing.album.profile_img
+        }
+        requests.push(obj)
+      end
+
+      render json: {requests: requests}
     end
 
     def create
@@ -66,11 +113,11 @@ module Api::V1
 
       @request.save
       render json: @request
-      redirect_to myrequests_path
+      # redirect_to api_v1_myrequests_path
     end
 
     def request_params
-      params.require(:request).permit(:id, :customer_id, :quantity, :approved, :paid, :created_at, :updated_at, :listing_ids => [])
+      params.permit(:id, :customer_id, :quantity, :approved, :paid, :listing_id)
     end
 
   end

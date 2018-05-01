@@ -12,10 +12,6 @@ Rails.application.routes.draw do
         resources :listings
       end
 
-      resources :users do
-        resources :listings
-      end
-
       resources :listings do
         resources :requests
       end
@@ -45,7 +41,7 @@ Rails.application.routes.draw do
 
       # show award nominees being tracked
       get "users/following" => 'users#following', :as => 'following'
-      
+
       # track award nominees
       post "awards/:award_id/nominees/:nominee_id/track" => 'award_nominees#track', :as => 'track_award_nominee'
 
