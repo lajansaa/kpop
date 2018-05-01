@@ -7,5 +7,7 @@ class User < ApplicationRecord
   has_many :listings
 
   has_many :track_award_nominee
+  
+  mount_uploader :image, AvatarUploader
 
 end
