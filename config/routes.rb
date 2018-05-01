@@ -41,6 +41,11 @@ Rails.application.routes.draw do
 
       # show award nominees being tracked
       get "users/following" => 'users#following', :as => 'following'
+
+      # show user name and avatar for profile page
+      get "users/info" => 'users#info', :as => 'user_info'
+
+      post "users/avatar" => 'users#avatar', :as => 'avatar'
       
       # track award nominees
       post "awards/:award_id/nominees/:nominee_id/track" => 'award_nominees#track', :as => 'track_award_nominee'

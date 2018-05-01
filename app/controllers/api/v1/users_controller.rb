@@ -17,8 +17,30 @@ module Api::V1
                         })
       end
       render json: { user_name: current_user.name,
+                     user_avatar: current_user.image.url,
                      followings: followings
                    }
     end
+
+    def avatar
+      User.update(current_user.id, :image => params["uploaded_avatar"])
+      # cannot use current_user.image.url because
+      # it's a variable that stores the old user object
+      avatar_link = User.find(current_user.id).image.url
+      render json: avatar_link
+    end
+
+    def info
+      render json: { user_name: current_user.name,
+                     user_avatar: current_user.image.url.nil? ? 'n/a' : current_user.image.url
+                   }
+    end
+
+    private
+
+    def avatar_params
+      params.permit(:uploaded_avatar)
+    end
+
   end
 end

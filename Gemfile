@@ -64,6 +64,8 @@ gem 'whenever', :require => false
 
 gem 'rack-cors'
 gem 'devise_token_auth'
+gem 'fog-aws'
+gem 'carrierwave'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
